@@ -1,0 +1,712 @@
+{
+  "schemaVersion": 1,
+  "scope": "measured CTX crop only",
+  "sourcePack": "public/data/mission-pack.json",
+  "sourcePackSha256": "not computed; use Git SHA and runtime hash externally",
+  "gridCoordinates": "zero-based (x east, y south), 80 by 60 cells; coordinates are chosen grid cells, not NASA targets",
+  "constraints": "Research demonstration only, not safe EVA planning. All legs must be computed with the current production A* engine and validated DEM. Only screenshot evidence from actual browser tests may be attached.",
+  "missions": [
+    {
+      "id": "EX-01",
+      "phase": "Explorer",
+      "title": "Short cross-crop traverse",
+      "objective": "Compare both route modes over a short eastbound crossing",
+      "stops": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 24,
+          "y": 28
+        }
+      ],
+      "researchQuestion": "Compare route cost versus geometric distance.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-02",
+      "phase": "Explorer",
+      "title": "Long diagonal",
+      "objective": "Observe a diagonal crossing with changing elevations",
+      "stops": [
+        {
+          "x": 10,
+          "y": 48
+        },
+        {
+          "x": 60,
+          "y": 9
+        }
+      ],
+      "researchQuestion": "Check how the terrain penalty changes a broad diagonal route.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-03",
+      "phase": "Explorer",
+      "title": "West-to-east transect",
+      "objective": "Follow a broad west-to-east transect",
+      "stops": [
+        {
+          "x": 8,
+          "y": 30
+        },
+        {
+          "x": 69,
+          "y": 30
+        }
+      ],
+      "researchQuestion": "Compare cumulative ascent and route distance.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-04",
+      "phase": "Explorer",
+      "title": "North-to-south transect",
+      "objective": "Compare north-to-south terrain gradients",
+      "stops": [
+        {
+          "x": 41,
+          "y": 7
+        },
+        {
+          "x": 41,
+          "y": 52
+        }
+      ],
+      "researchQuestion": "Inspect adjacent-cell maximum step slope.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-05",
+      "phase": "Explorer",
+      "title": "Corner-to-centre",
+      "objective": "Navigate from a western sector to central grid cells",
+      "stops": [
+        {
+          "x": 7,
+          "y": 14
+        },
+        {
+          "x": 39,
+          "y": 31
+        }
+      ],
+      "researchQuestion": "Check both route modes and avoid named science locality claims.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-06",
+      "phase": "Explorer",
+      "title": "Southern boundary approach",
+      "objective": "Study an approach across the southern sector",
+      "stops": [
+        {
+          "x": 13,
+          "y": 53
+        },
+        {
+          "x": 58,
+          "y": 49
+        }
+      ],
+      "researchQuestion": "Compare ascent despite a mostly horizontal displacement.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-07",
+      "phase": "Explorer",
+      "title": "Northeast transfer",
+      "objective": "Examine route choice toward the northeast",
+      "stops": [
+        {
+          "x": 31,
+          "y": 43
+        },
+        {
+          "x": 68,
+          "y": 10
+        }
+      ],
+      "researchQuestion": "Inspect changes in slope and length.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-08",
+      "phase": "Explorer",
+      "title": "Western short loop leg",
+      "objective": "Test closely spaced points in the west",
+      "stops": [
+        {
+          "x": 10,
+          "y": 18
+        },
+        {
+          "x": 19,
+          "y": 23
+        }
+      ],
+      "researchQuestion": "Document a short trip where routes may coincide.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-09",
+      "phase": "Explorer",
+      "title": "Cross-axis route",
+      "objective": "Compare a mixed north-south and east-west journey",
+      "stops": [
+        {
+          "x": 69,
+          "y": 43
+        },
+        {
+          "x": 18,
+          "y": 12
+        }
+      ],
+      "researchQuestion": "Quantify effect of slope weighting.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "EX-10",
+      "phase": "Explorer",
+      "title": "Illustrative waypoint rehearsal",
+      "objective": "Route from the preset start to an illustrative study grid waypoint",
+      "stops": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 57,
+          "y": 12
+        }
+      ],
+      "researchQuestion": "Do not identify the grid waypoint as real Jezero Delta.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-01",
+      "phase": "Scientist",
+      "title": "Elevation profile A",
+      "objective": "Compare surface height variation on a northern transect",
+      "stops": [
+        {
+          "x": 12,
+          "y": 10
+        },
+        {
+          "x": 67,
+          "y": 10
+        }
+      ],
+      "researchQuestion": "Use route metrics to discuss sampled DEM topography only.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-02",
+      "phase": "Scientist",
+      "title": "Elevation profile B",
+      "objective": "Compare surface height variation on a southern transect",
+      "stops": [
+        {
+          "x": 12,
+          "y": 50
+        },
+        {
+          "x": 67,
+          "y": 50
+        }
+      ],
+      "researchQuestion": "Contrast with SC-01; avoid claims of particular rock types.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-03",
+      "phase": "Scientist",
+      "title": "Eastward ascent comparison",
+      "objective": "Compare two eastward routes from nearby starting cells",
+      "stops": [
+        {
+          "x": 11,
+          "y": 22
+        },
+        {
+          "x": 63,
+          "y": 22
+        }
+      ],
+      "researchQuestion": "Report modeled ascent, not physical energy consumption.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-04",
+      "phase": "Scientist",
+      "title": "Eastward ascent replication",
+      "objective": "Repeat the eastward experiment at a different latitude",
+      "stops": [
+        {
+          "x": 11,
+          "y": 37
+        },
+        {
+          "x": 63,
+          "y": 37
+        }
+      ],
+      "researchQuestion": "Compare differences with SC-03.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-05",
+      "phase": "Scientist",
+      "title": "Northwest slope sampling",
+      "objective": "Sample a northwest-oriented long traverse",
+      "stops": [
+        {
+          "x": 65,
+          "y": 46
+        },
+        {
+          "x": 15,
+          "y": 14
+        }
+      ],
+      "researchQuestion": "Identify large adjacent-cell slope changes.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-06",
+      "phase": "Scientist",
+      "title": "Southwest slope sampling",
+      "objective": "Sample a southwest-oriented long traverse",
+      "stops": [
+        {
+          "x": 63,
+          "y": 12
+        },
+        {
+          "x": 15,
+          "y": 46
+        }
+      ],
+      "researchQuestion": "Contrast with SC-05 under the same cost model.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-07",
+      "phase": "Scientist",
+      "title": "Central DEM cross-section",
+      "objective": "Route along a central vertical section",
+      "stops": [
+        {
+          "x": 39,
+          "y": 8
+        },
+        {
+          "x": 39,
+          "y": 51
+        }
+      ],
+      "researchQuestion": "Treat 40 m cells as coarse elevation samples.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-08",
+      "phase": "Scientist",
+      "title": "Peripheral DEM cross-section",
+      "objective": "Repeat along a more eastern section",
+      "stops": [
+        {
+          "x": 68,
+          "y": 8
+        },
+        {
+          "x": 68,
+          "y": 51
+        }
+      ],
+      "researchQuestion": "Compare with SC-07 without inferring hazards.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-09",
+      "phase": "Scientist",
+      "title": "Route model sensitivity",
+      "objective": "Select endpoints likely to expose a difference in cost weighting",
+      "stops": [
+        {
+          "x": 8,
+          "y": 52
+        },
+        {
+          "x": 72,
+          "y": 12
+        }
+      ],
+      "researchQuestion": "Record cases where the routes differ or coincide.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "SC-10",
+      "phase": "Scientist",
+      "title": "Distance versus ascent",
+      "objective": "Explore a long path where distance and total ascent trade off",
+      "stops": [
+        {
+          "x": 6,
+          "y": 30
+        },
+        {
+          "x": 73,
+          "y": 41
+        }
+      ],
+      "researchQuestion": "Compare metrics; do not infer oxygen or safe EVA duration.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-01",
+      "phase": "Commander",
+      "title": "Three-leg western survey",
+      "objective": "Sequence three independently computed local route legs",
+      "stops": [
+        {
+          "x": 10,
+          "y": 12
+        },
+        {
+          "x": 23,
+          "y": 18
+        },
+        {
+          "x": 34,
+          "y": 25
+        },
+        {
+          "x": 47,
+          "y": 29
+        }
+      ],
+      "researchQuestion": "Sum route distances; do not claim native multistop routing.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-02",
+      "phase": "Commander",
+      "title": "Northern traverse relay",
+      "objective": "Test a north-sector multileg itinerary",
+      "stops": [
+        {
+          "x": 9,
+          "y": 9
+        },
+        {
+          "x": 27,
+          "y": 12
+        },
+        {
+          "x": 46,
+          "y": 10
+        },
+        {
+          "x": 69,
+          "y": 13
+        }
+      ],
+      "researchQuestion": "Compare sums for both modes across each leg.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-03",
+      "phase": "Commander",
+      "title": "Southern traverse relay",
+      "objective": "Test a south-sector multileg itinerary",
+      "stops": [
+        {
+          "x": 8,
+          "y": 49
+        },
+        {
+          "x": 26,
+          "y": 51
+        },
+        {
+          "x": 49,
+          "y": 47
+        },
+        {
+          "x": 70,
+          "y": 50
+        }
+      ],
+      "researchQuestion": "Record ascent separately for each leg.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-04",
+      "phase": "Commander",
+      "title": "Central square exercise",
+      "objective": "Visit four cells and return to the first",
+      "stops": [
+        {
+          "x": 30,
+          "y": 22
+        },
+        {
+          "x": 49,
+          "y": 22
+        },
+        {
+          "x": 49,
+          "y": 39
+        },
+        {
+          "x": 30,
+          "y": 39
+        },
+        {
+          "x": 30,
+          "y": 22
+        }
+      ],
+      "researchQuestion": "Check a closed tour using independent grid routes.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-05",
+      "phase": "Commander",
+      "title": "Crossing and return",
+      "objective": "Travel outward then reverse endpoints",
+      "stops": [
+        {
+          "x": 14,
+          "y": 33
+        },
+        {
+          "x": 57,
+          "y": 15
+        },
+        {
+          "x": 14,
+          "y": 33
+        }
+      ],
+      "researchQuestion": "Compare outward/inward ascent even when distances match.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-06",
+      "phase": "Commander",
+      "title": "Three-sector relay",
+      "objective": "Visit western, central, and eastern cells",
+      "stops": [
+        {
+          "x": 9,
+          "y": 27
+        },
+        {
+          "x": 36,
+          "y": 41
+        },
+        {
+          "x": 68,
+          "y": 30
+        }
+      ],
+      "researchQuestion": "Study overall ascent without unsupported time estimates.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-07",
+      "phase": "Commander",
+      "title": "Northern-southern transfer",
+      "objective": "Cross vertical sectors through an intermediate grid point",
+      "stops": [
+        {
+          "x": 25,
+          "y": 9
+        },
+        {
+          "x": 39,
+          "y": 30
+        },
+        {
+          "x": 53,
+          "y": 51
+        }
+      ],
+      "researchQuestion": "Assess segmented routes against a direct mission.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-08",
+      "phase": "Commander",
+      "title": "Waypoint assessment",
+      "objective": "Visit two illustrative preset locations from the default start",
+      "stops": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 41,
+          "y": 42
+        },
+        {
+          "x": 62,
+          "y": 32
+        }
+      ],
+      "researchQuestion": "Waypoints are grid examples, not verified scientific targets.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-09",
+      "phase": "Commander",
+      "title": "Boundary-aware rehearsal",
+      "objective": "Traverse positions near—but inside—the four data boundaries",
+      "stops": [
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 74,
+          "y": 7
+        },
+        {
+          "x": 73,
+          "y": 53
+        },
+        {
+          "x": 6,
+          "y": 52
+        }
+      ],
+      "researchQuestion": "Test bounded grid routing, not beyond-crop access.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    },
+    {
+      "id": "CM-10",
+      "phase": "Commander",
+      "title": "Full-grid expedition exercise",
+      "objective": "Travel a four-leg sequence spanning the measured crop",
+      "stops": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 67,
+          "y": 11
+        },
+        {
+          "x": 66,
+          "y": 48
+        },
+        {
+          "x": 18,
+          "y": 50
+        },
+        {
+          "x": 12,
+          "y": 28
+        }
+      ],
+      "researchQuestion": "Compare total modeled cost, ascent, and distance; no life-support budget.",
+      "category": "illustrative measured-grid exercise",
+      "sourceDataset": "Jezero CTX measured study crop",
+      "routeStatus": "requires executed route verification",
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+    }
+  ]
+}
