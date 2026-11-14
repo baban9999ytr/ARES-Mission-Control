@@ -1,0 +1,25 @@
+name: ARES release checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feature/pages-r2-release-readiness
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Verify app and Cloudflare Pages assets
+        run: npm run check
