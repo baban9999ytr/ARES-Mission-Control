@@ -6,6 +6,7 @@ import {selectMissionData,layerForMode} from './data/mission-mode.js';
 import {validateScienceCatalog,scienceCoverage,coordinateEvidence} from './data/science-catalog.js';
 import {fetchDonki,formatDonkiStatus} from './data/donki.js';
 import {buildBriefing} from './data/briefing.js';
+import {validateMissionLibrary,planMission,buildMissionReport} from './data/mission-library.js';
 
 const $=s=>document.querySelector(s);
 const DEMO_WAYPOINTS=[
@@ -13,7 +14,8 @@ const DEMO_WAYPOINTS=[
   {id:'rim',name:'Crater rim overlook',type:'Illustrative study target',x:66,y:40,code:'EX-02',desc:'Example point on the synthetic map.'},
   {id:'basin',name:'Ancient lakebed',type:'Illustrative study target',x:43,y:47,code:'EX-03',desc:'Example point on the synthetic map.'},
 ];
-const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false};
+const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
+const library={missions:[],loaded:false,error:null,phase:'All',search:''};
 const research={catalogs:{jezero:null,global:null},scope:'jezero',selected:null,weatherLoaded:false};
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDistance=m=>m>=1000?`${(m/1000).toFixed(2)} km`:`${Math.round(m)} m`;
@@ -25,7 +27,19 @@ function announce(message,error=false){$('#pointFeedback').textContent=message;$
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),2500);}
 function linePath(route){return route?.cells.map((p,i)=>{const q=svgPoint(p);return `${i?'L':'M'}${q.x.toFixed(2)},${q.y.toFixed(2)}`}).join(' ')||'';}
 function marker(point,letter,kind){const q=svgPoint(point);return `<g class="map-marker ${kind}" transform="translate(${q.x},${q.y})"><circle r="14"/><text y="1">${letter}</text></g>`;}
-function calculateRoutes(){const hazard=state.kind==='demo'&&state.hazards;state.routes.distance=planRoute(state.data,state.start,state.destination,'distance',hazard);state.routes.terrain=planRoute(state.data,state.start,state.destination,'terrain',hazard);renderMap();renderComparison();}
+function calculateRoutes(){
+  if(state.kind==='measured'&&state.activeMission){
+    const plan=planMission(state.data,state.activeMission);
+    if(plan){state.missionLegs=plan.legs;state.routes=plan.routes;}
+    else{state.missionLegs=[];state.routes={distance:null,terrain:null};announce('One or more mission legs have no valid measured-CTX route.',true);}
+  }else{
+    state.missionLegs=[];
+    const hazard=state.kind==='demo'&&state.hazards;
+    state.routes.distance=planRoute(state.data,state.start,state.destination,'distance',hazard);
+    state.routes.terrain=planRoute(state.data,state.start,state.destination,'terrain',hazard);
+  }
+  renderMap();renderComparison();
+}
 function renderMap(){
   const d=state.data;const stage=$('#mapStage');const world=$('#mapWorld');
   world.style.setProperty('--zoom',state.zoom);world.style.setProperty('--pan-x',`${state.panX}px`);world.style.setProperty('--pan-y',`${state.panY}px`);
@@ -40,8 +54,15 @@ function renderMap(){
   if(state.kind==='measured')for(let y=0;y<d.gridHeight;y++)for(let x=0;x<d.gridWidth;x++)if(d.heights[y*d.gridWidth+x]===null)svg+=`<rect x="${x/d.gridWidth*1000}" y="${y/d.gridHeight*750}" width="${1000/d.gridWidth}" height="${750/d.gridHeight}" fill="url(#unknown)"/>`;
   if(state.kind==='demo'&&state.hazards)for(const h of d.hazards)svg+=`<circle class="hazard-cell" cx="${(h.x+.5)/d.gridWidth*1000}" cy="${(h.y+.5)/d.gridHeight*750}" r="${h.radius/d.gridWidth*1000}"/>`;
   if(state.showRoutes)for(const mode of paths)svg+=`<path class="map-route ${mode}${mode===state.mode?'':' secondary'}" d="${linePath(state.routes[mode])}" stroke-width="${mode===state.mode?4:2.6}"/>`;
-  for(const p of state.waypoints){if(p.x===state.destination.x&&p.y===state.destination.y)continue;const q=svgPoint(p);svg+=`<g class="map-waypoint"><circle cx="${q.x}" cy="${q.y}" r="5"/><text x="${q.x+9}" y="${q.y-8}">${escapeHtml(p.code)}</text></g>`;}
-  svg+=marker(state.start,'S','start')+marker(state.destination,'D','destination');
+  if(state.activeMission){
+    const stops=state.activeMission.stops;
+    for(let i=1;i<stops.length-1;i++)svg+=marker(stops[i],String(i+1),'mission-stop');
+    const isReturn=state.start.x===state.destination.x&&state.start.y===state.destination.y;
+    svg+=isReturn?marker(state.start,'S/D','mission-return'):marker(state.start,'S','start')+marker(state.destination,'D','destination');
+  }else{
+    for(const p of state.waypoints){if(p.x===state.destination.x&&p.y===state.destination.y)continue;const q=svgPoint(p);svg+=`<g class="map-waypoint"><circle cx="${q.x}" cy="${q.y}" r="5"/><text x="${q.x+9}" y="${q.y-8}">${escapeHtml(p.code)}</text></g>`;}
+    svg+=marker(state.start,'S','start')+marker(state.destination,'D','destination');
+  }
   if(state.pick&&state.keyboardCell)svg+=marker(state.keyboardCell,'+','keyboard-cursor');
   $('#mapSvg').innerHTML=svg;
   $('#zoomPct').textContent=`${Math.round(state.zoom*100)}%`;
@@ -51,12 +72,13 @@ function renderComparison(){
   for(const mode of ['distance','terrain']){const r=state.routes[mode];$(`#${mode}Distance`).textContent=r?fmtDistance(r.meters):'No route';$(`#${mode}Slope`).textContent=r?fmtSlope(r.maxSlope):'—';$(`#${mode}Ascent`).textContent=r?`${Math.round(r.ascending)} m`:'—';}
   document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===state.mode)));
   const a=state.routes.distance,b=state.routes.terrain,selected=state.routes[state.mode];
-  $('#routeContext').textContent=`${state.presetId?'Illustrative example destination':'Custom map destination'} · ${coordinates(state.destination)}`;
+  $('#routeContext').textContent=state.activeMission?state.activeMission.id+' · '+state.missionLegs.length+' fixed-order A* legs · '+coordinates(state.destination):`${state.presetId?'Illustrative example destination':'Custom map destination'} · ${coordinates(state.destination)}`;
   $('#routeExplainer').textContent=!selected?'No route exists through the available cells. Choose two valid points.':state.kind==='measured'?'Both routes use sampled CTX DEM elevations. Terrain preferred adds an illustrative slope cost; shortest minimizes grid distance. Neither assesses safety.':'Both routes use synthetic height values. Terrain preferred adds an illustrative slope cost.';
   $('#routeDifference').textContent=a&&b?`Compared with shortest: ${signed(Math.round(b.meters-a.meters))} m distance, ${signed(b.maxSlope-a.maxSlope,1)}° maximum sampled step slope, ${signed(Math.round(b.ascending-a.ascending))} m ascent. The illustrative slope cost determines which cells A* prefers; shared sections overlap on the map.`:'No comparison is available for these points.';
   $('#startCoordinates').textContent=coordinates(state.start);$('#destinationCoordinates').textContent=coordinates(state.destination);
-  $('#evaTarget').textContent=state.presetId?state.destination.name:'Custom destination';$('#evaDistance').textContent=selected?fmtDistance(selected.meters):'—';$('#evaSlope').textContent=selected?fmtSlope(selected.maxSlope):'—';$('#evaHeading').textContent=`${Math.round((Math.atan2(state.destination.x-state.start.x,state.start.y-state.destination.y)*180/Math.PI+360)%360)}°`;
+  $('#evaTarget').textContent=state.presetId?state.destination.name:'Custom destination';$('#evaDistance').textContent=selected?fmtDistance(selected.meters):'—';$('#evaSlope').textContent=selected?fmtSlope(selected.maxSlope):'—';$('#evaHeading').textContent=state.activeMission&&state.missionLegs.length>1?'—':`${Math.round((Math.atan2(state.destination.x-state.start.x,state.start.y-state.destination.y)*180/Math.PI+360)%360)}°`;
   $('#waypoints').innerHTML=state.waypoints.map(p=>`<button type="button" class="waypoint ${state.presetId===p.id?'active':''}" data-waypoint="${escapeHtml(p.id)}" aria-pressed="${state.presetId===p.id}"><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.type)} · ${escapeHtml(p.code)}</small></button>`).join('');
+  renderMissionSummary();
 }
 function renderDataset(){const d=state.data,measured=state.kind==='measured';
   $('#datasetName').textContent=measured?d.site:'Synthetic Jezero demonstration';$('#datasetSummary').textContent=measured?'USGS CTX optical mosaic and DEM · Jezero study crop. Routes use a sampled 40 m grid.':'Illustrative map and height grid; not geographically registered.';
@@ -70,9 +92,60 @@ function renderDataset(){const d=state.data,measured=state.kind==='measured';
 }
 function setLayer(name){if(state.kind==='measured'&&!layerForMode(state.kind,state.data,name))return;state.layer=name;document.querySelectorAll('[data-layer]').forEach(b=>{b.classList.toggle('active',b.dataset.layer===name);b.setAttribute('aria-pressed',String(b.dataset.layer===name));});renderMap();}
 function setPick(which){state.pick=state.pick===which?null:which;state.keyboardCell=state.pick?{...(state.pick==='start'?state.start:state.destination)}:null;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}if(state.pick){const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);announce(`Choose ${state.pick} at ${coordinates(state.keyboardCell)}. Use arrow keys and Enter on the map, or click a valid cell.${blocked?' This cell is unavailable.':''}`,blocked);$('#mapStage').focus();}else announce('Select a point tool to plan your own route.');renderMap();}
-function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
+function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(state.activeMission){state.activeMission=null;state.missionLegs=[];renderMissionLibrary();}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
-function exportBriefing(){const briefing=buildBriefing(state);const blob=new Blob([JSON.stringify(briefing,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='ARES-route-briefing.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);toast('Route briefing exported');}
+function downloadJson(payload,filename){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=filename;link.click();setTimeout(()=>URL.revokeObjectURL(url),0);}
+function exportBriefing(){if(state.activeMission&&state.missionLegs.length){downloadJson(buildMissionReport({mission:state.activeMission,legs:state.missionLegs,routes:state.routes},state.data,state.mode),'ARES-mission-'+state.activeMission.id+'.json');toast('Mission briefing exported');return;}downloadJson(buildBriefing(state),'ARES-route-briefing.json');toast('Route briefing exported');}
+function renderMissionLibrary(){
+  const active=state.kind==='measured'&&library.loaded;
+  $('#missionControls').hidden=!active;
+  $('#missionStatus').textContent=state.kind!=='measured'?'Available only in measured CTX mode.':library.error?'Catalog unavailable: '+library.error:library.loaded?'30 verified measured-grid exercises · 10 per phase. Not named science sites.':'Loading measured mission catalog…';
+  if(!active){$('#missionList').replaceChildren();$('#missionDetail').textContent='These exercises cannot be loaded in synthetic mode.';return;}
+  const query=library.search.trim().toLowerCase();
+  const filtered=library.missions.filter(m=>(library.phase==='All'||m.phase===library.phase)&&
+    (!query||[m.id,m.title,m.objective,m.researchQuestion].some(s=>s.toLowerCase().includes(query))));
+  $('#missionList').innerHTML=filtered.map(m=>'<button type="button" class="mission-item" data-mission="'+escapeHtml(m.id)+'" aria-pressed="'+(state.activeMission?.id===m.id)+'"><strong><span class="mission-id">'+escapeHtml(m.id)+'</span>'+escapeHtml(m.title)+'</strong><small>'+escapeHtml(m.phase)+' · '+(m.stops.length-1)+' fixed-order '+(m.stops.length===2?'leg':'legs')+'</small></button>').join('')||'<p class="mission-empty">No missions match this filter.</p>';
+  const m=state.activeMission;
+  $('#missionDetail').innerHTML=m?'<strong>'+escapeHtml(m.id+' · '+m.title)+'</strong><p>'+escapeHtml(m.objective)+'</p><p><b>Research question:</b> '+escapeHtml(m.researchQuestion)+'</p><ol>'+m.stops.map((p,i)=>'<li>Stop '+(i+1)+': '+escapeHtml(coordinates(p))+'</li>').join('')+'</ol><p>Grid stops are illustrative CTX exercises, not source-verified Jezero science targets.</p>':'Select a mission to load its fixed-order grid stops, compute both route modes and compare leg totals.';
+}
+function renderMissionSummary(){
+  const m=state.activeMission;
+  $('#missionSummary').hidden=!m;
+  if(!m)return;
+  $('#missionSummaryTitle').textContent=m.id+' · '+m.title;
+  $('#missionSummaryNote').textContent=m.objective+' · '+m.stops.length+' ordered stops · '+state.missionLegs.length+' independently planned legs.';
+  $('#missionLegs').innerHTML=state.missionLegs.map(leg=>'<div class="mission-leg"><span>LEG '+leg.index+' · '+escapeHtml(leg.from.x+','+leg.from.y)+' → '+escapeHtml(leg.to.x+','+leg.to.y)+'</span><strong>'+fmtDistance(leg[state.mode].meters)+' · '+fmtSlope(leg[state.mode].maxSlope)+'</strong></div>').join('');
+}
+function selectLibraryMission(id){
+  if(state.kind!=='measured'||!library.loaded)return;
+  const mission=library.missions.find(m=>m.id===id);
+  if(!mission)return;
+  const plan=planMission(state.data,mission);
+  if(!plan){announce('This mission cannot be routed on the current measured crop.',true);return;}
+  state.activeMission=mission;state.missionLegs=plan.legs;
+  state.start={...mission.stops[0]};
+  state.destination={...mission.stops[mission.stops.length-1],id:mission.id,name:mission.title,type:'Illustrative measured-grid mission',code:mission.id};
+  state.presetId=null;
+  setPick(null);calculateRoutes();renderMissionLibrary();
+  announce('Loaded '+mission.id+': '+plan.legs.length+' independently routed legs.');
+}
+function clearLibraryMission(){
+  if(!state.activeMission||state.kind!=='measured')return;
+  state.activeMission=null;state.missionLegs=[];state.start={...state.data.start};
+  state.destination=state.waypoints[0];state.presetId=state.destination.id;
+  calculateRoutes();renderMissionLibrary();announce('Returned to default CTX route comparison.');
+}
+async function loadLibrary(){
+  try{
+    const response=await fetch('./data/scenarios/measured-missions.json',{cache:'no-store'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    library.missions=validateMissionLibrary(await response.json(),state.data);
+    library.loaded=true;library.error=null;
+    const requested=new URLSearchParams(location.search).get('mission');
+    if(requested)selectLibraryMission(requested);
+  }catch(error){library.error=error.message;library.loaded=false;console.warn('Mission library unavailable',error);}
+  renderMissionLibrary();
+}
 function renderScience(){
   const catalog=research.catalogs[research.scope],list=$('#scienceList'),detail=$('#scienceDetail');
   if(!catalog){list.textContent='Catalog unavailable or still loading.';detail.textContent='';return;}
@@ -99,13 +172,18 @@ async function loadWeather(){
 }
 function attach(){
   $('#layerIcons').addEventListener('click',e=>{const b=e.target.closest('[data-layer]');if(b&&!b.disabled)setLayer(b.dataset.layer);});
-  $('#waypoints').addEventListener('click',e=>{const b=e.target.closest('[data-waypoint]');if(!b)return;const p=state.waypoints.find(x=>x.id===b.dataset.waypoint);if(p){state.destination=p;state.presetId=p.id;calculateRoutes();announce(`Example destination selected: ${p.name}.`);}});
+  $('#waypoints').addEventListener('click',e=>{const b=e.target.closest('[data-waypoint]');if(!b)return;const p=state.waypoints.find(x=>x.id===b.dataset.waypoint);if(p){state.activeMission=null;state.missionLegs=[];state.destination=p;state.presetId=p.id;calculateRoutes();renderMissionLibrary();announce(`Example destination selected: ${p.name}.`);}});
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;renderMap();renderComparison();}));
   $('#pickStart').addEventListener('click',()=>setPick('start'));$('#pickDestination').addEventListener('click',()=>setPick('destination'));
   $('#routeToggle').addEventListener('change',e=>{state.showRoutes=e.target.checked;renderMap();});$('#hazardToggle').addEventListener('change',e=>{state.hazards=e.target.checked;calculateRoutes();});
   $('#zoomIn').addEventListener('click',()=>setZoom(state.zoom+.2));$('#zoomOut').addEventListener('click',()=>setZoom(state.zoom-.2));$('#panReset').addEventListener('click',()=>{state.zoom=1;state.panX=0;state.panY=0;renderMap();});
   $('#routeButton').addEventListener('click',()=>{calculateRoutes();toast('Routes recalculated');});$('#briefingExport').addEventListener('click',exportBriefing);
   $('#datasetSwitch').addEventListener('click',()=>{const url=new URL(location.href);if(state.kind==='measured')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.href=url.href;});
+  $('#missionPhase').addEventListener('change',e=>{library.phase=e.target.value;renderMissionLibrary();});
+  $('#missionSearch').addEventListener('input',e=>{library.search=e.target.value;renderMissionLibrary();});
+  $('#missionList').addEventListener('click',e=>{const b=e.target.closest('[data-mission]');if(b)selectLibraryMission(b.dataset.mission);});
+  $('#missionClear').addEventListener('click',clearLibraryMission);
+  $('#missionExport').addEventListener('click',exportBriefing);
   $('#scienceScope').addEventListener('change',e=>{research.scope=e.target.value;research.selected=null;renderScience();});
   $('#scienceList').addEventListener('click',e=>{const b=e.target.closest('[data-science]');if(b){research.selected=b.dataset.science;renderScience();}});
   $('#weatherDrawer').addEventListener('toggle',e=>{if(e.target.open&&!research.weatherLoaded){research.weatherLoaded=true;loadWeather();}});
@@ -121,7 +199,7 @@ function attach(){
   stage.addEventListener('pointercancel',()=>{drag=null;stage.classList.remove('panning');});
   window.addEventListener('resize',()=>{state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();});
 }
-async function loadMeasured(){try{const response=await fetch('./public/data/mission-pack.json',{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);const measured=validateMissionPack(await response.json());const selected=selectMissionData(demo,measured,location.search);if(selected.kind==='measured'){state.data=selected.terrain;state.kind='measured';state.waypoints=measured.waypoints;state.start={...measured.start};state.destination=measured.waypoints[0];state.presetId=state.destination.id;state.hazards=false;state.layer='optical';}renderDataset();calculateRoutes();renderScience();}catch(error){console.warn('Measured pack unavailable; synthetic demo retained',error);renderDataset();calculateRoutes();renderScience();toast('Measured pack unavailable; synthetic demo active');}}
+async function loadMeasured(){try{const response=await fetch('./public/data/mission-pack.json',{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);const measured=validateMissionPack(await response.json());const selected=selectMissionData(demo,measured,location.search);if(selected.kind==='measured'){state.data=selected.terrain;state.kind='measured';state.waypoints=measured.waypoints;state.start={...measured.start};state.destination=measured.waypoints[0];state.presetId=state.destination.id;state.hazards=false;state.layer='optical';}renderDataset();calculateRoutes();renderScience();if(state.kind==='measured')await loadLibrary();else renderMissionLibrary();}catch(error){console.warn('Measured pack unavailable; synthetic demo retained',error);renderDataset();calculateRoutes();renderScience();renderMissionLibrary();toast('Measured pack unavailable; synthetic demo active');}}
 attach();
 // The default measured page never paints synthetic terrain while its pack loads.
 if(new URLSearchParams(location.search).get('mode')==='demo'){
