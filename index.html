@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f3f5f5" />
   <meta name="description" content="ARES research prototype for Mars CTX terrain route comparison." />
+  <base href="/" />
   <title>ARES Mission Planner — Jezero CTX</title>
   <link rel="stylesheet" href="./planner.css" />
 </head>
@@ -14,27 +15,27 @@
     <div class="brand"><strong>ARES</strong><span>Mission Planner</span></div>
     <div class="header-links"><a href="./sources.html">Data sources</a><button id="evaButton" type="button" aria-pressed="false">Illustrative EVA view</button></div>
   </header>
-  <div class="research-banner">Research prototype · Routes are not verified for EVA safety or field traversability</div>
+  <div class="research-banner"><span>ARES Mission Control · Research Preview · Routes are not verified for EVA safety or field traversability</span><span id="buildId" aria-label="Build identifier">Build: local development</span></div>
   <main class="planner-layout">
     <aside class="tool-panel" aria-label="Dataset and map tools">
       <section class="panel-section dataset-section"><div class="section-title"><h2>Dataset</h2><button id="dataInspect" type="button" class="text-button">Details ↗</button></div><strong id="datasetName">Loading Jezero CTX dataset</strong><p id="datasetSummary">Reading the bundled mission pack.</p><div id="dataTag" class="dataset-tag">Loading</div><button id="datasetSwitch" type="button" class="dataset-switch" hidden></button></section>
       <section class="panel-section"><h2>Map layers</h2><div id="layerIcons" class="layer-controls"></div></section>
       <section class="panel-section"><h2>Choose route points</h2><p class="helper">Select a tool, then click a map cell. Points snap to the 40 m routing grid in CTX mode.</p><div class="point-tools"><button id="pickStart" type="button" class="pick-tool" aria-pressed="false"><b>S</b><span>Set start</span></button><button id="pickDestination" type="button" class="pick-tool" aria-pressed="false"><b>D</b><span>Set destination</span></button></div><div id="pointFeedback" class="feedback" role="status">Select a point tool to plan your own route.</div><dl class="point-coords"><div><dt>Start</dt><dd id="startCoordinates">—</dd></div><div><dt>Destination</dt><dd id="destinationCoordinates">—</dd></div></dl></section>
       <section class="panel-section"><div class="section-title"><h2>Example destinations</h2><span class="subtle">Illustrative</span></div><div id="waypoints" class="waypoint-list"></div></section>
-      <section class="panel-section science-section"><h2>Science Targets</h2><p class="helper">Research catalog · Browse evidence and check CTX coverage. Catalog names are not route presets.</p><label class="field-label" for="scienceScope">Catalog</label><select id="scienceScope"><option value="jezero">Jezero research</option><option value="global">Global Mars context</option></select><div id="scienceList" class="science-list" role="list">Loading catalog…</div><div id="scienceDetail" class="science-detail" aria-live="polite"></div></section>
+      <section class="panel-section science-section"><details id="scienceDrawer"><summary>Science Targets <span>Research catalog</span></summary><p class="helper">Browse evidence and check CTX coverage. Catalog names are not route presets.</p><label class="field-label" for="scienceScope">Catalog</label><select id="scienceScope"><option value="jezero">Jezero research</option><option value="global">Global Mars context</option></select><div id="scienceList" class="science-list" role="list">Loading catalog…</div><div id="scienceDetail" class="science-detail" aria-live="polite"></div></details></section>
       <section class="panel-section compact"><label class="checkbox-row"><input type="checkbox" id="routeToggle" checked /> Show both routes</label><label class="checkbox-row" id="hazardRow"><input type="checkbox" id="hazardToggle" checked /> <span id="hazardToggleLabel">Synthetic hazard zones</span></label></section>
     </aside>
 
     <section class="map-panel" aria-label="Interactive Mars surface map">
       <div class="map-header"><div><h1 id="mapHeading">Loading Jezero CTX terrain</h1><p id="mapSubheading">Reading the bundled mission pack</p></div><div class="map-header-actions"><span id="dataStatus" class="status-pill">Loading</span><button id="fullscreenButton" type="button" title="Fullscreen map" aria-label="Fullscreen map">⛶</button></div></div>
-      <div class="map-area"><div id="mapStage" class="map-stage" tabindex="0" aria-label="Map: choose start or destination on routing cells">
+      <div class="map-area"><div id="mapStage" class="map-stage" tabindex="0" aria-label="Map: choose start or destination on routing cells" aria-describedby="mapHint pointFeedback">
         <div id="mapWorld" class="map-world"><img id="terrainImage" alt="Loading Mars terrain" draggable="false" /><svg id="mapSvg" viewBox="0 0 1000 750" preserveAspectRatio="none" aria-label="Planned routes and markers"></svg></div>
         <div id="mapLayerLabel" class="map-layer-label">Synthetic optical style</div>
         <div class="map-zoom-controls"><button id="zoomIn" type="button" aria-label="Zoom in">+</button><span id="zoomPct">100%</span><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="panReset" type="button" aria-label="Reset map view">Reset</button></div>
         <div class="map-scale"><div id="scaleBar" class="scale-bar"></div><span id="scaleText">Illustrative grid</span></div>
       </div></div>
       <div class="map-footer"><div id="cursorCoordinates">Move over the map for grid coordinates</div><div class="route-legend"><span><i class="legend terrain"></i> Terrain preferred</span><span><i class="legend shortest"></i> Shortest</span></div></div>
-      <p class="map-hint">Drag to pan · Use + / − to zoom · Click the map after choosing Start or Destination</p>
+      <p id="mapHint" class="map-hint">Drag to pan · Use + / − to zoom · Choose Start or Destination, then click a cell or use arrow keys and Enter on the map</p>
     </section>
 
     <aside class="analysis-panel" aria-label="Route comparison and provenance">

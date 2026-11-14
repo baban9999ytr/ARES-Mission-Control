@@ -1,0 +1,431 @@
+{
+  "title": "ARES route briefing",
+  "generatedAt": "2026-11-14T19:02:02.624Z",
+  "warning": "Research prototype. Routes are not verified safe for EVA.",
+  "dataset": {
+    "kind": "measured",
+    "name": "Jezero CTX measured study crop",
+    "boundsMeters": {
+      "west": 4586000,
+      "south": 1091000,
+      "east": 4589200,
+      "north": 1093400
+    },
+    "crsWkt": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+    "cellMeters": 40,
+    "verticalReference": "Mars 2020 IAU sphere, radius 3396190 m (source DEM XML)",
+    "layers": {
+      "optical": {
+        "path": "data/mars-optical.webp",
+        "label": "MRO orbital imagery · processed crop",
+        "source": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tif"
+      },
+      "elevation": {
+        "path": "data/mars-elevation.webp",
+        "label": "Measured elevation · DEM",
+        "source": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tif"
+      }
+    }
+  },
+  "start": {
+    "x": 12,
+    "y": 28
+  },
+  "destination": {
+    "id": "delta",
+    "code": "SCI-01",
+    "name": "Delta science target",
+    "type": "SEDIMENTARY SURVEY",
+    "desc": "Illustrative planner waypoint; not a verified rover science target.",
+    "x": 57,
+    "y": 12
+  },
+  "preference": "terrain",
+  "syntheticHazardsEnabled": null,
+  "routes": {
+    "shortest": {
+      "distanceMeters": 2065.096679918781,
+      "maximumStepSlopeDegrees": 17.717381288748765,
+      "totalAscentMeters": 52.31600000000026,
+      "totalCost": 2065.096679918781,
+      "plannedCells": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 13,
+          "y": 28
+        },
+        {
+          "x": 14,
+          "y": 28
+        },
+        {
+          "x": 15,
+          "y": 28
+        },
+        {
+          "x": 16,
+          "y": 28
+        },
+        {
+          "x": 17,
+          "y": 28
+        },
+        {
+          "x": 18,
+          "y": 28
+        },
+        {
+          "x": 19,
+          "y": 28
+        },
+        {
+          "x": 20,
+          "y": 28
+        },
+        {
+          "x": 21,
+          "y": 28
+        },
+        {
+          "x": 22,
+          "y": 28
+        },
+        {
+          "x": 23,
+          "y": 27
+        },
+        {
+          "x": 24,
+          "y": 27
+        },
+        {
+          "x": 25,
+          "y": 27
+        },
+        {
+          "x": 26,
+          "y": 26
+        },
+        {
+          "x": 27,
+          "y": 26
+        },
+        {
+          "x": 28,
+          "y": 25
+        },
+        {
+          "x": 29,
+          "y": 25
+        },
+        {
+          "x": 30,
+          "y": 24
+        },
+        {
+          "x": 31,
+          "y": 24
+        },
+        {
+          "x": 32,
+          "y": 23
+        },
+        {
+          "x": 33,
+          "y": 23
+        },
+        {
+          "x": 34,
+          "y": 22
+        },
+        {
+          "x": 35,
+          "y": 22
+        },
+        {
+          "x": 36,
+          "y": 22
+        },
+        {
+          "x": 37,
+          "y": 21
+        },
+        {
+          "x": 38,
+          "y": 21
+        },
+        {
+          "x": 39,
+          "y": 20
+        },
+        {
+          "x": 40,
+          "y": 20
+        },
+        {
+          "x": 41,
+          "y": 19
+        },
+        {
+          "x": 42,
+          "y": 19
+        },
+        {
+          "x": 43,
+          "y": 18
+        },
+        {
+          "x": 44,
+          "y": 18
+        },
+        {
+          "x": 45,
+          "y": 17
+        },
+        {
+          "x": 46,
+          "y": 17
+        },
+        {
+          "x": 47,
+          "y": 17
+        },
+        {
+          "x": 48,
+          "y": 16
+        },
+        {
+          "x": 49,
+          "y": 16
+        },
+        {
+          "x": 50,
+          "y": 15
+        },
+        {
+          "x": 51,
+          "y": 15
+        },
+        {
+          "x": 52,
+          "y": 14
+        },
+        {
+          "x": 53,
+          "y": 14
+        },
+        {
+          "x": 54,
+          "y": 13
+        },
+        {
+          "x": 55,
+          "y": 13
+        },
+        {
+          "x": 56,
+          "y": 12
+        },
+        {
+          "x": 57,
+          "y": 12
+        }
+      ]
+    },
+    "terrainPreferred": {
+      "distanceMeters": 2131.370849898476,
+      "maximumStepSlopeDegrees": 10.43827741321068,
+      "totalAscentMeters": 38.492000000000644,
+      "totalCost": 2314.397563471732,
+      "plannedCells": [
+        {
+          "x": 12,
+          "y": 28
+        },
+        {
+          "x": 13,
+          "y": 27
+        },
+        {
+          "x": 14,
+          "y": 26
+        },
+        {
+          "x": 15,
+          "y": 25
+        },
+        {
+          "x": 16,
+          "y": 24
+        },
+        {
+          "x": 17,
+          "y": 23
+        },
+        {
+          "x": 18,
+          "y": 22
+        },
+        {
+          "x": 19,
+          "y": 21
+        },
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 21,
+          "y": 19
+        },
+        {
+          "x": 22,
+          "y": 18
+        },
+        {
+          "x": 23,
+          "y": 17
+        },
+        {
+          "x": 24,
+          "y": 17
+        },
+        {
+          "x": 25,
+          "y": 17
+        },
+        {
+          "x": 26,
+          "y": 17
+        },
+        {
+          "x": 27,
+          "y": 17
+        },
+        {
+          "x": 28,
+          "y": 17
+        },
+        {
+          "x": 29,
+          "y": 17
+        },
+        {
+          "x": 30,
+          "y": 17
+        },
+        {
+          "x": 31,
+          "y": 17
+        },
+        {
+          "x": 32,
+          "y": 17
+        },
+        {
+          "x": 33,
+          "y": 16
+        },
+        {
+          "x": 34,
+          "y": 15
+        },
+        {
+          "x": 35,
+          "y": 14
+        },
+        {
+          "x": 36,
+          "y": 14
+        },
+        {
+          "x": 37,
+          "y": 14
+        },
+        {
+          "x": 38,
+          "y": 14
+        },
+        {
+          "x": 39,
+          "y": 14
+        },
+        {
+          "x": 40,
+          "y": 14
+        },
+        {
+          "x": 41,
+          "y": 14
+        },
+        {
+          "x": 42,
+          "y": 14
+        },
+        {
+          "x": 43,
+          "y": 14
+        },
+        {
+          "x": 44,
+          "y": 14
+        },
+        {
+          "x": 45,
+          "y": 14
+        },
+        {
+          "x": 46,
+          "y": 13
+        },
+        {
+          "x": 47,
+          "y": 12
+        },
+        {
+          "x": 48,
+          "y": 11
+        },
+        {
+          "x": 49,
+          "y": 10
+        },
+        {
+          "x": 50,
+          "y": 10
+        },
+        {
+          "x": 51,
+          "y": 10
+        },
+        {
+          "x": 52,
+          "y": 10
+        },
+        {
+          "x": 53,
+          "y": 10
+        },
+        {
+          "x": 54,
+          "y": 10
+        },
+        {
+          "x": 55,
+          "y": 10
+        },
+        {
+          "x": 56,
+          "y": 11
+        },
+        {
+          "x": 57,
+          "y": 12
+        }
+      ]
+    }
+  }
+}

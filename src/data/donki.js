@@ -21,6 +21,11 @@ export function weatherState(results, retrievedAt, now = new Date()) {
   return {status:failures?'partial':events.length?'ready':'empty',events,message:failures?'Some event types could not be retrieved.':events.length?'Observed solar events from DONKI.':'No FLR, CME or SEP records in this query window.'};
 }
 
+export function formatDonkiStatus(result){
+  const label=result.status==='unavailable'?'Attempted':result.status==='partial'?'Partially retrieved':'Retrieved';
+  return `${result.message} Query ${result.startDate}–${result.endDate} UTC · ${label} ${result.retrievedAt} · ${result.types.map(t=>`${t.type}: ${t.ok?t.count:'unavailable'}`).join(', ')}.`;
+}
+
 export async function fetchDonki({fetchImpl=fetch,now=new Date()}={}) {
   const end=now.toISOString().slice(0,10),start=new Date(now.getTime()-7*86400000).toISOString().slice(0,10);
   const types=['FLR','CME','SEP'];

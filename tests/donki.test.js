@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {parseDonki,weatherState,fetchDonki,DONKI_BASE} from '../src/data/donki.js';
+import {parseDonki,weatherState,fetchDonki,formatDonkiStatus,DONKI_BASE} from '../src/data/donki.js';
 const fixture=name=>JSON.parse(readFileSync(new URL(`fixtures/donki-${name}.json`,import.meta.url)));
 test('parses sanitized live FLR, CME and historical SEP schemas',()=>{
   for(const type of ['FLR','CME','SEP']){
@@ -31,4 +31,8 @@ test('all failed or malformed live responses produce unavailable state',async()=
   assert.equal(failed.status,'unavailable');assert.deepEqual(failed.events,[]);
   const malformed=await fetchDonki({fetchImpl:async()=>({ok:true,headers:new Headers({'content-type':'application/json'}),json:async()=>({bad:'schema'})}),now:new Date('2026-11-14T12:00:00Z')});
   assert.equal(malformed.status,'unavailable');assert.deepEqual(malformed.events,[]);
+  const label=formatDonkiStatus(failed);
+  assert.match(label,/Attempted/);
+  assert.doesNotMatch(label,/Retrieved/);
+  assert.match(label,/FLR: unavailable, CME: unavailable, SEP: unavailable/);
 });

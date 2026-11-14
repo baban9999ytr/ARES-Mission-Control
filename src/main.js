@@ -1,10 +1,10 @@
 import demo from './data/demo-terrain.json' with {type:'json'};
 import {planRoute,isBlocked} from './engine/routing.js';
-import {clientPointToCell,clampPan,cellToSvg} from './engine/map-grid.js';
+import {clientPointToCell,clampPan,cellToSvg,stepKeyboardCell} from './engine/map-grid.js';
 import {validateMissionPack,mapDisplayCoordinates} from './data/mission-pack.js';
 import {selectMissionData,layerForMode} from './data/mission-mode.js';
 import {validateScienceCatalog,scienceCoverage,coordinateEvidence} from './data/science-catalog.js';
-import {fetchDonki} from './data/donki.js';
+import {fetchDonki,formatDonkiStatus} from './data/donki.js';
 import {buildBriefing} from './data/briefing.js';
 
 const $=s=>document.querySelector(s);
@@ -13,7 +13,7 @@ const DEMO_WAYPOINTS=[
   {id:'rim',name:'Crater rim overlook',type:'Illustrative study target',x:66,y:40,code:'EX-02',desc:'Example point on the synthetic map.'},
   {id:'basin',name:'Ancient lakebed',type:'Illustrative study target',x:43,y:47,code:'EX-03',desc:'Example point on the synthetic map.'},
 ];
-const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false};
+const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false};
 const research={catalogs:{jezero:null,global:null},scope:'jezero',selected:null,weatherLoaded:false};
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDistance=m=>m>=1000?`${(m/1000).toFixed(2)} km`:`${Math.round(m)} m`;
@@ -41,7 +41,9 @@ function renderMap(){
   if(state.kind==='demo'&&state.hazards)for(const h of d.hazards)svg+=`<circle class="hazard-cell" cx="${(h.x+.5)/d.gridWidth*1000}" cy="${(h.y+.5)/d.gridHeight*750}" r="${h.radius/d.gridWidth*1000}"/>`;
   if(state.showRoutes)for(const mode of paths)svg+=`<path class="map-route ${mode}${mode===state.mode?'':' secondary'}" d="${linePath(state.routes[mode])}" stroke-width="${mode===state.mode?4:2.6}"/>`;
   for(const p of state.waypoints){if(p.x===state.destination.x&&p.y===state.destination.y)continue;const q=svgPoint(p);svg+=`<g class="map-waypoint"><circle cx="${q.x}" cy="${q.y}" r="5"/><text x="${q.x+9}" y="${q.y-8}">${escapeHtml(p.code)}</text></g>`;}
-  svg+=marker(state.start,'S','start')+marker(state.destination,'D','destination');$('#mapSvg').innerHTML=svg;
+  svg+=marker(state.start,'S','start')+marker(state.destination,'D','destination');
+  if(state.pick&&state.keyboardCell)svg+=marker(state.keyboardCell,'+','keyboard-cursor');
+  $('#mapSvg').innerHTML=svg;
   $('#zoomPct').textContent=`${Math.round(state.zoom*100)}%`;
   if(state.kind==='measured'){$('#scaleBar').hidden=false;$('#scaleBar').style.width=`${400/(d.gridWidth*d.cellMeters)*stage.clientWidth*state.zoom}px`;$('#scaleText').textContent='400 m';}else{$('#scaleBar').hidden=true;$('#scaleText').textContent='Illustrative grid';}
 }
@@ -67,7 +69,7 @@ function renderDataset(){const d=state.data,measured=state.kind==='measured';
   $('#dataDialogText').textContent=measured?JSON.stringify({dataset:d.site,sourceOrganization:'USGS Astrogeology / MRO CTX',crs:d.crsWkt,boundsMeters:d.boundsMeters,verticalUnits:d.verticalUnits,verticalReference:d.verticalReference,sourceResolution:d.quality.sourceResolution,routingGridMeters:d.cellMeters,validCells:d.quality.validCells,totalCells:d.quality.totalCells,sources:Object.fromEntries(Object.entries(d.layers).map(([k,v])=>[k,v.source])),limitations:d.notice},null,2):'Synthetic procedural demo. Terrain, heights, thermal color, hazards and waypoints are illustrative. No measured elevations or registered Mars coordinates.';
 }
 function setLayer(name){if(state.kind==='measured'&&!layerForMode(state.kind,state.data,name))return;state.layer=name;document.querySelectorAll('[data-layer]').forEach(b=>{b.classList.toggle('active',b.dataset.layer===name);b.setAttribute('aria-pressed',String(b.dataset.layer===name));});renderMap();}
-function setPick(which){state.pick=state.pick===which?null:which;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}announce(state.pick?`Click a valid map cell to set ${state.pick}. Drag the map to pan.`:'Select a point tool to plan your own route.');}
+function setPick(which){state.pick=state.pick===which?null:which;state.keyboardCell=state.pick?{...(state.pick==='start'?state.start:state.destination)}:null;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}if(state.pick){const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);announce(`Choose ${state.pick} at ${coordinates(state.keyboardCell)}. Use arrow keys and Enter on the map, or click a valid cell.${blocked?' This cell is unavailable.':''}`,blocked);$('#mapStage').focus();}else announce('Select a point tool to plan your own route.');renderMap();}
 function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
 function exportBriefing(){const briefing=buildBriefing(state);const blob=new Blob([JSON.stringify(briefing,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='ARES-route-briefing.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);toast('Route briefing exported');}
@@ -91,7 +93,7 @@ async function loadScience(){
 }
 async function loadWeather(){
   const button=$('#weatherRefresh'),status=$('#weatherStatus'),container=$('#weatherEvents');button.disabled=true;status.textContent='Retrieving FLR, CME and SEP events from NASA DONKI…';container.replaceChildren();
-  try{const result=await fetchDonki();status.textContent=`${result.message} Query ${result.startDate}–${result.endDate} UTC · Retrieved ${result.retrievedAt} · ${result.types.map(t=>`${t.type}: ${t.ok?t.count:'unavailable'}`).join(', ')}.`;
+  try{const result=await fetchDonki();status.textContent=formatDonkiStatus(result);
     for(const event of result.events.slice(0,12)){const row=document.createElement('div');row.className='weather-event';const title=document.createElement('strong');title.textContent=`${event.type} · ${new Date(event.time).toLocaleString('en-GB',{timeZone:'UTC',dateStyle:'medium',timeStyle:'short'})} UTC`;const sub=document.createElement('small');sub.textContent=`${event.catalog} · ${event.source}`;row.append(title,sub);if(event.link){const a=document.createElement('a');a.href=event.link;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Source record ↗';row.append(a);}container.append(row);}
   }catch(error){status.textContent='DONKI unavailable. No events are being substituted.';console.warn('DONKI request failed',error);}finally{button.disabled=false;}
 }
@@ -112,6 +114,7 @@ function attach(){
   $('#fullscreenButton').addEventListener('click',()=>{const el=$('#mapStage');if(!document.fullscreenElement)el.requestFullscreen?.().catch(()=>toast('Fullscreen unavailable'));else document.exitFullscreen?.();});
   $('#evaButton').addEventListener('click',()=>{state.eva=!state.eva;document.body.classList.toggle('eva-active',state.eva);$('#evaButton').setAttribute('aria-pressed',String(state.eva));});$('#evaExit').addEventListener('click',()=>{state.eva=false;document.body.classList.remove('eva-active');$('#evaButton').setAttribute('aria-pressed','false');});
   const stage=$('#mapStage');let drag=null;
+  stage.addEventListener('keydown',e=>{if(e.target!==stage||!state.pick)return;if(e.key.startsWith('Arrow')){e.preventDefault();state.keyboardCell=stepKeyboardCell(state.keyboardCell,e.key,state.data.gridWidth,state.data.gridHeight);const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);$('#cursorCoordinates').textContent=coordinates(state.keyboardCell);announce(`${coordinates(state.keyboardCell)}. ${blocked?'Unavailable cell; choose another.':'Press Enter or Space to set '+state.pick+'.'}`,blocked);renderMap();}else if(e.key==='Enter'||e.key===' '){e.preventDefault();setPoint(state.pick,state.keyboardCell);}else if(e.key==='Escape'){e.preventDefault();setPick(null);}});
   stage.addEventListener('pointerdown',e=>{if(e.target.closest('button,.map-scale,.map-layer-label'))return;drag={x:e.clientX,y:e.clientY,panX:state.panX,panY:state.panY,moved:false};stage.setPointerCapture(e.pointerId);});
   stage.addEventListener('pointermove',e=>{const rect=stage.getBoundingClientRect();const cell=clientPointToCell(e.clientX,e.clientY,rect,state.data.gridWidth,state.data.gridHeight,state.zoom,state.panX,state.panY);$('#cursorCoordinates').textContent=cell?coordinates(cell):'Outside mapped footprint';if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>4)drag.moved=true;if(drag.moved){stage.classList.add('panning');state.panX=clampPan(drag.panX+dx,state.zoom,rect.width);state.panY=clampPan(drag.panY+dy,state.zoom,rect.height);renderMap();}}});
   stage.addEventListener('pointerup',e=>{if(!drag)return;const moved=drag.moved;drag=null;stage.classList.remove('panning');if(!moved&&state.pick){const rect=stage.getBoundingClientRect();setPoint(state.pick,clientPointToCell(e.clientX,e.clientY,rect,state.data.gridWidth,state.data.gridHeight,state.zoom,state.panX,state.panY));}});
@@ -127,3 +130,4 @@ if(new URLSearchParams(location.search).get('mode')==='demo'){
 }
 loadMeasured();
 loadScience();
+fetch('./build-info.json',{cache:'no-store'}).then(response=>response.ok?response.json():null).then(info=>{if(info?.id)$('#buildId').textContent=`Build: ${info.id}`;}).catch(()=>{});

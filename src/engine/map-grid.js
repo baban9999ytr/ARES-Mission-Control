@@ -14,3 +14,9 @@ export function clampPan(pan,zoom,extent){
 export function cellToSvg(point,gridWidth,gridHeight){
   return {x:(point.x+.5)/gridWidth*1000,y:(point.y+.5)/gridHeight*750};
 }
+
+export function stepKeyboardCell(cell,key,gridWidth,gridHeight){
+  const delta={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[key];
+  if(!delta)return cell;
+  return {x:Math.max(0,Math.min(gridWidth-1,cell.x+delta[0])),y:Math.max(0,Math.min(gridHeight-1,cell.y+delta[1]))};
+}
