@@ -1,0 +1,26 @@
+{
+  "id": "SC-06",
+  "name": "20 m DEM çözünürlüğü farkındalığı",
+  "phase": "SCIENTIST",
+  "status": "scenario_ready_pending_ctx_execution",
+  "scientific_aim": "20 m/piksel CTX DEM'in küçük ölçekli arazi ayrıntılarını nasıl sınırladığını belgelemek.",
+  "dataset": {
+    "name": "USGS Mars 2020 Science Investigation CTX DEM Mosaic",
+    "resolution_m_per_pixel": 20
+  },
+  "start": {
+    "lat": 18.43,
+    "lon": 77.33
+  },
+  "end": {
+    "lat": 18.54,
+    "lon": 77.48
+  },
+  "observations": [],
+  "interpretation": [],
+  "limitations": [
+    "Gerçek CTX rasterı ARES'e yüklenmeden rota metriği doğrulanamaz.",
+    "ARES operasyonel EVA güvenlik sistemi değildir.",
+    "Bilimsel yorum gözlemden ayrı tutulmalıdır."
+  ]
+}

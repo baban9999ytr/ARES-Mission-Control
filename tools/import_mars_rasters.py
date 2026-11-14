@@ -36,14 +36,14 @@ def inspect_raster(src, label):
 
 
 def projected_band(src, bounds, w, h, resampling=Resampling.bilinear, band=1):
-    # nan is an explicit destination no-data; it is later mapped to null and an impassable mask.
+    # GDAL pulls only the source regions needed for this destination grid.
+    # Keep source nodata explicit so it cannot be interpolated into valid terrain.
     dst = np.full((h, w), np.nan, dtype=np.float32)
-    source = src.read(band, masked=True)
     reproject(
-        source=source.filled(np.nan).astype(np.float32), destination=dst,
-        src_transform=src.transform, src_crs=src.crs, src_nodata=np.nan,
+        source=rasterio.band(src, band), destination=dst,
+        src_transform=src.transform, src_crs=src.crs, src_nodata=src.nodatavals[band-1],
         dst_transform=from_bounds(*bounds, w, h), dst_crs=src.crs,
-        dst_nodata=np.nan, resampling=resampling,
+        dst_nodata=np.nan, init_dest_nodata=True, resampling=resampling,
     )
     return dst
 
@@ -126,6 +126,7 @@ def generate(args):
         render_rgb(optical, bounds).save(output/'mars-optical.webp', quality=86, method=4)
         elevation_visual(heights).save(output/'mars-elevation.webp', quality=85)
         crs = dem.crs.to_wkt()
+        source_resolution = {'opticalMeters': list(optical.res), 'demMeters': list(dem.res)}
 
     layers = {
         'optical': {'path':'data/mars-optical.webp','label':'MRO orbital imagery · processed crop', 'source':require_source_url(args.optical_source)},
@@ -149,10 +150,11 @@ def generate(args):
         'heights': [round(float(v),3) if math.isfinite(v) else None for v in heights.flat],
         'hazards': [], 'boundsMeters': {'west': west,'south':south,'east':east,'north':north},
         'crsWkt': crs,
-        'verticalUnits': 'metres (as confirmed by the operator from source DEM metadata)',
+        'verticalUnits': 'metres', 'verticalReference': args.vertical_reference,
         'layers':layers,
         'quality': {'validCells':valid_count,'totalCells':args.width*args.height,
-                    'horizontalCellMeters': round(cell_x,4),'verticalCellMeters':round(cell_y,4)},
+                    'horizontalCellMeters': round(cell_x,4),'verticalCellMeters':round(cell_y,4),
+                    'sourceResolution': source_resolution},
     }
     cells['start'] = find_valid(heights,.15,.48)
     candidates=[('delta','Delta science target','SEDIMENTARY SURVEY',.72,.20),
@@ -177,6 +179,7 @@ def main():
     p.add_argument('--width', type=int, default=80)
     p.add_argument('--height', type=int, default=60)
     p.add_argument('--site', default='Jezero study sector')
+    p.add_argument('--vertical-reference', default='Unverified; consult source DEM metadata', help='Vertical reference stated in source DEM metadata')
     p.add_argument('--dem-source', required=True, help='Public URL for original DEM')
     p.add_argument('--optical-source', required=True, help='Public URL for original image product')
     p.add_argument('--thermal', help='Optional registered regional thermal raster (for context, not live temperature)')

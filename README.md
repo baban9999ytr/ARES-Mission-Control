@@ -1,109 +1,59 @@
-# ARES / Astronaut Route & Exploration System
+# ARES Mission Planner
 
-![ARES Mission Control screenshot](preview.png)
+![ARES CTX planner at desktop width](docs/screenshots/planner-desktop.png)
 
-**NASA Space Apps Challenge 2026** — [Interplanetary Survival Guide: Martian Map](https://www.spaceappschallenge.org/2026/challenges/interplanetary-survival-guide-martian-map/)
+ARES is a research prototype for comparing routes on a measured Jezero CTX optical mosaic and sampled digital elevation model. It uses a dependency-free web UI and an eight-direction A* routing engine. It is **not** an EVA safety or field-traversability system.
 
-ARES is a cinematic, interactive **Mars surface mission-planning prototype**. This prototype demonstrates the interaction model, UI, and a working explainable A* routing engine without pretending to have integrated flight-quality geospatial datasets.
+## Deployment and large datasets
 
-> **Prototype transparency:** The bundled terrain, height field, thermal coloring, hazards, waypoints, scale, and distances are **synthetic illustrative demonstration data in the default fallback**. They are *not* a NASA/USGS DEM, Mars orbital mosaic, validated physical hazard map, or real-time measurement. Coordinates displayed as Jezero regional context are not registered to the bundled map. The router is real software running on demo input, not certified EVA planning.
+ARES is ready for a Cloudflare Pages *research preview*. The current web app uses small processed CTX WebP/JSON assets and does **not** require uploading the original multi-gigabyte TIFFs. Keep raw GeoTIFFs outside Git; optionally back them up in a **private R2 bucket**. For future high-resolution areas, derive bounded/validated mission packs and, only once a tile loader exists, serve versioned browser-ready tiles from public R2.
 
-## Quick start (no dependency installation)
+See **[Pages + R2 deployment and data architecture](docs/PAGES_R2_DATA_ARCHITECTURE.md)** for the `spapps.openstacktool.com` release checklist, staging strategy, Cloudflare size limits, data integrity gates, optional R2 setup, and rollback instructions. `npm run build` now rejects oversize or accidental raw/sensitive artifacts in `dist/`.
 
-Requirements: Node.js 22 or newer.
+**Note:** This repository does not automatically provision Pages, R2 or DNS. Live deployment must be authorized and separately smoke-tested.
 
-```bash
-npm run dev
-```
+## Run
 
-Open **http://localhost:4173** in a current browser.
+Requires Node.js 22 or newer.
 
 ```bash
-npm run test   # A* planner tests
-npm run build  # Copy static deployable site to dist/
-npm run check  # both
+npm run dev      # http://localhost:4173
+npm run test     # routing, data, map geometry and mode tests
+npm run build    # static site in dist/
+npm run check    # tests and build
 ```
 
-You can publish the contents of `dist/` on any static host. This starter intentionally has **zero production or build dependencies** so the team can demo it quickly without spending time on package setup.
+## Plan a route
 
-## Current features (v0.2)
+1. The measured CTX pack loads by default. Choose **Optical** or **Elevation** for the same registered crop.
+2. Select **Set start** or **Set destination**, then click the map. Each point snaps to a routing cell; unknown DEM cells and enabled demo hazards are rejected.
+3. Compare **Shortest** and **Terrain preferred** in the right panel. The selected column determines which line is emphasized. Drag to pan; use the zoom controls to inspect the map.
+4. Open **Details** for source URLs, CRS, bounds, vertical reference, resolution and coverage. Export the route briefing as JSON if needed.
 
-- A production-inspired 1440px Mission Control interface with responsive layout.
-- Three visibly distinct, locally bundled, aligned demo map layers: optical style, elevation visualization, thermal style.
-- Interactive science waypoint selection via sidebar and surface-map markers.
-- 8-direction A* route planner. Terrain-preferred routing weighs synthetic slope; shortest-path mode minimizes distance while avoiding enabled synthetic hazard zones.
-- Dynamic route distances, segment maximum slope and accumulated ascent based on the bundled demo height field.
-- Toggle demonstration hazard zones and optional route visibility.
-- Mission telemetry UI, zoom controls, fullscreen attempt, simplified EVA mode.
-- NASA science-resource link and provenance notes, with explicit labeling of all simulated content.
-- 9 algorithm / pack-validation unit tests and an offline raster importer smoke test.
-- Export a route briefing as JSON, including route-cell coordinates, metrics, and clear research-prototype warnings.
-- Optional real-data pack loader with projected metre coordinates, science-data provenance card, and hatching for no-data DEM cells.
-- Python pipeline for co-registered Mars-projected optical GeoTIFFs and DEM; missing data never becomes traversable ground.
-- The original synthetic demo remains available if scientific data is absent or malformed.
+The **Science Targets** explorer keeps a Jezero catalog and a global Mars catalog separate. Its submitted Jezero coordinates currently lie outside the measured crop, or have no single point, so none becomes a named route preset. The collapsed **Space Weather** drawer makes a read-only NASA CCMC DONKI request for observed solar events when opened. It reports UTC event and retrieval times and displays an unavailable state if the request fails. These events do not measure local Mars radiation or establish EVA safety.
 
-## Project structure
+Use **Switch to synthetic demo** or `?mode=demo` for the separate illustrative dataset. The synthetic mode includes illustrative hazards and thermal coloring. Measured CTX mode has **no** thermal or verified hazard layer.
 
-```text
-ARES-Mission-Control/
-├── index.html                     # Mission Control interface
-├── sources.html                   # Scientific reference / data honesty page
-├── styles.css                     # Main responsive design system
-├── public/
-│   ├── mars-demo-terrain.webp     # Synthetic, locally rendered surface
-│   ├── mars-demo-elevation.webp   # Matching synthetic elevation visualization
-│   ├── mars-demo-thermal.webp     # Matching synthetic thermal visualization
-│   └── data/                     # Optional imported mission pack (not bundled by default)
-├── src/
-│   ├── main.js                    # UI state, event handlers, SVG visualization
-│   ├── data/demo-terrain.json     # Height grid, synthetic hazard locations
-│   ├── data/mission-pack.js      # Validates projected scientific data pack
-│   └── engine/routing.js          # A*, slope, route scoring
-├── tests/routing.test.js
-├── tests/data-pack.test.js
-├── tools/
-│   ├── dev-server.js              # Zero-dependency Node HTTP dev server
-│   ├── build.js                   # Static build to dist/
-│   ├── generate_demo_terrain.py   # Reproducible synthetic data generator
-│   ├── import_mars_rasters.py    # Offline importer for projected Mars GeoTIFFs
-│   └── test_raster_import.py     # Fixture-driven importer smoke test
-├── IMPORT_REAL_DATA.md           # Detailed import steps and limitations
-├── DATA_SOURCES.md
-└── PHASE_2_PLAN.md
-```
+## Measured data
 
-## Scientific upgrade path
+The bundled `JEZ_ctx_B_soc_008` pair comes from the [USGS Astrogeology Mars 2020 CTX archive](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/index.html). The source optical mosaic is 6 m/pixel and the DEM is 20 m/pixel, both in the Mars Equirectangular IAU sphere projected CRS. The selected crop covers E 4,586,000–4,589,200 m and N 1,091,000–1,093,400 m. Routing uses 80 × 60 cells at 40 m spacing. The two WebP display layers share the crop bounds; numerical heights come from the DEM array in `public/data/mission-pack.json`.
 
-The v0.2 importer and data-pack loader are available; see [IMPORT_REAL_DATA.md](IMPORT_REAL_DATA.md). **No measured NASA/USGS raster has been packaged yet.** The next task is downloading a matching Jezero optical + DEM crop, verifying the source metadata, and running the importer.
+The source DEM metadata states elevation units of metres relative to the Mars 2020 IAU sphere of radius 3,396,190 m. The route metric called **maximum step slope** is the angle between adjacent sampled grid heights, not the maximum physical slope within each cell. Terrain-preferred cost uses an illustrative slope weighting. Neither mode evaluates rocks, sand, cliffs, lighting, communications, suit limits, or mission constraints. User-selected points are grid locations, not verified science sites; the three presets are illustrative examples. A shorter or lower-slope route is not certified safe.
 
+See [REALITY_CHECK.md](docs/REALITY_CHECK.md) for independent data and algorithm checks, [UI_REFINEMENT_REPORT.md](docs/UI_REFINEMENT_REPORT.md) for UI verification, and [IMPORT_REAL_DATA.md](IMPORT_REAL_DATA.md) for the importer command.
 
-The next step is to **select an exact Jezero footprint with matching reference data**, then replace simulated data *as a coordinated dataset*:
+Phase 4+5 evidence and presentation: [intake audit](docs/PHASE4_5_INTAKE_AUDIT.md), [DONKI report](docs/PHASE4_SOLAR_INTEGRATION_REPORT.md), [science/mission report](docs/PHASE5_SCIENCE_INTEGRATION_REPORT.md), [QA report](docs/PHASE5_QA_REPORT.md), and [jury runbook](docs/FINAL_DEMO_RUNBOOK.md). The submitted research ZIP is intake material, not a verified implementation report.
 
-1. Download and crop a USGS/NASA-referenced Jezero orthomosaic **and** co-registered DEM. Record CRS, bounding box, pixel resolution, vertical datum, and attribution.
-2. Reproject and resample both to the same exact local grid. Preserve `nodata` masks. Render tiles/images and export a compact elevation array with real units.
-3. Derive physically meaningful slope from **horizontal meter spacing** and elevation, flag unknown regions, and exclude them from routing pending review.
-4. Ground sample waypoints in actual mapped geology. Only mark hazards when supported by imagery or a dataset, plus resolution and confidence.
-5. Add thermal information at its actual resolution/time coverage. If data is global or regional, do not imply it has meter-scale accuracy.
-6. Show source ID, capture date, units and uncertainty for *every layer*.
-7. Evaluate route distance and obstacles against manually inspected examples. Obtain a domain expert review before suggesting any operational safety use.
+## Layout and code
 
-See [DATA_SOURCES.md](DATA_SOURCES.md) for official data links and [PHASE_2_PLAN.md](PHASE_2_PLAN.md) for team tasks.
+- `index.html`, `planner.css`, `src/main.js`: planner UI and interactions
+- `src/engine/routing.js`: A* and route metrics
+- `src/engine/map-grid.js`: click-to-grid conversion under zoom and pan
+- `src/data/mission-pack.js`, `src/data/mission-mode.js`: validation and dataset selection
+- `src/data/science-catalog.js`, `src/data/donki.js`, `src/data/briefing.js`: catalog coverage, observed solar events and export serialization
+- `public/data/`: measured pack and aligned display layers
+- `src/data/demo-terrain.json`, `public/mars-demo-*.webp`: separate synthetic demo
+- `tools/import_mars_rasters.py`: offline GeoTIFF import
+- `sources.html`, `styles.css`: scientific sources page
 
-## Why no React yet?
-
-For the first hackathon milestone we prioritized a **runnable, dependency-free, easy-to-present starter**. The UI code is intentionally modular at the routing and data layers. Moving the view to React/TypeScript and integrating Leaflet is the next step if time permits, not a prerequisite for demonstrating a complete route workflow.
-
-## Design system
-
-Deep space navy `#070d14` · oxidized Mars orange `#e9946a` · route cyan `#71e3d9` · warning amber.
-
-Space Grotesk and IBM Plex Mono are optional remotely loaded fonts; system fallbacks preserve offline usability. Mission maps and tests work without network access. The scientific reference thumbnail, if available, is fetched from NASA's website; the synthetic main map is always local.
-
-## Credits / integrity
-
-- Built independently for NASA Space Apps Challenge 2026; **NASA does not endorse this project**.
-- The Jezero scientific scenario was inspired by official NASA Perseverance mission materials.
-- Remote NASA images and linked resource materials retain their respective NASA/JPL credits.
-- Terrain illustrations are synthetic and generated specifically for the starter. No NASA image has been altered or falsely positioned as georeferenced imagery.
-
-**Safety:** This is a hackathon research and interaction prototype, not a life-support, spaceflight, or EVA navigation product.
+Built independently for NASA Space Apps Challenge 2026. NASA does not endorse this project.

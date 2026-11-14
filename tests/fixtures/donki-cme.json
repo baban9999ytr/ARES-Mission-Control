@@ -1,0 +1,22 @@
+[
+  {
+    "activityID": "2026-11-07T06:24:00-CME-001",
+    "catalog": "M2M_CATALOG",
+    "instruments": [
+      {
+        "displayName": "SOHO: LASCO/C2"
+      },
+      {
+        "displayName": "SOHO: LASCO/C3"
+      },
+      {
+        "displayName": "STEREO A: SECCHI/COR2"
+      },
+      {
+        "displayName": "GOES: CCOR-1"
+      }
+    ],
+    "startTime": "2026-11-07T06:24Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/CME/49445/-1"
+  }
+]

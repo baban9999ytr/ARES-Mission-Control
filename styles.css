@@ -12,6 +12,10 @@
 .secondary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
 .secondary-actions button{padding:10px 5px;background:#172b35;color:#a9d6d4;border:1px solid #3a555e;border-radius:4px;font:600 10px var(--mono)}
 .secondary-actions button:hover{background:#23404a;border-color:#69acae}
+.dataset-switch{display:block;width:100%;margin-top:10px;padding:9px 10px;border:1px solid #537b80;border-radius:4px;background:#172b35;color:#b5e8e1;font:600 10px var(--mono);text-align:left}
+.dataset-switch:hover{background:#23404a}
+.dataset-switch[hidden]{display:none}
+#hazardLegend[hidden]{display:none}
 .compare-mini{background:#0e242c;color:#8ec4bf;border:1px solid #31555a;border-radius:4px;padding:9px 11px;font:9px/1.5 var(--mono);margin:11px 0 2px}
 .layer-option:disabled{opacity:.38;cursor:not-allowed}
 .dataset-dialog{max-width:min(600px,92vw);width:100%;padding:22px;border:1px solid #557079;border-radius:8px;background:#0d1c26;color:#cde5e7;box-shadow:0 20px 100px #000b}

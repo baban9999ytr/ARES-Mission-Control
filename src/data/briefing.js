@@ -1,0 +1,4 @@
+const summarize=route=>route?{distanceMeters:route.meters,maximumStepSlopeDegrees:route.maxSlope,totalAscentMeters:route.ascending,totalCost:route.totalCost,plannedCells:route.cells}:null;
+export function buildBriefing({data,kind,start,destination,mode,hazards,routes},generatedAt=new Date().toISOString()){
+  return {title:'ARES route briefing',generatedAt,warning:'Research prototype. Routes are not verified safe for EVA.',dataset:{kind,name:data.site??'Synthetic Jezero illustration',boundsMeters:data.boundsMeters??null,crsWkt:data.crsWkt??null,cellMeters:data.cellMeters??data.demoCellMeters,verticalReference:data.verticalReference??null,layers:data.layers??null},start,destination,preference:mode,syntheticHazardsEnabled:kind==='demo'?hazards:null,routes:{shortest:summarize(routes.distance),terrainPreferred:summarize(routes.terrain)}};
+}

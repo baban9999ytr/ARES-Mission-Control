@@ -1,0 +1,13 @@
+[
+  {
+    "flrID": "2026-11-07T12:26:00-FLR-001",
+    "catalog": "M2M_CATALOG",
+    "instruments": [
+      {
+        "displayName": "GOES-P: EXIS 1.0-8.0"
+      }
+    ],
+    "beginTime": "2026-11-07T12:26Z",
+    "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/FLR/49433/-1"
+  }
+]
