@@ -24,3 +24,37 @@ dialog{width:min(600px,92vw);border:1px solid #aebfc1;border-radius:8px;padding:
 @media(min-width:721px) and (max-width:1180px){.planner-layout{grid-template-rows:auto 1fr}.tool-panel{grid-column:1;grid-row:1 / span 2;max-height:calc(100vh - 96px);overflow:auto}.map-panel{grid-column:2;grid-row:1}.analysis-panel{grid-column:2;grid-row:2;display:block;border-left:1px solid var(--line)}.analysis-panel .panel-section:first-child{grid-row:auto}.analysis-actions{grid-column:auto}}
 @media(max-width:720px){.tool-panel .science-section{grid-column:1/-1}}
 .field-label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:5px}.science-section select{width:100%;border:1px solid #b9c7cb;border-radius:4px;background:#fff;padding:8px;color:var(--ink);font-size:12px}.science-list{display:grid;gap:4px;max-height:185px;overflow:auto;margin:10px 0}.science-item{background:#fff;border:1px solid #d9e1e2;border-radius:4px;text-align:left;padding:7px 9px;font-size:12px;font-weight:700;color:var(--ink)}.science-item[aria-pressed=true]{background:#edf3f2;border-color:var(--teal)}.science-item small{display:block;font-size:10px;font-weight:400;color:var(--muted);line-height:1.35}.science-detail{border-top:1px solid var(--line);padding-top:10px;font-size:11px;line-height:1.5}.science-detail h3{font-size:13px;margin:0 0 8px}.science-detail h3 small{font-weight:400;color:var(--muted)}.science-detail p{margin:6px 0}.science-detail dl{margin:10px 0}.science-detail dt{font-weight:700;color:var(--muted);margin-top:7px}.science-detail dd{margin:0;overflow-wrap:anywhere}.science-detail a{font-weight:700}.weather-drawer summary{cursor:pointer;font-size:16px;font-weight:700}.weather-drawer summary span{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:3px}.weather-drawer[open] summary{margin-bottom:12px}.weather-drawer>a{display:inline-block;margin-top:10px;font-size:11px}.weather-status{font-size:11px;line-height:1.5;margin:10px 0;color:var(--muted)}.weather-events{display:grid;gap:6px;max-height:270px;overflow:auto}.weather-event{border:1px solid #dde5e5;border-radius:4px;padding:8px;font-size:11px}.weather-event strong,.weather-event small,.weather-event a{display:block}.weather-event small{color:var(--muted);line-height:1.4;margin:3px 0}.weather-event a{font-size:11px}
+
+
+/* Phase 8: searchable, accessible Mission Library (measured CTX exercises only). */
+.mission-section summary{cursor:pointer;font-size:16px;font-weight:700}
+.mission-section summary span{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:3px}
+.mission-section summary:focus-visible{outline:3px solid #338dce;outline-offset:2px}
+.mission-section details[open] summary{margin-bottom:12px}
+.mission-section .field-label{margin-top:10px}
+.mission-section select,.mission-section input[type=search]{display:block;width:100%;border:1px solid #b9c7cb;border-radius:4px;background:#fff;padding:9px;color:var(--ink);font:12px var(--font)}
+.mission-list{display:grid;gap:5px;max-height:260px;overflow:auto;margin:12px 0}
+.mission-item{display:block;width:100%;border:1px solid #d6dfe0;background:#fff;border-radius:5px;padding:9px;text-align:left;color:var(--ink)}
+.mission-item:hover,.mission-item:focus-visible{border-color:var(--teal);background:#edf5f3}
+.mission-item[aria-pressed=true]{background:#e4f1ee;border-color:var(--teal)}
+.mission-item strong{font:700 12px/1.4 var(--font)}
+.mission-item small{display:block;font:11px/1.5 var(--font);color:var(--muted);margin-top:4px}
+.mission-item .mission-id{font:700 10px var(--mono);color:var(--rust);margin-right:5px}
+.mission-empty{font-size:12px;color:var(--muted);margin:8px 0}
+.mission-detail{font:11px/1.5 var(--font);margin:9px 0 0;color:var(--ink)}
+.mission-detail strong{font-size:12px}
+.mission-detail p{margin:7px 0}
+.mission-detail ol{padding-left:19px;margin:8px 0}
+.mission-detail li{margin:4px 0;font:10px/1.4 var(--mono);overflow-wrap:anywhere}
+.mission-summary .mission-legs{display:grid;gap:6px}
+.mission-summary .mission-leg{display:flex;justify-content:space-between;gap:10px;padding:9px;border:1px solid #dbe5e5;border-radius:4px;background:#fff;font-size:11px}
+.mission-summary .mission-leg span{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}
+.mission-summary .mission-leg strong{font:700 11px var(--mono);text-align:right}
+.mission-actions{display:flex;gap:8px;margin-top:10px}
+.mission-actions button{flex:1;padding:10px 7px;font-size:11px;border:1px solid #aebfc1;background:#fff;color:#254e5b;border-radius:5px;font-weight:700}
+.mission-actions button:first-child{background:#235b63;color:white;border-color:#235b63}
+.map-marker.mission-stop circle{stroke:#294e77;fill:#edf4fb;stroke-width:2.5}
+.map-marker.mission-stop text{fill:#224264;font-size:12px}
+.map-marker.mission-return text{font-size:9px}
+[hidden]{display:none!important}
+@media(max-width:720px){.tool-panel .mission-section{grid-column:1/-1}.mission-list{max-height:240px}}
