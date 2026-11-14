@@ -4,6 +4,14 @@
 
 ARES is a research prototype for comparing routes on a measured Jezero CTX optical mosaic and sampled digital elevation model. It uses a dependency-free web UI and an eight-direction A* routing engine. It is **not** an EVA safety or field-traversability system.
 
+## Deployment and large datasets
+
+ARES is ready for a Cloudflare Pages *research preview*. The current web app uses small processed CTX WebP/JSON assets and does **not** require uploading the original multi-gigabyte TIFFs. Keep raw GeoTIFFs outside Git; optionally back them up in a **private R2 bucket**. For future high-resolution areas, derive bounded/validated mission packs and, only once a tile loader exists, serve versioned browser-ready tiles from public R2.
+
+See **[Pages + R2 deployment and data architecture](docs/PAGES_R2_DATA_ARCHITECTURE.md)** for the `spapps.openstacktool.com` release checklist, staging strategy, Cloudflare size limits, data integrity gates, optional R2 setup, and rollback instructions. `npm run build` now rejects oversize or accidental raw/sensitive artifacts in `dist/`.
+
+**Note:** This repository does not automatically provision Pages, R2 or DNS. Live deployment must be authorized and separately smoke-tested.
+
 ## Run
 
 Requires Node.js 22 or newer.
