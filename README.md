@@ -6,7 +6,7 @@
 
 ARES is a cinematic, interactive **Mars surface mission-planning prototype**. This prototype demonstrates the interaction model, UI, and a working explainable A* routing engine without pretending to have integrated flight-quality geospatial datasets.
 
-> **Prototype transparency:** The bundled terrain, height field, thermal coloring, hazards, waypoints, scale, and distances are **synthetic illustrative demonstration data in the default fallback**. They are *not* a NASA/USGS DEM, Mars orbital mosaic, validated physical hazard map, or real-time measurement. Coordinates displayed as Jezero regional context are not registered to the bundled map. The router is real software running on demo input, not certified EVA planning.
+> **Prototype transparency:** The default map uses a measured Jezero CTX optical mosaic and DEM crop. Routes use sampled DEM heights and projected metre spacing. Waypoints are illustrative; no verified hazard or EVA safety assessment is provided. The synthetic demo remains available from the dataset switch.
 
 ## Quick start (no dependency installation)
 
@@ -38,7 +38,7 @@ You can publish the contents of `dist/` on any static host. This starter intenti
 - NASA science-resource link and provenance notes, with explicit labeling of all simulated content.
 - 9 algorithm / pack-validation unit tests and an offline raster importer smoke test.
 - Export a route briefing as JSON, including route-cell coordinates, metrics, and clear research-prototype warnings.
-- Optional real-data pack loader with projected metre coordinates, science-data provenance card, and hatching for no-data DEM cells.
+- Bundled measured CTX pack with projected metre coordinates, source links, provenance card, and hatching for no-data DEM cells.
 - Python pipeline for co-registered Mars-projected optical GeoTIFFs and DEM; missing data never becomes traversable ground.
 - The original synthetic demo remains available if scientific data is absent or malformed.
 
@@ -53,7 +53,7 @@ ARES-Mission-Control/
 │   ├── mars-demo-terrain.webp     # Synthetic, locally rendered surface
 │   ├── mars-demo-elevation.webp   # Matching synthetic elevation visualization
 │   ├── mars-demo-thermal.webp     # Matching synthetic thermal visualization
-│   └── data/                     # Optional imported mission pack (not bundled by default)
+│   └── data/                     # Bundled measured CTX mission pack and map layers
 ├── src/
 │   ├── main.js                    # UI state, event handlers, SVG visualization
 │   ├── data/demo-terrain.json     # Height grid, synthetic hazard locations
@@ -72,9 +72,19 @@ ARES-Mission-Control/
 └── PHASE_2_PLAN.md
 ```
 
-## Scientific upgrade path
+## Measured CTX demonstration
 
-The v0.2 importer and data-pack loader are available; see [IMPORT_REAL_DATA.md](IMPORT_REAL_DATA.md). **No measured NASA/USGS raster has been packaged yet.** The next task is downloading a matching Jezero optical + DEM crop, verifying the source metadata, and running the importer.
+The default pack uses the local `JEZ_ctx_B_soc_008` pair from the [USGS Astrogeology Mars 2020 CTX archive](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/index.html). The optical source is 6 m/pixel; the DEM is 20 m/pixel. Both are in the Equirectangular Mars 2000 Sphere IAU projected CRS in metres. The overlapping footprint is E 4,573,663.250853–4,605,583.250853 m and N 1,079,453.140188–1,109,693.140188 m. Both source masks are fully valid in the selected crop.
+
+The selected 4:3 crop is E 4,586,000–4,589,200 m and N 1,091,000–1,093,400 m. The router samples the DEM on an 80 × 60 grid of 40 m cells; the two display layers share these exact bounds. The source DEM metadata states elevations in metres relative to the Mars 2020 IAU sphere of radius 3,396,190 m. A cell without a DEM elevation is impassable. The source metadata reports 9.6 m average displacement between individual CTX images and 3.8 m vertical registration between CTX DTMs; those figures are mosaic metadata, not a route-level error estimate.
+
+Use **Switch to synthetic demo** in the layer sidebar, or open `?mode=demo`. The synthetic map, hazards, and routes remain separate from measured mode. The importer command and source URLs are recorded in [IMPORT_REAL_DATA.md](IMPORT_REAL_DATA.md).
+
+### Scientific limits
+
+This is a 40 m routing grid sampled from a 20 m DEM. Slopes are endpoint differences over grid steps, not local ground slope or traversability measurements. Terrain-preferred costs use an illustrative slope weight; neither route mode checks rocks, sand, cliffs, illumination, communications, suit limits, or mission constraints. Waypoints and the HAB marker are placed for demonstration and have no verified field coordinates. The cropped WebP layers are contrast-stretched visualizations; numerical elevation comes from the DEM array in the pack. No thermal raster or validated hazard layer is included.
+
+## Scientific upgrade path
 
 
 The next step is to **select an exact Jezero footprint with matching reference data**, then replace simulated data *as a coordinated dataset*:

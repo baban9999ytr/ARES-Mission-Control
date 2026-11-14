@@ -65,7 +65,7 @@ const renderMap=()=>{
  $('#mapSvg').innerHTML=`<defs><filter id="routeGlow"><feGaussianBlur stdDeviation="5" /></filter><pattern id="unknownHatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#0b1119" fill-opacity=".46"/><line x1="0" y1="0" x2="0" y2="7" stroke="#DA9D6C" stroke-width="1.5" stroke-opacity=".4"/></pattern></defs><g class="map-nodata">${noDataSvg()}</g><g class="map-hazards">${hazardSvg()}</g>
  ${state.showRoute&&state.alternate?`<path d="${linePath(state.alternate)}" stroke="#E6AB70" stroke-width="2" opacity=".56" fill="none" stroke-dasharray="6 9" stroke-linejoin="round"/>`:''}
  ${state.showRoute&&state.route?`<path d="${linePath(state.route)}" stroke="#59E5D8" stroke-width="11" opacity=".20" filter="url(#routeGlow)" fill="none"/><path d="${linePath(state.route)}" stroke="#74F4E2" stroke-width="2.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`:''}
- <g transform="translate(${pos(START)})"><circle r="19" fill="#68DFD0" fill-opacity=".11" stroke="#83E7DD" stroke-width="1" stroke-dasharray="4 3"/><circle r="8" fill="#7BEADD" fill-opacity=".3"/><circle r="3.2" fill="#9DFEF2"/><text x="-16" y="-26" class="pin-label">HAB-01</text></g>${waypointSvg()}`;
+ <g transform="translate(${pos(START)})"><circle r="19" fill="#68DFD0" fill-opacity=".11" stroke="#83E7DD" stroke-width="1" stroke-dasharray="4 3"/><circle r="8" fill="#7BEADD" fill-opacity=".3"/><circle r="3.2" fill="#9DFEF2"/><text x="-16" y="-26" class="pin-label">${dataKind==='measured'?'START · ILLUSTRATIVE':'HAB-01'}</text></g>${waypointSvg()}`;
  $('#mapStage').style.setProperty('--zoom',state.zoom);
  $('#zoomPct').textContent=`${Math.round(state.zoom*100)}%`;
 };
@@ -125,6 +125,7 @@ function attach(){
    $('#cursorCoordinates').textContent=projected?`E ${Math.round(projected.east)} m / N ${Math.round(projected.north)} m`:`GRID ${String(x).padStart(2,'0')} / ${String(y).padStart(2,'0')}`;
  });
  $('#briefingExport').addEventListener('click',exportBriefing);
+ $('#datasetSwitch').addEventListener('click',()=>{const url=new URL(location.href);if(dataKind==='measured')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.href=url.href;});
  $('#dataInspect').addEventListener('click',()=>$('#dataDialog').showModal());
  $('#dataClose').addEventListener('click',()=>$('#dataDialog').close());
  $('#fullscreenButton').addEventListener('click',()=>{const el=$('#mapStage');if(!document.fullscreenElement&&el.requestFullscreen)el.requestFullscreen().catch(()=>toast('Fullscreen unavailable'));else if(document.exitFullscreen)document.exitFullscreen();});
@@ -136,6 +137,7 @@ function exportBriefing(){
   warning:'Research planning prototype only; not flight-validated and not for operational astronaut guidance.',
   dataset:{kind:dataKind,site:meta.site??'Synthetic Jezero illustration',crs:meta.crsWkt??null,
     bbox:meta.boundsMeters??null,cellMeters:meta.cellMeters??meta.demoCellMeters,
+    verticalReference:meta.verticalReference??null,
     layers:meta.layers?Object.fromEntries(Object.entries(meta.layers).map(([key,v])=>[key,{source:v.source,label:v.label}])):null},
   destination:{...state.destination},origin:{...START},preference:state.mode,
   syntheticHazardsEnabled:dataKind==='demo'?state.hazards:null,
@@ -163,10 +165,22 @@ function applyDataPack(pack){
  $('#distanceSource').textContent='PROJECTED GRID METRES';
  $('#ascentSource').textContent='SAMPLED DEM ELEVATION';
  $('#dataStatus').textContent='REGISTERED RASTERS';
+ $('#mapHeading').innerHTML='Jezero CTX <span>/ Mars</span>';
+ $('#environmentLabel').textContent='MEASURED CTX STUDY CROP';
+ $('#waypointLegend').lastChild.textContent=' ILLUSTRATIVE TARGET';
+ $('#hazardLegend').hidden=true;
+ $('#sectorLabel').textContent='MARS / JEZERO CTX CROP';
+ $('#mapSvg').setAttribute('aria-label','Measured Jezero CTX optical and elevation map with illustrative waypoints and planned route');
+ $('#layerCount').textContent=`${Object.keys(pack.layers).length.toString().padStart(2,'0')} AVAILABLE`;
+ $('#datasetSwitch').hidden=false;
+ $('#datasetSwitch').textContent='Switch to synthetic demo';
  $('#scienceProvenance').textContent='Imported raster datasets. Inspect the full URLs and coordinate information before trusting measurements.';
  $('#scienceAttribution').textContent=pack.site||'Mission sector';
+ $('#sourceLink').href=pack.layers.optical.source;
+ $('#sourceLink').textContent='CTX optical source ↗';
  $('#dataDialogText').textContent=JSON.stringify({kind:pack.kind,site:pack.site,notice:pack.notice,boundsMeters:pack.boundsMeters,
    cellMeters:pack.cellMeters,validCells:pack.quality?.validCells,verticalUnits:pack.verticalUnits,
+   verticalReference:pack.verticalReference,sourceResolution:pack.quality?.sourceResolution,
    sources:Object.fromEntries(Object.entries(pack.layers).map(([k,v])=>[k,{label:v.label,source:v.source}]))},null,2);
  $('#waypoints').innerHTML=waypointList();
  document.querySelectorAll('[data-layer]').forEach(btn=>{const layer=pack.layers[btn.dataset.layer];btn.disabled=!layer;
@@ -178,7 +192,13 @@ async function loadDataPack(){
  try{
   const res=await fetch('./public/data/mission-pack.json',{cache:'no-store'});
   if(!res.ok){if(res.status!==404)toast('Measured data pack not available; synthetic mode active');return;}
-  const pack=validateMissionPack(await res.json());applyDataPack(pack);
+  const pack=validateMissionPack(await res.json());
+  if(new URLSearchParams(location.search).get('mode')==='demo'){
+    $('#datasetSwitch').hidden=false;
+    $('#datasetSwitch').textContent='Switch to measured CTX terrain';
+    return;
+  }
+  applyDataPack(pack);
  }catch(err){console.warn('ARES retained synthetic fallback:',err);toast('Data pack invalid — keeping safe synthetic fallback');}
 }
 function start(){

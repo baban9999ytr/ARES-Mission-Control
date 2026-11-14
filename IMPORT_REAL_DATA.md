@@ -1,6 +1,24 @@
 # ARES v0.2 — Importing georeferenced Martian rasters
 
-The bundled map is still **synthetic**. v0.2 adds an optional **offline scientific-data pipeline** that activates only when a valid `public/data/mission-pack.json` and matching `.webp` assets are present.
+The default map now uses a measured Jezero CTX pack. The synthetic demo remains available through the dataset switch or `?mode=demo`.
+
+## Bundled Jezero CTX pack
+
+The first measured pack is generated from the local `ARES-DATA/01_OPTICAL/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff` and `ARES-DATA/02_ELEVATION/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff` files. Rebuild it from the repository root with:
+
+```bash
+.venv/bin/python tools/import_mars_rasters.py \
+  --optical ARES-DATA/01_OPTICAL/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff \
+  --dem ARES-DATA/02_ELEVATION/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff \
+  --bounds 4586000 1091000 4589200 1093400 \
+  --site 'Jezero CTX measured study crop' \
+  --vertical-reference 'Mars 2020 IAU sphere, radius 3396190 m (source DEM XML)' \
+  --optical-source 'https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tif' \
+  --dem-source 'https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tif' \
+  --output public/data
+```
+
+The `.venv` is local and untracked. If absent, install `rasterio`, `numpy`, and `Pillow` in a Python environment before running the importer.
 
 ## Data sources
 
