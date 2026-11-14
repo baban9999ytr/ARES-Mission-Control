@@ -36,14 +36,14 @@ def inspect_raster(src, label):
 
 
 def projected_band(src, bounds, w, h, resampling=Resampling.bilinear, band=1):
-    # nan is an explicit destination no-data; it is later mapped to null and an impassable mask.
+    # GDAL pulls only the source regions needed for this destination grid.
+    # Keep source nodata explicit so it cannot be interpolated into valid terrain.
     dst = np.full((h, w), np.nan, dtype=np.float32)
-    source = src.read(band, masked=True)
     reproject(
-        source=source.astype(np.float32).filled(np.nan), destination=dst,
-        src_transform=src.transform, src_crs=src.crs, src_nodata=np.nan,
+        source=rasterio.band(src, band), destination=dst,
+        src_transform=src.transform, src_crs=src.crs, src_nodata=src.nodatavals[band-1],
         dst_transform=from_bounds(*bounds, w, h), dst_crs=src.crs,
-        dst_nodata=np.nan, resampling=resampling,
+        dst_nodata=np.nan, init_dest_nodata=True, resampling=resampling,
     )
     return dst
 

@@ -1,6 +1,7 @@
 import terrain from './data/demo-terrain.json' with { type: 'json' };
 import {planRoute} from './engine/routing.js';
 import {validateMissionPack,mapDisplayCoordinates} from './data/mission-pack.js';
+import {selectMissionData,layerForMode} from './data/mission-mode.js';
 
 const $=(selector)=>document.querySelector(selector);
 let WAYPOINTS=[
@@ -57,11 +58,12 @@ const noDataSvg=()=>{
 };
 const renderMap=()=>{
  const layerUrls={optical:'mars-demo-terrain.webp',elevation:'mars-demo-elevation.webp',thermal:'mars-demo-thermal.webp'};
- const packLayer=activeTerrain.layers?.[state.layer];
+ const packLayer=layerForMode(dataKind,activeTerrain,state.layer);
  const img=$('#terrainImage');
- img.src=packLayer?`./public/${packLayer.path}`:`./public/${layerUrls[state.layer]}`;
- img.alt=packLayer?`${packLayer.label} · cropped registered raster; see source attribution`: `Illustrative simulated ${state.layer} terrain image; not a NASA data product`;
- $('#mapLayerLabel').textContent=packLayer?packLayer.label.toUpperCase():{optical:'SIMULATED ORBITAL-STYLE SURFACE',elevation:'SYNTHETIC ELEVATION RENDER',thermal:'SYNTHETIC THERMAL RENDER'}[state.layer];
+ const imagePath=dataKind==='measured'?(packLayer?`./public/${packLayer.path}`:null):`./public/${layerUrls[state.layer]}`;
+ if(imagePath)img.src=imagePath;else img.removeAttribute('src');
+ img.alt=packLayer?`${packLayer.label} · cropped registered raster; see source attribution`:dataKind==='measured'?'Unavailable measured raster layer':`Illustrative simulated ${state.layer} terrain image; not a NASA data product`;
+ $('#mapLayerLabel').textContent=packLayer?packLayer.label.toUpperCase():dataKind==='measured'?'UNAVAILABLE':{optical:'SIMULATED ORBITAL-STYLE SURFACE',elevation:'SYNTHETIC ELEVATION RENDER',thermal:'SYNTHETIC THERMAL RENDER'}[state.layer];
  $('#mapSvg').innerHTML=`<defs><filter id="routeGlow"><feGaussianBlur stdDeviation="5" /></filter><pattern id="unknownHatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#0b1119" fill-opacity=".46"/><line x1="0" y1="0" x2="0" y2="7" stroke="#DA9D6C" stroke-width="1.5" stroke-opacity=".4"/></pattern></defs><g class="map-nodata">${noDataSvg()}</g><g class="map-hazards">${hazardSvg()}</g>
  ${state.showRoute&&state.alternate?`<path d="${linePath(state.alternate)}" stroke="#E6AB70" stroke-width="2" opacity=".56" fill="none" stroke-dasharray="6 9" stroke-linejoin="round"/>`:''}
  ${state.showRoute&&state.route?`<path d="${linePath(state.route)}" stroke="#59E5D8" stroke-width="11" opacity=".20" filter="url(#routeGlow)" fill="none"/><path d="${linePath(state.route)}" stroke="#74F4E2" stroke-width="2.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`:''}
@@ -98,7 +100,7 @@ function calculateRoute(){
  renderMap();renderStats();
 }
 function setDestination(w){state.destination=w;$('#waypoints').innerHTML=waypointList(); calculateRoute();toast(`${htmlEscape(w.code)} selected · ${htmlEscape(w.name)}`);}
-function setLayer(name){state.layer=name; document.querySelectorAll('[data-layer]').forEach(b=>{const active=b.dataset.layer===name;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});renderMap();toast(`Layer: ${name} · ${dataKind==='measured'?'source raster':'synthetic demonstration'}`);}
+function setLayer(name){if(dataKind==='measured'&&!layerForMode(dataKind,activeTerrain,name))return;state.layer=name; document.querySelectorAll('[data-layer]').forEach(b=>{const active=b.dataset.layer===name;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});renderMap();toast(`Layer: ${name} · ${dataKind==='measured'?'source raster':'synthetic demonstration'}`);}
 let toastTimer=0;
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('visible');window.clearTimeout(toastTimer);toastTimer=window.setTimeout(()=>el.classList.remove('visible'),3100);}
 function renderMode(){document.body.classList.toggle('eva-active',state.eva);$('#evaButton').classList.toggle('active',state.eva);$('#evaButton').setAttribute('aria-pressed',String(state.eva));}
@@ -183,8 +185,8 @@ function applyDataPack(pack){
    verticalReference:pack.verticalReference,sourceResolution:pack.quality?.sourceResolution,
    sources:Object.fromEntries(Object.entries(pack.layers).map(([k,v])=>[k,{label:v.label,source:v.source}]))},null,2);
  $('#waypoints').innerHTML=waypointList();
- document.querySelectorAll('[data-layer]').forEach(btn=>{const layer=pack.layers[btn.dataset.layer];btn.disabled=!layer;
-    btn.querySelector('small').textContent=layer?(btn.dataset.layer==='thermal'?'Source thermal raster':'Registered raster'):'Not imported';});
+ document.querySelectorAll('[data-layer]').forEach(btn=>{const layer=layerForMode('measured',pack,btn.dataset.layer);btn.disabled=!layer;
+    btn.querySelector('small').textContent=layer?(btn.dataset.layer==='thermal'?'Source thermal raster':'Registered raster'):'Unavailable';});
  calculateRoute();renderStats();
  toast('Registered source data pack loaded');
 }
@@ -193,12 +195,13 @@ async function loadDataPack(){
   const res=await fetch('./public/data/mission-pack.json',{cache:'no-store'});
   if(!res.ok){if(res.status!==404)toast('Measured data pack not available; synthetic mode active');return;}
   const pack=validateMissionPack(await res.json());
-  if(new URLSearchParams(location.search).get('mode')==='demo'){
+  const selected=selectMissionData(terrain,pack,location.search);
+  if(selected.kind==='demo'){
     $('#datasetSwitch').hidden=false;
     $('#datasetSwitch').textContent='Switch to measured CTX terrain';
     return;
   }
-  applyDataPack(pack);
+  applyDataPack(selected.terrain);
  }catch(err){console.warn('ARES retained synthetic fallback:',err);toast('Data pack invalid — keeping safe synthetic fallback');}
 }
 function start(){

@@ -35,3 +35,16 @@ test('missing DEM cells are rejected even in shortest-path mode',()=>{
   assert.equal(planRoute(modified,pack.start,target,'distance',false),null);
   assert.throws(()=>validateMissionPack(modified));
 });
+
+test('an internal nodata barrier forces a detour and cannot be crossed',()=>{
+  const modified={...pack,heights:[...pack.heights]};
+  const baseline=planRoute(pack,pack.start,pack.waypoints[0],'distance',false);
+  for(let y=8;y<50;y++)modified.heights[y*pack.gridWidth+35]=null;
+  const detour=planRoute(modified,pack.start,pack.waypoints[0],'distance',false);
+  assert.ok(detour);
+  assert.ok(detour.meters>baseline.meters);
+  assert.ok(detour.cells.every(p=>!isBlocked(modified,p.x,p.y,false)));
+  assert.ok(detour.cells.every(p=>p.x!==35||p.y<8||p.y>=50));
+  for(let y=0;y<pack.gridHeight;y++)modified.heights[y*pack.gridWidth+35]=null;
+  assert.equal(planRoute(modified,pack.start,pack.waypoints[0],'distance',false),null);
+});
