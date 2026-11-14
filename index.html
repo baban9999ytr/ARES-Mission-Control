@@ -22,6 +22,25 @@
       <section class="panel-section"><h2>Map layers</h2><div id="layerIcons" class="layer-controls"></div></section>
       <section class="panel-section"><h2>Choose route points</h2><p class="helper">Select a tool, then click a map cell. Points snap to the 40 m routing grid in CTX mode.</p><div class="point-tools"><button id="pickStart" type="button" class="pick-tool" aria-pressed="false"><b>S</b><span>Set start</span></button><button id="pickDestination" type="button" class="pick-tool" aria-pressed="false"><b>D</b><span>Set destination</span></button></div><div id="pointFeedback" class="feedback" role="status">Select a point tool to plan your own route.</div><dl class="point-coords"><div><dt>Start</dt><dd id="startCoordinates">—</dd></div><div><dt>Destination</dt><dd id="destinationCoordinates">—</dd></div></dl></section>
       <section class="panel-section"><div class="section-title"><h2>Example destinations</h2><span class="subtle">Illustrative</span></div><div id="waypoints" class="waypoint-list"></div></section>
+      <section class="panel-section mission-section">
+        <details id="missionDrawer" open>
+          <summary>Mission Library <span>30 measured CTX exercises</span></summary>
+          <p id="missionStatus" class="helper" role="status">Loading measured mission catalog…</p>
+          <div id="missionControls" hidden>
+            <label class="field-label" for="missionPhase">Mission phase</label>
+            <select id="missionPhase">
+              <option value="All">All 30 missions</option>
+              <option value="Explorer">Explorer · 10</option>
+              <option value="Scientist">Scientist · 10</option>
+              <option value="Commander">Commander · 10</option>
+            </select>
+            <label class="field-label" for="missionSearch">Search missions</label>
+            <input id="missionSearch" type="search" placeholder="ID, title, objective…" autocomplete="off" />
+            <div id="missionList" class="mission-list" aria-label="Measured mission exercises"></div>
+          </div>
+          <p id="missionDetail" class="mission-detail" aria-live="polite">Mission routes use measured CTX heights, with illustrative routing costs. No EVA safety certification.</p>
+        </details>
+      </section>
       <section class="panel-section science-section"><details id="scienceDrawer"><summary>Science Targets <span>Research catalog</span></summary><p class="helper">Browse evidence and check CTX coverage. Catalog names are not route presets.</p><label class="field-label" for="scienceScope">Catalog</label><select id="scienceScope"><option value="jezero">Jezero research</option><option value="global">Global Mars context</option></select><div id="scienceList" class="science-list" role="list">Loading catalog…</div><div id="scienceDetail" class="science-detail" aria-live="polite"></div></details></section>
       <section class="panel-section compact"><label class="checkbox-row"><input type="checkbox" id="routeToggle" checked /> Show both routes</label><label class="checkbox-row" id="hazardRow"><input type="checkbox" id="hazardToggle" checked /> <span id="hazardToggleLabel">Synthetic hazard zones</span></label></section>
     </aside>
@@ -39,6 +58,13 @@
     </section>
 
     <aside class="analysis-panel" aria-label="Route comparison and provenance">
+      <section class="panel-section mission-summary" id="missionSummary" hidden>
+        <h2 id="missionSummaryTitle">Selected mission</h2>
+        <p id="missionSummaryNote" class="helper"></p>
+        <div id="missionLegs" class="mission-legs"></div>
+        <p class="helper">Fixed-order independent A* legs; not a globally optimized multi-stop route. Illustrative research exercise, not verified EVA guidance.</p>
+        <div class="mission-actions"><button id="missionExport" type="button">Export mission JSON</button><button id="missionClear" type="button">Exit mission</button></div>
+      </section>
       <section class="panel-section"><h2>Route comparison</h2><p id="routeContext" class="helper">Illustrative destination · Both routes are calculated from the active height grid.</p>
         <div class="comparison" role="group" aria-label="Choose highlighted route">
           <div class="comparison-head"><span>Metric</span><button data-mode="distance" type="button" aria-pressed="false"><i class="legend shortest"></i> Shortest</button><button data-mode="terrain" type="button" aria-pressed="true"><i class="legend terrain"></i> Terrain preferred</button></div>
