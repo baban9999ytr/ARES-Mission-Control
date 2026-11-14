@@ -1,0 +1,26 @@
+{
+  "id": "SC-01",
+  "name": "Yükseklik farkı karşılaştırması",
+  "phase": "SCIENTIST",
+  "status": "scenario_ready_pending_ctx_execution",
+  "scientific_aim": "Aynı boylam boyunca iki yükseklik bölgesini karşılaştırmak.",
+  "dataset": {
+    "name": "USGS Mars 2020 Science Investigation CTX DEM Mosaic",
+    "resolution_m_per_pixel": 20
+  },
+  "start": {
+    "lat": 18.34,
+    "lon": 77.38
+  },
+  "end": {
+    "lat": 18.62,
+    "lon": 77.38
+  },
+  "observations": [],
+  "interpretation": [],
+  "limitations": [
+    "Gerçek CTX rasterı ARES'e yüklenmeden rota metriği doğrulanamaz.",
+    "ARES operasyonel EVA güvenlik sistemi değildir.",
+    "Bilimsel yorum gözlemden ayrı tutulmalıdır."
+  ]
+}
