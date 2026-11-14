@@ -4,7 +4,7 @@
 
 NASA CCMC's [migration announcement](https://ccmc.gsfc.nasa.gov/news/major-updates/) sets the public base to `https://ccmc.gsfc.nasa.gov/DONKI-API/get/`. The [DONKI documentation](https://ccmc.gsfc.nasa.gov/tools/DONKI/) describes FLR, CME, SEP and the M2M catalog as research/prototyping information. The [API UI](https://ccmc.gsfc.nasa.gov/DONKI/api/) and [Swagger UI](https://ccmc.gsfc.nasa.gov/DONKI-API/) are official, but the interactive specifications did not expose a usable machine-readable schema through the static fetch attempted here. The implementation therefore validates the actual fields used rather than assuming a broader schema.
 
-Read-only requests on 14 November 2026 used `startDate=2026-11-07&endDate=2026-11-14` with no API key and `Origin: http://localhost:4173`:
+Read-only requests on 14 November 2026 used `startDate=2026-11-07&endDate=2026-11-14` with no API key and `Origin: http://localhost:4173`: 
 
 | Endpoint | HTTP | Content type | CORS | Records | Observed first record |
 | --- | ---: | --- | --- | ---: | --- |
