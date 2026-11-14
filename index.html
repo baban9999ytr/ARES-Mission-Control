@@ -3,60 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#070d14" />
-  <meta name="description" content="ARES — experimental Mars EVA route planning, NASA Space Apps Challenge 2026." />
-  <title>ARES / Mission Control — Mars Exploration Suite</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="theme-color" content="#f3f5f5" />
+  <meta name="description" content="ARES research prototype for Mars CTX terrain route comparison." />
+  <title>ARES Mission Planner — Jezero CTX</title>
+  <link rel="stylesheet" href="./planner.css" />
 </head>
 <body>
-<div id="app" class="app-shell">
-  <header class="topbar">
-    <div class="brand-group">
-      <a class="brand" href="./index.html" aria-label="ARES home"><span class="brand-mark"><span class="planet"></span><span class="orbit-ring"></span></span><span class="brand-word">ARES<span class="brand-slash">/</span></span></a>
-      <div class="brand-divider"></div>
-      <div class="brand-sub"><b>EXPLORATION SYSTEMS</b><small>INTERPLANETARY NAVIGATION LAB</small></div>
-    </div>
-    <nav class="topnav" aria-label="Application navigation"><span class="nav-link selected"><span class="nav-indicator"></span>MISSION CONTROL</span><a class="nav-link" href="./sources.html">DATA SOURCES</a></nav>
-    <div class="topbar-right"><div class="top-coordinates"><span class="mini-pulse"></span><span>JEZERO CRATER <strong>18.4° N / 77.5° E</strong></span></div><div class="version">BUILD 0.2</div><button id="evaButton" class="top-eva" aria-pressed="false"><span class="eva-circle">●</span> ENTER EVA MODE</button></div>
+<div id="app">
+  <header class="app-header">
+    <div class="brand"><strong>ARES</strong><span>Mission Planner</span></div>
+    <div class="header-links"><a href="./sources.html">Data sources</a><button id="evaButton" type="button" aria-pressed="false">Illustrative EVA view</button></div>
   </header>
-  <div class="status-strip"><div><span class="signal-bars">▂▄▆</span> MISSION OPERATIONS CENTER <span class="str-sep">/</span> SURFACE EXPEDITION PLANNING</div><div><span class="status-dot"></span> SYSTEM READY <span class="str-sep">·</span> <span class="strip-orange" id="environmentLabel">SIMULATION ENVIRONMENT</span></div></div>
-
-  <main class="workspace">
-    <aside class="sidebar left-sidebar">
-      <section class="mission-intro"><div class="eyebrow"><span class="eyebrow-number">01</span> ACTIVE EXPEDITION <span class="side-ellipsis">···</span></div><div class="mission-name">THE JEZERO<br/><em>EXPEDITION</em></div><p>Exploring the geological history of an ancient Martian river delta.</p><div class="mission-metadata"><div><small>MISSION SITE</small><strong>Jezero Crater</strong></div><div><small>PLAN STATUS</small><strong><span class="text-cyan">●</span> In planning</strong></div></div></section>
-      <div class="sidebar-section"><div class="section-header"><span>01 / SURFACE LAYERS</span><span class="section-header-right" id="layerCount">03 AVAILABLE</span></div><div id="layerIcons" class="layer-list"></div><p id="dataCaution" class="data-caution">All map layers currently use aligned <strong>synthetic demonstration data</strong>.</p><button id="datasetSwitch" class="dataset-switch" type="button" hidden></button></div>
-      <div class="sidebar-section waypoint-section"><div class="section-header"><span>02 / SCIENCE WAYPOINTS</span><span class="section-header-right">03 TARGETS</span></div><div id="waypoints"></div></div>
-      <div class="sidebar-bottom"><div class="orbital-ring-icon">◎</div><div><strong>DATA INTEGRITY</strong><small><span id="dataIntegrity">NASA data integration planned. This initial visualization is a functional simulation.</span></small></div></div>
+  <div class="research-banner">Research prototype · Routes are not verified for EVA safety or field traversability</div>
+  <main class="planner-layout">
+    <aside class="tool-panel" aria-label="Dataset and map tools">
+      <section class="panel-section dataset-section"><div class="section-title"><h2>Dataset</h2><button id="dataInspect" type="button" class="text-button">Details ↗</button></div><strong id="datasetName">Loading Jezero CTX dataset</strong><p id="datasetSummary">Reading the bundled mission pack.</p><div id="dataTag" class="dataset-tag">Loading</div><button id="datasetSwitch" type="button" class="dataset-switch" hidden></button></section>
+      <section class="panel-section"><h2>Map layers</h2><div id="layerIcons" class="layer-controls"></div></section>
+      <section class="panel-section"><h2>Choose route points</h2><p class="helper">Select a tool, then click a map cell. Points snap to the 40 m routing grid in CTX mode.</p><div class="point-tools"><button id="pickStart" type="button" class="pick-tool" aria-pressed="false"><b>S</b><span>Set start</span></button><button id="pickDestination" type="button" class="pick-tool" aria-pressed="false"><b>D</b><span>Set destination</span></button></div><div id="pointFeedback" class="feedback" role="status">Select a point tool to plan your own route.</div><dl class="point-coords"><div><dt>Start</dt><dd id="startCoordinates">—</dd></div><div><dt>Destination</dt><dd id="destinationCoordinates">—</dd></div></dl></section>
+      <section class="panel-section"><div class="section-title"><h2>Example destinations</h2><span class="subtle">Illustrative</span></div><div id="waypoints" class="waypoint-list"></div></section>
+      <section class="panel-section compact"><label class="checkbox-row"><input type="checkbox" id="routeToggle" checked /> Show both routes</label><label class="checkbox-row" id="hazardRow"><input type="checkbox" id="hazardToggle" checked /> <span id="hazardToggleLabel">Synthetic hazard zones</span></label></section>
     </aside>
 
-    <section class="map-panel" aria-label="Interactive mission surface map">
-      <div class="map-toolbar"><div class="map-heading"><span class="map-signal">⊙</span><div><div class="overline">GEOSPATIAL EXPLORATION VIEW</div><h1 id="mapHeading">Western Delta <span>/ Mars</span></h1></div></div><div class="map-toolbar-right"><div class="toolbar-stamp"><span class="green-dot"></span> <span id="dataStatus">INTERACTIVE DEMO</span></div><button id="fullscreenButton" class="icon-button" aria-label="Toggle map fullscreen" title="Fullscreen map">⛶</button></div></div>
-      <div id="mapStage" class="map-stage" style="--zoom:1">
-        <div class="map-zoom-content"><img id="terrainImage" class="terrain-image" alt="Simulated Martian terrain visualization" src="./public/mars-demo-terrain.webp" draggable="false" /><div class="map-color-wash"></div><div class="map-contours"></div><div class="map-gridlines"></div><svg id="mapSvg" class="route-svg" viewBox="0 0 1000 750" preserveAspectRatio="none" role="img" aria-label="Simulation map with planned route, science waypoints and demonstration hazard areas"></svg></div>
-        <div class="map-corner top-left"><div class="map-label-top"><span class="live-rectangle"></span> ORBITAL VIEW <span class="map-small-spacer">•</span> MISSION M-01</div><div class="map-floating-sub" id="mapLayerLabel">SIMULATED ORBITAL-STYLE SURFACE</div></div>
-        <div class="map-corner top-right"><div class="compass"><div class="compass-n">N</div><div class="compass-dial"><span class="compass-needle"></span></div></div></div>
-        <div class="map-corner bottom-left"><div class="map-legend"><span><i class="legend-line cyan"></i> PLANNED TRAVERSE</span><span id="waypointLegend"><i class="legend-dot orange"></i> SCIENCE TARGET</span><span id="hazardLegend"><i class="legend-circle"></i> DEMO HAZARD</span></div><div class="scale-line"><span></span><span></span><span></span><em id="scaleText">ILLUSTRATIVE SCALE</em></div></div>
-        <div class="map-corner bottom-right"><div class="map-zoom-widget"><button id="zoomIn" aria-label="Zoom in">+</button><div id="zoomPct">100%</div><button id="zoomOut" aria-label="Zoom out">−</button></div></div>
-        <div class="map-edge-label map-edge-left" id="sectorLabel">MARS / JEZERO SECTOR 07</div><div class="map-edge-label map-edge-bottom"><span id="mapWarning">CAUTION: SYNTHETIC MAP · NO GEOGRAPHIC REGISTRATION</span></div>
-      </div>
-      <div class="map-bottom-bar"><div class="map-bottom-left"><span class="small-cross">✛</span><div><strong>MISSION PLANNING GRID</strong><small id="cursorCoordinates">GRID 00 / 00</small></div></div><div class="map-bottom-right"><span class="map-data-tag" id="dataTag">SYNTHETIC MAP</span><span class="map-data-tag">A* ROUTING</span><span class="map-data-tag muted">NO LIVE TELEMETRY</span></div></div>
+    <section class="map-panel" aria-label="Interactive Mars surface map">
+      <div class="map-header"><div><h1 id="mapHeading">Loading Jezero CTX terrain</h1><p id="mapSubheading">Reading the bundled mission pack</p></div><div class="map-header-actions"><span id="dataStatus" class="status-pill">Loading</span><button id="fullscreenButton" type="button" title="Fullscreen map" aria-label="Fullscreen map">⛶</button></div></div>
+      <div class="map-area"><div id="mapStage" class="map-stage" tabindex="0" aria-label="Map: choose start or destination on routing cells">
+        <div id="mapWorld" class="map-world"><img id="terrainImage" alt="Loading Mars terrain" draggable="false" /><svg id="mapSvg" viewBox="0 0 1000 750" preserveAspectRatio="none" aria-label="Planned routes and markers"></svg></div>
+        <div id="mapLayerLabel" class="map-layer-label">Synthetic optical style</div>
+        <div class="map-zoom-controls"><button id="zoomIn" type="button" aria-label="Zoom in">+</button><span id="zoomPct">100%</span><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="panReset" type="button" aria-label="Reset map view">Reset</button></div>
+        <div class="map-scale"><div id="scaleBar" class="scale-bar"></div><span id="scaleText">Illustrative grid</span></div>
+      </div></div>
+      <div class="map-footer"><div id="cursorCoordinates">Move over the map for grid coordinates</div><div class="route-legend"><span><i class="legend terrain"></i> Terrain preferred</span><span><i class="legend shortest"></i> Shortest</span></div></div>
+      <p class="map-hint">Drag to pan · Use + / − to zoom · Click the map after choosing Start or Destination</p>
     </section>
 
-    <aside class="sidebar right-sidebar"><section class="analysis-header"><div class="eyebrow">03 / EVA PATHFINDER <span class="analysis-id">PATH-A001</span></div><h2>Route intelligence<span class="highlight-dot">.</span></h2><p>Evaluate a science traverse using terrain-aware pathfinding.</p></section>
-      <div class="right-scroll"><section class="target-card"><div class="target-card-top"><span>SELECTED DESTINATION</span><span class="target-icon">◎</span></div><div class="target-name" id="waypointName">Delta escarpment</div><div class="target-type" id="waypointType">SEDIMENTARY STUDY</div><p id="waypointDesc"></p></section>
-      <section class="analysis-section"><div class="section-header"><span>ROUTE COMPUTATION</span><span id="routeTag" class="route-tag">NOT CALCULATED</span></div><div class="stat-grid"><div class="stat-cell primary"><span>TRAVERSE DISTANCE</span><strong id="distanceValue">—</strong><small id="distanceSource">DEMO CELL METRIC</small></div><div class="stat-cell"><span>MAXIMUM STEP SLOPE</span><strong id="slopeValue">—</strong><small id="slopeSource">SYNTHETIC ELEVATION</small></div><div class="stat-cell"><span>ASCENT TOTAL</span><strong id="ascentValue">—</strong><small id="ascentSource">SIMULATED HEIGHT</small></div></div></section>
-      <section class="analysis-section"><div class="section-header"><span>ROUTING PREFERENCE</span><span class="tiny-info">ⓘ</span></div><div class="mode-switch"><button data-mode="terrain" class="active" aria-pressed="true"><span>◇</span> Terrain preferred</button><button data-mode="distance" aria-pressed="false"><span>→</span> Shortest</button></div><p class="explanation" id="routeExplainer"></p><div class="compare-mini" id="compareSummary" aria-live="polite"></div></section>
-      <section class="analysis-section options"><div class="section-header"><span>VISIBLE MAP OVERLAYS</span></div><label class="option-row"><span><i class="option-hazard"></i> <span id="hazardToggleLabel">Synthetic hazard zones</span></span><input type="checkbox" id="hazardToggle" checked/><span class="switch" aria-hidden="true"></span></label><label class="option-row"><span><i class="option-route"></i> Route visualization</span><input type="checkbox" id="routeToggle" checked/><span class="switch" aria-hidden="true"></span></label></section>
-      <section class="source-panel"><div class="source-overline">DATA REFERENCE</div><div class="source-card"><div class="source-graphic"><span class="source-graphic-label">NASA / MRO</span></div><div><strong id="scienceAttribution">Jezero geology</strong><p id="scienceProvenance">Research context for future orbital-image integration.</p><a id="sourceLink" href="https://science.nasa.gov/mission/mars-2020-perseverance/location-map/" target="_blank" rel="noopener noreferrer">NASA mission maps ↗</a></div></div></section>
-      </div>
-      <div class="right-actions"><button id="routeButton" class="primary-action">Recalculate route</button><div class="secondary-actions"><button id="briefingExport" type="button">↓ Export briefing</button><button id="dataInspect" type="button">ⓘ Dataset card</button></div><div class="small-warning"><span>ⓘ</span><span id="scientificNote">Simulation only · No operational safety assessment</span></div></div>
+    <aside class="analysis-panel" aria-label="Route comparison and provenance">
+      <section class="panel-section"><h2>Route comparison</h2><p id="routeContext" class="helper">Illustrative destination · Both routes are calculated from the active height grid.</p>
+        <div class="comparison" role="group" aria-label="Choose highlighted route">
+          <div class="comparison-head"><span>Metric</span><button data-mode="distance" type="button" aria-pressed="false"><i class="legend shortest"></i> Shortest</button><button data-mode="terrain" type="button" aria-pressed="true"><i class="legend terrain"></i> Terrain preferred</button></div>
+          <div class="comparison-row"><span>Distance</span><strong id="distanceDistance">—</strong><strong id="terrainDistance">—</strong></div>
+          <div class="comparison-row"><span>Max step slope</span><strong id="distanceSlope">—</strong><strong id="terrainSlope">—</strong></div>
+          <div class="comparison-row"><span>Total ascent</span><strong id="distanceAscent">—</strong><strong id="terrainAscent">—</strong></div>
+        </div>
+        <p id="routeExplainer" class="route-explainer">Calculating routes…</p><p id="routeDifference" class="route-difference"></p><button id="routeButton" type="button" class="primary-button">Recalculate routes</button>
+      </section>
+      <section class="panel-section"><h2>Dataset provenance</h2><dl class="provenance"><div><dt>Source</dt><dd id="sourceOrg">Synthetic illustration</dd></div><div><dt>Optical</dt><dd id="opticalResolution">Illustrative</dd></div><div><dt>DEM</dt><dd id="demResolution">Synthetic</dd></div><div><dt>Route grid</dt><dd id="gridResolution">Illustrative</dd></div><div><dt>Coverage</dt><dd id="coverage">Not geographically registered</dd></div></dl><button id="provenanceButton" type="button" class="text-button">Full dataset information ↗</button></section>
+      <section class="panel-section limits"><h2>Interpretation limits</h2><p id="scientificNote">Synthetic demonstration. No operational safety assessment.</p><p>Lower sampled slope does not establish a safe traverse. Rocks, sand, lighting, communications and suit constraints are not assessed.</p></section>
+      <div class="analysis-actions"><button id="briefingExport" type="button">Export route briefing JSON</button></div>
     </aside>
   </main>
-  <footer class="footer"><div><span class="footer-asterisk">✳</span> ARES <span class="foot-dim">/ ASTRONAUT ROUTE & EXPLORATION SYSTEM</span></div><div>BUILT FOR <strong>NASA SPACE APPS CHALLENGE 2026</strong> <span class="footer-bar">|</span> INDEPENDENT PROJECT · NOT NASA ENDORSED</div><div class="footer-build">SYSTEM VERSION 0.2.0</div></footer>
 </div>
-
-<dialog id="dataDialog" class="dataset-dialog" aria-label="Mission dataset metadata"><div class="dataset-dialog-top"><strong>DATASET / PROVENANCE</strong><button id="dataClose" type="button">Close ×</button></div><p>Information supplied by the data-pack operator. Verify the original sources, CRS, bounds, and units before using scientific claims.</p><pre id="dataDialogText">Synthetic procedural demo: no measured elevation, imagery, or temperature. NASA location is contextual only.</pre></dialog>
-<div id="evaScreen" class="eva-screen" aria-label="Simulated astronaut EVA mode"><div class="eva-header"><div class="eva-brand"><span class="eva-a">◉</span> ARES / HELMET VIEW <span class="eva-demo">SIMULATION ONLY</span></div><button id="evaExit">EXIT EVA MODE ✕</button></div><div class="eva-center"><div class="eva-crosshair"><span></span><span></span><span></span><span></span><i></i></div><div class="eva-notice"><span>● NAVIGATION GUIDANCE / SIMULATED</span><h2 id="evaTarget">Delta escarpment</h2><p>Waypoint selected. This display does not provide live astronaut positioning.</p></div></div><div class="eva-bottom"><div><small>PLANNED ROUTE</small><strong id="evaDistance">—</strong></div><div><small>ILLUSTRATIVE HEADING</small><strong id="evaHeading">—</strong></div><div><small>MAX GRID SLOPE</small><strong id="evaSlope">—</strong></div><div><small>MISSION STATUS</small><strong class="eva-green">ROUTE LOADED</strong></div></div></div>
-<div id="toast" role="status" class="toast" aria-live="polite"></div>
+<dialog id="dataDialog" aria-label="Mission dataset metadata"><div class="dialog-top"><h2>Dataset information</h2><button id="dataClose" type="button">Close</button></div><pre id="dataDialogText">Synthetic procedural demo.</pre></dialog>
+<div id="evaScreen" class="eva-screen" aria-label="Illustrative EVA mode"><div><strong>ARES / illustrative EVA view</strong><button id="evaExit" type="button">Exit EVA view</button></div><p>This display does not provide live positioning or operational guidance.</p><dl><div><dt>Destination</dt><dd id="evaTarget">—</dd></div><div><dt>Planned route</dt><dd id="evaDistance">—</dd></div><div><dt>Maximum sampled slope</dt><dd id="evaSlope">—</dd></div><div><dt>Illustrative bearing</dt><dd id="evaHeading">—</dd></div></dl></div>
+<div id="toast" role="status" aria-live="polite"></div>
 <script type="module" src="./src/main.js"></script>
-</body></html>
+</body>
+</html>
