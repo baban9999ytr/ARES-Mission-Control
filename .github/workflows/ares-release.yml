@@ -23,3 +23,5 @@ jobs:
           node-version-file: .node-version
       - name: Verify app and Cloudflare Pages assets
         run: npm run check
+      - name: Recompute and verify 30 measured mission scenarios
+        run: node tools/generate_mission_results.mjs --check
