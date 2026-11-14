@@ -25,6 +25,34 @@
       <section class="panel-section mission-section">
         <details id="missionDrawer" open>
           <summary>Mission Library <span>30 measured CTX exercises</span></summary>
+          <section id="missionBuilder" class="mission-builder" hidden aria-label="Custom mission editor">
+            <h3>Custom Mission Builder</h3>
+            <p class="helper">Create your own ordered stops on the measured CTX grid, or duplicate a catalog exercise to edit it.</p>
+            <div class="mission-builder-actions">
+              <button id="missionNew" type="button">+ New mission</button>
+              <button id="missionDuplicate" type="button">Duplicate selected</button>
+            </div>
+            <div id="missionEditor" hidden>
+              <label class="field-label" for="missionTitle">Mission name</label>
+              <input id="missionTitle" type="text" maxlength="80" autocomplete="off" aria-label="Custom mission title"/>
+              <fieldset class="mission-map-tools">
+                <legend>Map interaction</legend>
+                <button id="missionPan" type="button" data-edit-mode="navigate" aria-pressed="false">Pan map</button>
+                <button id="missionMove" type="button" data-edit-mode="edit" aria-pressed="true">Drag stops</button>
+                <button id="missionAdd" type="button" data-edit-mode="add" aria-pressed="false">+ Add stop on map</button>
+              </fieldset>
+              <p class="helper">Drag numbered markers on the map. Drag the grips below to reorder stops (or use ↑ / ↓). Routes recalculate after each valid edit.</p>
+              <div id="missionEditorStops" class="mission-editor-stops" aria-label="Reorder custom mission stops"></div>
+              <div class="mission-builder-actions">
+                <button id="missionUndo" type="button">Undo</button>
+                <button id="missionRedo" type="button">Redo</button>
+                <button id="missionSave" type="button">Save mission JSON</button>
+                <label for="missionImport" class="mission-file-label">Load JSON</label>
+                <input id="missionImport" type="file" accept=".json,application/json" aria-label="Load an ARES custom mission JSON file" hidden />
+              </div>
+              <p id="missionEditorStatus" role="status" class="helper">Drag a stop or add one on the map.</p>
+            </div>
+          </section>
           <p id="missionStatus" class="helper" role="status">Loading measured mission catalog…</p>
           <div id="missionControls" hidden>
             <label class="field-label" for="missionPhase">Mission phase</label>
@@ -38,7 +66,7 @@
             <input id="missionSearch" type="search" placeholder="ID, title, objective…" autocomplete="off" />
             <div id="missionList" class="mission-list" aria-label="Measured mission exercises"></div>
           </div>
-          <p id="missionDetail" class="mission-detail" aria-live="polite">Mission routes use measured CTX heights, with illustrative routing costs. No EVA safety certification.</p>
+          <div id="missionDetail" class="mission-detail" aria-live="polite">Mission routes use measured CTX heights, with illustrative routing costs. No EVA safety certification.</div>
         </details>
       </section>
       <section class="panel-section science-section"><details id="scienceDrawer"><summary>Science Targets <span>Research catalog</span></summary><p class="helper">Browse evidence and check CTX coverage. Catalog names are not route presets.</p><label class="field-label" for="scienceScope">Catalog</label><select id="scienceScope"><option value="jezero">Jezero research</option><option value="global">Global Mars context</option></select><div id="scienceList" class="science-list" role="list">Loading catalog…</div><div id="scienceDetail" class="science-detail" aria-live="polite"></div></details></section>
