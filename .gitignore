@@ -27,3 +27,10 @@ venv/
 # Local scientific source tree; small intentional assets in public/ remain trackable.
 /ARES-DATA/
 /incoming/
+# Local R2 upload staging, source archives, and one-off data exports.
+/r2-staging/
+/r2-uploads/
+/raw-downloads/
+/data/manifests/r2-upload-plan.json
+*.tar
+*.tar.gz
