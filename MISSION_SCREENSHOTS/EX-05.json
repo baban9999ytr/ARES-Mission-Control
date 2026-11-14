@@ -1,0 +1,34 @@
+{
+  "id": "EX-05",
+  "name": "Güneybatı — Delta Çevresi",
+  "phase": "EXPLORER",
+  "status": "pending_real_ctx_validation",
+  "dataset": {
+    "name": "USGS Mars 2020 Science Investigation CTX DEM Mosaic",
+    "resolution_m_per_pixel": 20
+  },
+  "start": {
+    "lat": 18.28,
+    "lon": 77.3
+  },
+  "end": {
+    "lat": 18.55,
+    "lon": 77.5
+  },
+  "shortest": {
+    "distance_m": null,
+    "max_sampled_slope_deg": null,
+    "total_ascent_m": null
+  },
+  "terrain_preferred": {
+    "distance_m": null,
+    "max_sampled_slope_deg": null,
+    "total_ascent_m": null
+  },
+  "screenshot": null,
+  "limitations": [
+    "Gerçek CTX rasterı ARES'e yüklenmeden rota metriği doğrulanamaz.",
+    "ARES operasyonel EVA güvenlik sistemi değildir.",
+    "Bilimsel yorum gözlemden ayrı tutulmalıdır."
+  ]
+}
