@@ -6,11 +6,13 @@ ARES is a research prototype for comparing routes on a measured Jezero CTX optic
 
 ## Deployment and large datasets
 
-ARES is ready for a Cloudflare Pages *research preview*. The current web app uses small processed CTX WebP/JSON assets and does **not** require uploading the original multi-gigabyte TIFFs. Keep raw GeoTIFFs outside Git; optionally back them up in a **private R2 bucket**. For future high-resolution areas, derive bounded/validated mission packs and, only once a tile loader exists, serve versioned browser-ready tiles from public R2.
+The live research preview is hosted on **Cloudflare Workers Static Assets** at [spcapps.openstacktool.com](https://spcapps.openstacktool.com/), not Cloudflare Pages. `wrangler.json` points to the generated `dist/` directory and enables SPA navigation fallback. Git-linked Workers Builds must run **build: `npm run build`**, then **deploy: `npx wrangler deploy`** from the repository root. Deploying raw repository files instead of `dist/` will omit the generated `build-info.json`.
 
-See **[Pages + R2 deployment and data architecture](docs/PAGES_R2_DATA_ARCHITECTURE.md)** for the `spapps.openstacktool.com` release checklist, staging strategy, Cloudflare size limits, data integrity gates, optional R2 setup, and rollback instructions. `npm run build` now rejects oversize or accidental raw/sensitive artifacts in `dist/`.
+See [Phase 7 Workers deployment and live verification](docs/PHASE7_WORKERS_RELEASE.md) for current setup and checks. The earlier [Pages + R2 design](docs/PAGES_R2_DATA_ARCHITECTURE.md) remains an alternative/reference, not the current hosting platform.
 
-**Note:** This repository does not automatically provision Pages, R2 or DNS. Live deployment must be authorized and separately smoke-tested.
+The current web app uses compact CTX WebP/JSON assets and does **not** need the original multi-gigabyte TIFFs. Keep source GeoTIFFs outside Git; optionally back them up in private R2. Future high-resolution regions need a separately implemented, validated tile loader and derived map assets. The build checks for accidental raw rasters, sensitive files and oversized files in `dist/`.
+
+**Note:** Repository changes alone do not prove Cloudflare deployed the new version; verify the live build ID, data, deep links, and response headers after each production deployment.
 
 ## Run
 
