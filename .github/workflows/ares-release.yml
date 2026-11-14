@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - feature/pages-r2-release-readiness
 
 permissions:
   contents: read
@@ -25,3 +24,5 @@ jobs:
         run: npm run check
       - name: Recompute and verify 30 measured mission scenarios
         run: node tools/generate_mission_results.mjs --check
+      - name: Validate Cloudflare Workers assets deployment without publishing
+        run: npx --yes wrangler@4 deploy --dry-run
