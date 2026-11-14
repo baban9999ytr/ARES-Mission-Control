@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0",
+  "planet": "Mars",
+  "region": "Jezero Crater",
+  "dataset": "ARES Science Database — Jezero EVA Points",
+  "coordinate_convention": "latitude in degrees; longitude_east in degrees, 0–360° east-positive",
+  "coordinate_policy": "Coordinates identify the specific location represented by the coordinate note. They are not treated as feature centroids unless a source explicitly establishes that.",
+  "notes": [
+    "This file is separate from the previously created global Mars dataset.",
+    "Coordinates are null when a single feature coordinate could not be verified in the checked NASA sources.",
+    "Verified sample-site or rover-location coordinates are explicitly labeled rather than being presented as geological-feature centroids."
+  ],
+  "points": [
+    {
+      "id": "jezero-001",
+      "name": {
+        "en": "Jezero Delta",
+        "tr": "Jezero Deltası"
+      },
+      "scientific_description": {
+        "en": "A fan-shaped ancient river delta where sediment was deposited into the lake that once occupied Jezero Crater. Its stratified sediments are a major target for investigating ancient habitability and possible biosignatures.",
+        "tr": "Jezero Krateri'ndeki eski göle bir nehrin taşıdığı tortuların birikmesiyle oluşmuş yelpaze biçimli antik deltadır. Katmanlı tortulları, geçmiş yaşanabilirlik ve olası biyolojik izlerin araştırılması için önemli bir hedeftir."
+      },
+      "scientific_target": "Ancient lake environment, deltaic sedimentation, habitability and biosignature preservation",
+      "nasa_source_url": "https://science.nasa.gov/resource/perseverances-route-to-the-delta-2/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA24922/PIA24922~orig.jpg",
+        "credit": "NASA/JPL-Caltech/University of Arizona/USGS"
+      },
+      "coordinates": {
+        "latitude": null,
+        "longitude_east": null,
+        "represents": "Jezero western delta feature; NASA source does not provide a single verified point coordinate for the entire delta",
+        "status": "null — feature is an extended geological unit"
+      },
+      "geological_category": "ancient river delta / sedimentary deposit",
+      "jury_description_en": "Jezero’s ancient delta records where a river once entered a lake, preserving layered sediments deposited in a potentially habitable environment. It is one of the mission’s key locations for searching for preserved evidence of ancient life."
+    },
+    {
+      "id": "jezero-002",
+      "name": {
+        "en": "Kodiak",
+        "tr": "Kodiak"
+      },
+      "scientific_description": {
+        "en": "Kodiak is a remnant of Jezero Crater’s ancient delta. Its exposed stratigraphy provides a close-up view of sedimentary layers associated with the former river-and-lake system.",
+        "tr": "Kodiak, Jezero Krateri'nin antik deltasından günümüze kalan bir parçadır. Açığa çıkmış tabakaları, eski nehir-göl sistemiyle ilişkili tortul katmanların yakından incelenmesini sağlar."
+      },
+      "scientific_target": "Delta stratigraphy, sediment deposition and ancient hydrology",
+      "nasa_source_url": "https://www.jpl.nasa.gov/images/pia24814-jezero-craters-kodiak-and-scarps/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA24814/PIA24814~orig.jpg",
+        "credit": "NASA/JPL-Caltech/University of Arizona/USGS"
+      },
+      "coordinates": {
+        "latitude": null,
+        "longitude_east": null,
+        "represents": "Kodiak delta remnant; NASA source confirms the feature but does not publish a single verified coordinate",
+        "status": "null — named outcrop/remnant"
+      },
+      "geological_category": "delta remnant / sedimentary stratigraphy",
+      "jury_description_en": "Kodiak is a preserved remnant of Jezero’s ancient delta, exposing sedimentary layers formed by a former river-and-lake system. Its stratigraphy helps reconstruct how water and sediment moved through the crater."
+    },
+    {
+      "id": "jezero-003",
+      "name": {
+        "en": "Máaz",
+        "tr": "Máaz"
+      },
+      "scientific_description": {
+        "en": "Máaz is a geologic formation on Jezero’s crater floor composed of basaltic lava flows. Perseverance sampled this unit during its first science campaign to study its mineralogy, chemistry and alteration history.",
+        "tr": "Máaz, Jezero'nun krater tabanında bulunan bazaltik lav akıntılarından oluşan bir jeolojik formasyondur. Perseverance ilk bilim kampanyasında bu birimden örnekler alarak mineralojisini, kimyasını ve alterasyon geçmişini inceledi."
+      },
+      "scientific_target": "Basaltic volcanism, alteration, mineralogy and crater-floor history",
+      "nasa_source_url": "https://ntrs.nasa.gov/api/citations/20230016431/downloads/Sun%20et%20al%202023%20JGR%20Planets%20Jezero%20Campaign.pdf",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA24814/PIA24814~orig.jpg",
+        "credit": "NASA/JPL-Caltech/University of Arizona/USGS"
+      },
+      "coordinates": {
+        "latitude": 18.43074,
+        "longitude_east": 77.44437,
+        "represents": "Rochette/Bellegarde sample locality within the Máaz formation",
+        "status": "verified sample-site coordinate; not the centroid of the entire Máaz formation"
+      },
+      "geological_category": "igneous formation / basaltic lava flows",
+      "jury_description_en": "Máaz is a basaltic lava-flow formation on the Jezero crater floor. Perseverance’s samples from this unit help scientists reconstruct Martian volcanism and the chemical alteration that affected the crater floor."
+    },
+    {
+      "id": "jezero-004",
+      "name": {
+        "en": "Séítah",
+        "tr": "Séítah"
+      },
+      "scientific_description": {
+        "en": "Séítah is an olivine-rich igneous formation on the Jezero crater floor, characterized by hilly terrain and exposed ultramafic cumulate rocks. Perseverance investigated and sampled the formation during its first science campaign.",
+        "tr": "Séítah, Jezero krater tabanında bulunan olivin açısından zengin magmatik bir formasyondur; engebeli arazi ve açığa çıkmış ultramafik kümülat kayaçlarıyla karakterizedir. Perseverance ilk bilim kampanyasında bu formasyonu inceledi ve örnekledi."
+      },
+      "scientific_target": "Olivine-rich igneous rocks, cumulate formation and crater-floor evolution",
+      "nasa_source_url": "https://ntrs.nasa.gov/api/citations/20230016431/downloads/Sun%20et%20al%202023%20JGR%20Planets%20Jezero%20Campaign.pdf",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA24814/PIA24814~orig.jpg",
+        "credit": "NASA/JPL-Caltech/University of Arizona/USGS"
+      },
+      "coordinates": {
+        "latitude": 18.43397,
+        "longitude_east": 77.44301,
+        "represents": "Brac/Dourbes sample locality within the Séítah formation",
+        "status": "verified sample-site coordinate; not the centroid of the entire Séítah formation"
+      },
+      "geological_category": "igneous formation / ultramafic olivine-rich cumulate",
+      "jury_description_en": "Séítah exposes olivine-rich igneous rocks that formed deep within the Martian crust before being exposed at the crater floor. Its samples provide a window into the early magmatic history of Jezero."
+    },
+    {
+      "id": "jezero-005",
+      "name": {
+        "en": "Three Forks",
+        "tr": "Three Forks"
+      },
+      "scientific_description": {
+        "en": "Three Forks is the staging area at the base of Jezero’s ancient western delta where rover routes to the delta converged. Perseverance also created its first surface sample depot here, depositing 10 sealed sample tubes.",
+        "tr": "Three Forks, Jezero'nun antik batı deltasının tabanında, deltaya giden rover rotalarının birleştiği hazırlık bölgesidir. Perseverance burada 10 mühürlü örnek tüpünden oluşan ilk yüzey örnek deposunu da oluşturdu."
+      },
+      "scientific_target": "Delta-front geology, sample-depot context and rover route planning",
+      "nasa_source_url": "https://www.jpl.nasa.gov/images/pia25682-perseverances-three-forks-sample-depot-map/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA25682/PIA25682~orig.jpg",
+        "credit": "NASA/JPL-Caltech"
+      },
+      "coordinates": {
+        "latitude": 18.45369687,
+        "longitude_east": 77.41359752,
+        "represents": "USGS Astrogeology reference point near the Three Forks location and western delta front",
+        "status": "verified reference point; not a surveyed centroid of the named area"
+      },
+      "geological_category": "delta-front terrain / rover sample-depot site",
+      "jury_description_en": "Three Forks marks the gateway to Jezero’s western delta and became the site of Perseverance’s first surface sample depot. It is especially important for linking rover navigation, delta geology, and future sample-retrieval planning."
+    },
+    {
+      "id": "jezero-006",
+      "name": {
+        "en": "Enchanted Lake",
+        "tr": "Enchanted Lake"
+      },
+      "scientific_description": {
+        "en": "Enchanted Lake is a named feature along Perseverance’s exploration of the front of Jezero’s ancient delta. NASA identifies it among the key features visited during the delta-front campaign.",
+        "tr": "Enchanted Lake, Perseverance'ın Jezero'nun antik deltasının ön kısmındaki keşfi sırasında ziyaret ettiği adlandırılmış bir özelliktir. NASA, deltadaki bilim kampanyası kapsamında bu özelliği önemli keşif noktalarından biri olarak belirtir."
+      },
+      "scientific_target": "Delta-front sedimentary geology and ancient river-lake system",
+      "nasa_source_url": "https://science.nasa.gov/resource/perseverance-exploring-the-front-of-the-delta/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA25022/PIA25022~orig.jpg",
+        "credit": "NASA/JPL-Caltech/ASU/MSSS"
+      },
+      "coordinates": {
+        "latitude": null,
+        "longitude_east": null,
+        "represents": "Named mission feature within the delta-front campaign; no verified single coordinate found in the checked NASA sources",
+        "status": "null — coordinate not verified"
+      },
+      "geological_category": "delta-front terrain / sedimentary environment",
+      "jury_description_en": "Enchanted Lake is one of the named features explored during Perseverance’s investigation of Jezero’s delta front. It belongs to the broader ancient river-and-lake environment that makes the delta scientifically valuable."
+    },
+    {
+      "id": "jezero-007",
+      "name": {
+        "en": "Belva",
+        "tr": "Belva"
+      },
+      "scientific_description": {
+        "en": "Belva is a small impact crater in the western Jezero region near the ancient delta. Perseverance imaged the crater and used its exposed geology to investigate local stratigraphic context.",
+        "tr": "Belva, antik delta yakınındaki batı Jezero bölgesinde bulunan küçük bir çarpma krateridir. Perseverance krateri görüntüledi ve açığa çıkan jeolojiyi yerel stratigrafik bağlamı incelemek için kullandı."
+      },
+      "scientific_target": "Impact excavation, exposed stratigraphy and delta geology",
+      "nasa_source_url": "https://science.nasa.gov/resource/perseverances-mid-climb-view-of-jezero-crater/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA25761/PIA25761~orig.jpg",
+        "credit": "NASA/JPL-Caltech/ASU/MSSS"
+      },
+      "coordinates": {
+        "latitude": 18.456223,
+        "longitude_east": 77.31508121,
+        "represents": "Perseverance rover location reported by NASA on May 3, 2024 in the Belva area; not Belva crater center",
+        "status": "verified NASA rover-location reference; not a crater-centroid coordinate"
+      },
+      "geological_category": "impact crater / exposed delta-margin geology",
+      "jury_description_en": "Belva is a small impact crater in the western Jezero region that exposes local geology in a useful stratigraphic setting. Perseverance’s observations there help place the delta and its sedimentary rocks into a broader geological context."
+    },
+    {
+      "id": "jezero-008",
+      "name": {
+        "en": "Bright Angel",
+        "tr": "Bright Angel"
+      },
+      "scientific_description": {
+        "en": "Bright Angel is a light-toned rocky outcrop along the northern wall of Neretva Vallis, an ancient river channel that fed Jezero. Its layered rocks may represent ancient channel-fill sediment or older bedrock exposed by river erosion.",
+        "tr": "Bright Angel, Jezero'yu besleyen antik Neretva Vallis kanalının kuzey duvarı boyunca bulunan açık renkli kayalık bir yüzeydir. Katmanlı kayaçları, antik kanal dolgusu tortullarını veya nehir erozyonuyla açığa çıkmış daha yaşlı ana kayayı temsil ediyor olabilir."
+      },
+      "scientific_target": "Ancient river-channel deposits, stratigraphy and aqueous history",
+      "nasa_source_url": "https://science.nasa.gov/resource/perseverance-views-bright-angel/",
+      "image": {
+        "url": "https://images-assets.nasa.gov/image/PIA26336/PIA26336~orig.jpg",
+        "credit": "NASA/JPL-Caltech"
+      },
+      "coordinates": {
+        "latitude": 18.4907,
+        "longitude_east": 77.48205542,
+        "represents": "Perseverance rover location reported by NASA on June 21, 2024 during proximity science at Bright Angel; not the outcrop centroid",
+        "status": "verified NASA rover-location reference; not a surveyed feature centroid"
+      },
+      "geological_category": "ancient river-channel outcrop / layered sedimentary or exposed bedrock",
+      "jury_description_en": "Bright Angel exposes light-toned, layered rocks beside an ancient river channel that once fed Jezero’s lake. The outcrop is important for testing whether its rocks record channel-fill sediment or older bedrock revealed by erosion."
+    }
+  ]
+}

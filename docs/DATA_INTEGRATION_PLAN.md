@@ -1,0 +1,10 @@
+# Scientific data integration plan
+
+1. Confirm the high-resolution GeoTIFF product IDs, acquisition and processing history, vertical datum/units, accuracy, and license from source records. Preserve the original TIFFs and record source URLs plus citation terms in a reviewed manifest.
+2. Select a footprint wholly inside one DEM/DRG pair, inspect masks and valid coverage at native resolution, and test registration with identifiable landmarks or control points. Treat the CTX context pair separately because its CRS differs.
+3. Use `tools/import_mars_rasters.py` with the reviewed source URLs and a projected-metre crop. It resamples a DEM to the route grid, generates WebP visualizations, preserves nodata as impassable cells, and emits `public/data/mission-pack.json`. Document crop bounds, grid dimensions, resampling, vertical units, and any gaps. Review the generated result before considering it measured input.
+4. Replace the importer's illustrative start and waypoint positions with sourced positions only after converting the science JSON's east-positive longitude/latitude into the selected Martian projected CRS. Distinguish rover/sample coordinates from extended geological features; keep nulls null. Check each point falls on valid raster cells and record transform method and uncertainty.
+5. Review route behavior on known landmarks and masked regions. Establish whether the DEM resolution and vertical uncertainty support the displayed slope metrics. Do not infer subpixel hazards from 1 m or 20 m elevation cells. Keep thermal out of measured layers until a registered, sourced thermal product exists.
+6. Add narrow tests for the chosen mission pack and provenance, then build the static app. Only small approved WebP/PNG layers and tiles needed by the app should enter Git. Keep source rasters, intermediates, caches, and local paths out of commits.
+
+The current app already loads an optional measured mission pack when present and falls back to synthetic data otherwise. This preparation does not modify its routing or UI behavior.

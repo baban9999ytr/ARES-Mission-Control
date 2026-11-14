@@ -1,0 +1,706 @@
+{
+  "schema_version": 1,
+  "note": "Source labels correspond to --root order; no absolute paths stored.",
+  "rasters": [
+    {
+      "root": "file_1",
+      "relative_path": "cenjez_DEM_1m(1).tif",
+      "filename": "cenjez_DEM_1m(1).tif",
+      "size_bytes": 251714420,
+      "sha256": "e89f87a44b5c7b34a22c3f4a5b0032212e7104ecba699192dc0936ddf4a3067c",
+      "driver": "GTiff",
+      "width": 18978,
+      "height": 24401,
+      "bands": 1,
+      "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "projected_mars_meters": true,
+      "resolution": [
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        4359982.037914526,
+        1077616.6170900527,
+        4378960.037914526,
+        1102017.6170900527
+      ],
+      "nodata": [
+        -32767.0
+      ],
+      "dtype": [
+        "float32"
+      ],
+      "compression": "LERC_ZSTD",
+      "tiled": true,
+      "block_shapes": [
+        [
+          256,
+          256
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 597,
+        "height": 768,
+        "valid_pixels": 287162,
+        "total_pixels": 458496,
+        "estimated_min": -2710.48486328125,
+        "estimated_max": -2479.780029296875
+      },
+      "preview": {
+        "path": "docs/previews/file_1__cenjez_DEM_1m(1).png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          -2701.405654296875,
+          -2544.6763232421877
+        ]
+      }
+    },
+    {
+      "root": "file_2",
+      "relative_path": "cenjez_DRG_0_3m.tif",
+      "filename": "cenjez_DRG_0_3m.tif",
+      "size_bytes": 1640221885,
+      "sha256": "c63f189f84ab1f2b1b802819d27b17ec1273d625dcf68cc74814e9dc4d7b24c5",
+      "driver": "GTiff",
+      "width": 63261,
+      "height": 81340,
+      "bands": 1,
+      "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "projected_mars_meters": true,
+      "resolution": [
+        0.29995473187602484,
+        0.29995473187602484
+      ],
+      "bounds": [
+        4359982.912805038,
+        1077618.1716011204,
+        4378958.349098247,
+        1102016.4894919163
+      ],
+      "nodata": [
+        0.0
+      ],
+      "dtype": [
+        "uint8"
+      ],
+      "compression": "ZSTD",
+      "tiled": true,
+      "block_shapes": [
+        [
+          256,
+          256
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 597,
+        "height": 768,
+        "valid_pixels": 287223,
+        "total_pixels": 458496,
+        "estimated_min": 20.0,
+        "estimated_max": 237.0
+      },
+      "preview": {
+        "path": "docs/previews/file_2__cenjez_DRG_0_3m.png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          76.0,
+          183.0
+        ]
+      }
+    },
+    {
+      "root": "file_3",
+      "relative_path": "swjez-DEM_1m.tif",
+      "filename": "swjez-DEM_1m.tif",
+      "size_bytes": 198198530,
+      "sha256": "44475f14a666c75e83d83461cd33bf0ce40ca1f9003f8d5bc8e7486bbc60b6a4",
+      "driver": "GTiff",
+      "width": 12776,
+      "height": 25193,
+      "bands": 1,
+      "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "projected_mars_meters": true,
+      "resolution": [
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        4349996.816078357,
+        1072667.7375764067,
+        4362772.816078357,
+        1097860.7375764067
+      ],
+      "nodata": [
+        -3.4028226550889045e+38
+      ],
+      "dtype": [
+        "float32"
+      ],
+      "compression": "LERC_ZSTD",
+      "tiled": true,
+      "block_shapes": [
+        [
+          256,
+          256
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 389,
+        "height": 768,
+        "valid_pixels": 188973,
+        "total_pixels": 298752,
+        "estimated_min": -2694.23681640625,
+        "estimated_max": -1705.466552734375
+      },
+      "preview": {
+        "path": "docs/previews/file_3__swjez-DEM_1m.png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          -2679.45861328125,
+          -2177.5418457031255
+        ]
+      }
+    },
+    {
+      "root": "file_4",
+      "relative_path": "swjez-DRG_0_3m.tif",
+      "filename": "swjez-DRG_0_3m.tif",
+      "size_bytes": 1125585518,
+      "sha256": "685321ae6cf0a9485e98ad9bea0f3690f871d1150b2a2e08b8983059715dee77",
+      "driver": "GTiff",
+      "width": 42152,
+      "height": 83974,
+      "bands": 1,
+      "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "projected_mars_meters": true,
+      "resolution": [
+        0.3,
+        0.3
+      ],
+      "bounds": [
+        4350129.442128072,
+        1072667.1487371756,
+        4362775.042128071,
+        1097859.3487371756
+      ],
+      "nodata": [
+        0.0
+      ],
+      "dtype": [
+        "uint8"
+      ],
+      "compression": "ZSTD",
+      "tiled": true,
+      "block_shapes": [
+        [
+          256,
+          256
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 386,
+        "height": 768,
+        "valid_pixels": 168179,
+        "total_pixels": 296448,
+        "estimated_min": 1.0,
+        "estimated_max": 254.0
+      },
+      "preview": {
+        "path": "docs/previews/file_4__swjez-DRG_0_3m.png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          44.0,
+          199.0
+        ]
+      }
+    },
+    {
+      "root": "file_5",
+      "relative_path": "JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff",
+      "filename": "JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff",
+      "size_bytes": 9662387,
+      "sha256": "16a1aa66c3f48c1bca252795827db7b417876217aff0f5e1aff18027fab2327b",
+      "driver": "GTiff",
+      "width": 1596,
+      "height": 1512,
+      "bands": 1,
+      "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "ESRI:103885",
+      "projected_mars_meters": true,
+      "resolution": [
+        20.0,
+        20.0
+      ],
+      "bounds": [
+        4573663.250853,
+        1079453.140188,
+        4605583.250853,
+        1109693.140188
+      ],
+      "nodata": [
+        -3.4028226550889045e+38
+      ],
+      "dtype": [
+        "float32"
+      ],
+      "compression": null,
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          1596
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 728,
+        "valid_pixels": 559104,
+        "total_pixels": 559104,
+        "estimated_min": -2710.60009765625,
+        "estimated_max": -1515.6756591796875
+      },
+      "preview": {
+        "path": "docs/previews/file_5__JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          -2675.6723486328124,
+          -1791.0827636718755
+        ]
+      }
+    },
+    {
+      "root": "file_6",
+      "relative_path": "JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff",
+      "filename": "JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff",
+      "size_bytes": 36269402,
+      "sha256": "842b457afee7c2672022b66e3f60be836c6d52e99474015bfd9ced60099b8615",
+      "driver": "GTiff",
+      "width": 5322,
+      "height": 5040,
+      "bands": 1,
+      "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "ESRI:103885",
+      "projected_mars_meters": true,
+      "resolution": [
+        6.0,
+        6.0
+      ],
+      "bounds": [
+        4573663.250853,
+        1079453.140188,
+        4605595.250853,
+        1109693.140188
+      ],
+      "nodata": [
+        0.0
+      ],
+      "dtype": [
+        "uint8"
+      ],
+      "compression": null,
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          5322
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 727,
+        "valid_pixels": 558336,
+        "total_pixels": 558336,
+        "estimated_min": 18.0,
+        "estimated_max": 255.0
+      },
+      "preview": {
+        "path": "docs/previews/file_6__JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.png",
+        "purpose": "non-operational visualization",
+        "resampling": "nearest-neighbor overview",
+        "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
+        "sample_percentiles": [
+          97.0,
+          201.0
+        ]
+      }
+    },
+    {
+      "root": "file_7",
+      "relative_path": "cenjez_DEM_1m.tif",
+      "filename": "cenjez_DEM_1m.tif",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "error": "'cenjez_DEM_1m.tif' not recognized as being in a supported file format."
+    },
+    {
+      "root": "file_8",
+      "relative_path": "cenjez_DRG_0_3m.tif",
+      "filename": "cenjez_DRG_0_3m.tif",
+      "size_bytes": 238,
+      "sha256": "5a078fe0bc5a4c53c9822d183590975d16c909bc89a303c89fbc2551ace7ddd5",
+      "error": "'cenjez_DRG_0_3m.tif' not recognized as being in a supported file format."
+    },
+    {
+      "root": "file_9",
+      "relative_path": "cenjez_DEM_1m.XHe4jmn7.tif.part",
+      "filename": "cenjez_DEM_1m.XHe4jmn7.tif.part",
+      "size_bytes": 89068868,
+      "sha256": "66ad19da96816584903b0a9cc10e95f26d8d9242fb91eaa98ac3a5e1ac815ea1",
+      "error": "cenjez_DEM_1m.XHe4jmn7.tif.part: TIFFReadDirectory:Failed to read directory at offset 251656012"
+    },
+    {
+      "root": "file_10",
+      "relative_path": "cenjez_DRG_0_3m(1).opkTWtQs.tif.part",
+      "filename": "cenjez_DRG_0_3m(1).opkTWtQs.tif.part",
+      "size_bytes": 48133037,
+      "sha256": "63a3ae4aac88bdfa5e3654eb18ed35c4cb9bef1e8dc2a1bfcd9a52f06913f975",
+      "driver": "GTiff",
+      "width": 63261,
+      "height": 81340,
+      "bands": 1,
+      "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "projected_mars_meters": true,
+      "resolution": [
+        0.29995473187602484,
+        0.29995473187602484
+      ],
+      "bounds": [
+        4359982.912805038,
+        1077618.1716011204,
+        4378958.349098247,
+        1102016.4894919163
+      ],
+      "nodata": [
+        0.0
+      ],
+      "dtype": [
+        "uint8"
+      ],
+      "compression": "ZSTD",
+      "tiled": true,
+      "block_shapes": [
+        [
+          256,
+          256
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "error": "Read failed. See previous exception for details."
+    },
+    {
+      "root": "file_11",
+      "relative_path": "PIA24802.tif",
+      "filename": "PIA24802.tif",
+      "size_bytes": 22513710,
+      "sha256": "4d5b2a4ac3494994dee696563aeed420dc2ca8d9d53ef1703b41bd603497e7ff",
+      "driver": "GTiff",
+      "width": 2700,
+      "height": 3599,
+      "bands": 3,
+      "crs": null,
+      "crs_name": null,
+      "projected_mars_meters": false,
+      "resolution": null,
+      "bounds": null,
+      "nodata": [
+        null,
+        null,
+        null
+      ],
+      "dtype": [
+        "uint8",
+        "uint8",
+        "uint8"
+      ],
+      "compression": "LZW",
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          2700
+        ],
+        [
+          1,
+          2700
+        ],
+        [
+          1,
+          2700
+        ]
+      ],
+      "embedded_tags": {
+        "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
+        "TIFFTAG_DATETIME": "2021:12:13 08:25:36",
+        "TIFFTAG_XRESOLUTION": "72",
+        "TIFFTAG_YRESOLUTION": "72",
+        "TIFFTAG_RESOLUTIONUNIT": "2 (pixels/inch)"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 576,
+        "height": 768,
+        "valid_pixels": 442368,
+        "total_pixels": 442368,
+        "estimated_min": 38.0,
+        "estimated_max": 255.0
+      }
+    },
+    {
+      "root": "file_12",
+      "relative_path": "PIA25325.tif",
+      "filename": "PIA25325.tif",
+      "size_bytes": 42078412,
+      "sha256": "ac906090e1788f24ce9c8542d367268ebf7dcb5971df525abd3b591cbf49be4b",
+      "driver": "GTiff",
+      "width": 5120,
+      "height": 2880,
+      "bands": 3,
+      "crs": null,
+      "crs_name": null,
+      "projected_mars_meters": false,
+      "resolution": null,
+      "bounds": null,
+      "nodata": [
+        null,
+        null,
+        null
+      ],
+      "dtype": [
+        "uint8",
+        "uint8",
+        "uint8"
+      ],
+      "compression": "LZW",
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          5120
+        ],
+        [
+          1,
+          5120
+        ],
+        [
+          1,
+          5120
+        ]
+      ],
+      "embedded_tags": {
+        "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
+        "TIFFTAG_DATETIME": "2022:06:29 08:52:17",
+        "TIFFTAG_XRESOLUTION": "72",
+        "TIFFTAG_YRESOLUTION": "72",
+        "TIFFTAG_RESOLUTIONUNIT": "2 (pixels/inch)"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 432,
+        "valid_pixels": 331776,
+        "total_pixels": 331776,
+        "estimated_min": 0.0,
+        "estimated_max": 255.0
+      }
+    },
+    {
+      "root": "file_13",
+      "relative_path": "PIA25682.tif",
+      "filename": "PIA25682.tif",
+      "size_bytes": 1550590,
+      "sha256": "ec1372500e0ec295f7da1e0152ea011f43f9b0ec8c7856d6a222f7d81a871bce",
+      "driver": "GTiff",
+      "width": 998,
+      "height": 777,
+      "bands": 3,
+      "crs": null,
+      "crs_name": null,
+      "projected_mars_meters": false,
+      "resolution": null,
+      "bounds": null,
+      "nodata": [
+        null,
+        null,
+        null
+      ],
+      "dtype": [
+        "uint8",
+        "uint8",
+        "uint8"
+      ],
+      "compression": "LZW",
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          998
+        ],
+        [
+          1,
+          998
+        ],
+        [
+          1,
+          998
+        ]
+      ],
+      "embedded_tags": {
+        "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
+        "TIFFTAG_DATETIME": "2023:01:30 09:12:53",
+        "TIFFTAG_XRESOLUTION": "72",
+        "TIFFTAG_YRESOLUTION": "72",
+        "TIFFTAG_RESOLUTIONUNIT": "2 (pixels/inch)"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 598,
+        "valid_pixels": 459264,
+        "total_pixels": 459264,
+        "estimated_min": 0.0,
+        "estimated_max": 255.0
+      }
+    },
+    {
+      "root": "file_14",
+      "relative_path": "JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff",
+      "filename": "JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff",
+      "size_bytes": 9662387,
+      "sha256": "16a1aa66c3f48c1bca252795827db7b417876217aff0f5e1aff18027fab2327b",
+      "driver": "GTiff",
+      "width": 1596,
+      "height": 1512,
+      "bands": 1,
+      "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "ESRI:103885",
+      "projected_mars_meters": true,
+      "resolution": [
+        20.0,
+        20.0
+      ],
+      "bounds": [
+        4573663.250853,
+        1079453.140188,
+        4605583.250853,
+        1109693.140188
+      ],
+      "nodata": [
+        -3.4028226550889045e+38
+      ],
+      "dtype": [
+        "float32"
+      ],
+      "compression": null,
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          1596
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 728,
+        "valid_pixels": 559104,
+        "total_pixels": 559104,
+        "estimated_min": -2710.60009765625,
+        "estimated_max": -1515.6756591796875
+      }
+    },
+    {
+      "root": "file_15",
+      "relative_path": "JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff",
+      "filename": "JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff",
+      "size_bytes": 36269402,
+      "sha256": "842b457afee7c2672022b66e3f60be836c6d52e99474015bfd9ced60099b8615",
+      "driver": "GTiff",
+      "width": 5322,
+      "height": 5040,
+      "bands": 1,
+      "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "crs_name": "ESRI:103885",
+      "projected_mars_meters": true,
+      "resolution": [
+        6.0,
+        6.0
+      ],
+      "bounds": [
+        4573663.250853,
+        1079453.140188,
+        4605595.250853,
+        1109693.140188
+      ],
+      "nodata": [
+        0.0
+      ],
+      "dtype": [
+        "uint8"
+      ],
+      "compression": null,
+      "tiled": false,
+      "block_shapes": [
+        [
+          1,
+          5322
+        ]
+      ],
+      "embedded_tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "sample": {
+        "method": "nearest-neighbor overview, at most 768 pixels per side",
+        "width": 768,
+        "height": 727,
+        "valid_pixels": 558336,
+        "total_pixels": 558336,
+        "estimated_min": 18.0,
+        "estimated_max": 255.0
+      }
+    }
+  ]
+}

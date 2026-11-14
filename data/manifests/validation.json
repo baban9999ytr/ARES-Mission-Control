@@ -1,0 +1,72 @@
+{
+  "science": {
+    "file": "jezero-science-points.json",
+    "counts": {
+      "total": 8,
+      "with_coordinates": 5,
+      "null_coordinates": 3,
+      "rover_or_sample": 4,
+      "feature": 4,
+      "unclear_type": 0
+    },
+    "issues": [],
+    "caution": "URL format, coordinate plausibility and descriptions do not establish scientific source verification."
+  },
+  "pairs": {
+    "central_jezero": {
+      "status": "geometry-compatible",
+      "same_crs": true,
+      "overlap_square_meters": 462968726.8,
+      "dem_bbox_coverage_fraction": 0.999755,
+      "pixel_resolution_meters": {
+        "dem": [
+          1.0,
+          1.0
+        ],
+        "drg": [
+          0.29995473187602484,
+          0.29995473187602484
+        ]
+      },
+      "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
+    },
+    "southwest_jezero": {
+      "status": "geometry-compatible",
+      "same_crs": true,
+      "overlap_square_meters": 318506960.32,
+      "dem_bbox_coverage_fraction": 0.989565,
+      "pixel_resolution_meters": {
+        "dem": [
+          1.0,
+          1.0
+        ],
+        "drg": [
+          0.3,
+          0.3
+        ]
+      },
+      "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
+    },
+    "northern_fan": {
+      "status": "missing",
+      "reason": "DEM or DRG unavailable"
+    },
+    "ctx_context": {
+      "status": "geometry-compatible",
+      "same_crs": true,
+      "overlap_square_meters": 965260800.0,
+      "dem_bbox_coverage_fraction": 1.0,
+      "pixel_resolution_meters": {
+        "dem": [
+          20.0,
+          20.0
+        ],
+        "drg": [
+          6.0,
+          6.0
+        ]
+      },
+      "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
+    }
+  }
+}

@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" hint="target=mars">
+<Folder>
+<name>Mars2020 LSWG2 GIS Data</name>
+<description>GIS Data for the Mars 2020 Landing Site Working Group</description>
+<NetworkLink>
+    <name>Mars 2020 SHARAD Coverage</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>20.888</north><south>15.521</south>
+          <east>80.502</east><west>71.596</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/Shapes/Mars2020_SHARAD.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>Mars 2020 HiRISE Coverage</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>20.888</north><south>15.521</south>
+          <east>80.502</east><west>71.596</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/Shapes/Mars2020_HiRISE.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>Mars 2020 CRISM Coverage</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>20.888</north><south>15.521</south>
+          <east>80.502</east><west>71.596</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/Shapes/Mars2020_CRISM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>Mars 2020 Landing Site Ellipses</name>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.508613</north><south>17.820731</south>
+          <east>77.593358</east><west>77.066268</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/Shapes/NES-JEZ-MDW_ellipses.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+
+
+
+
+
+
+<Folder>
+<name>Northeast Syrtis HiRISE DEMs</name>
+<description>HiRISE Topography (Ames Stereo Pipeline)</description>
+<Folder>
+<name>Ellipse Mosaic</name>
+<description></description>
+<NetworkLink>
+    <name>NES_Ellipse_DEM_ASP</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/NES_Ellipse_DEM_ASP/Northeast-Syrtis-Ellipse_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>NES_Ellipse_DEM_ASP (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/NES_Ellipse_DEM_ASP_10mCTR/NES_Ellipse_DEM_ASP_10mCTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+<Folder>
+<name>ESP_015942_1980__ESP_016443_1980</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_015942_1980__ESP_016443_1980</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_015942_1980__ESP_016443_1980/ESP_015942_1980__ESP_016443_1980.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_015942_1980__ESP_016443_1980 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_015942_1980__ESP_016443_1980_ctr/ESP_015942_1980__ESP_016443_1980_ctr.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_016219_1980__ESP_016364_1980</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_016219_1980__ESP_016364_1980</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016219_1980__ESP_016364_1980/ESP_016219_1980__ESP_016364_1980.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_016219_1980__ESP_016364_1980 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016219_1980__ESP_016364_1980_ctr/ESP_016219_1980__ESP_016364_1980_ctr.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_016509_1980__ESP_016575_1980</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_016509_1980__ESP_016575_1980</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016509_1980__ESP_016575_1980/ESP_016509_1980__ESP_016575_1980.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_016509_1980__ESP_016575_1980 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016509_1980__ESP_016575_1980_ctr/ESP_016509_1980__ESP_016575_1980_ctr.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_016931_1980__ESP_017076_1980</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_016931_1980__ESP_017076_1980</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016931_1980__ESP_017076_1980/ESP_016931_1980__ESP_017076_1980.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_016931_1980__ESP_017076_1980 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_016931_1980__ESP_017076_1980_ctr/ESP_016931_1980__ESP_017076_1980_ctr.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_049053_1980__ESP_049119_1980</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_049053_1980__ESP_049119_1980</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_049053_1980__ESP_049119_1980/ESP_049053_1980__ESP_049119_1980.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_049053_1980__ESP_049119_1980 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>17.964743</north><south>17.785798</south>
+          <east>77.352255</east><west>77.041922</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_049053_1980__ESP_049119_1980_ctr/ESP_049053_1980__ESP_049119_1980_ctr.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+</Folder>
+
+
+
+
+<Folder>
+<name>Jezero Crater HiRISE DEMs</name>
+<description>HiRISE Topography (Ames Stereo Pipeline)</description>
+<Folder>
+<name>Western Channel/Fan Mosaic</name>
+<description></description>
+<NetworkLink>
+    <name>Jezero_Channel-Fan_DEM_ASP</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/Jezero_ChannelFan_DEM_ASP/Jezero_ChannelFan_DEM_ASP.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>Jezero_Channel-Fan (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/Jezero_ChannelFan_CTR_ASP/Jezero_ChannelFan_CTR_ASP.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+<Folder>
+<name>ESP_022746_1985__ESP_022680_1985</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_022746_1985__ESP_022680_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_022746_1985_ESP_022680_1985_DEM/ESP_022746_1985_ESP_022680_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_022746_1985__ESP_022680_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_022746_1985_ESP_022680_1985_CTR/ESP_022746_1985_ESP_022680_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_023379_1985__ESP_023524_1985</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_023379_1985__ESP_023524_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_023379_1985_ESP_023524_1985_DEM/ESP_023379_1985_ESP_023524_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_023379_1985__ESP_023524_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_023379_1985_ESP_023524_1985_CTR/ESP_023379_1985_ESP_023524_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_036618_1985__ESP_037119_1985</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_036618_1985__ESP_037119_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_036618_1985_ESP_037119_1985_DEM/ESP_036618_1985_ESP_037119_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_036618_1985__ESP_037119_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_036618_1985_ESP_037119_1985_CTR/ESP_036618_1985_ESP_037119_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_037818_1990__ESP_037330_1990</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_037818_1990__ESP_037330_1990</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_037818_1990_ESP_037330_1990_DEM/ESP_037818_1990_ESP_037330_1990_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_037818_1990__ESP_037330_1990 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_037818_1990_ESP_037330_1990_CTR/ESP_037818_1990_ESP_037330_1990_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>ESP_042315_1985__ESP_037396_1985</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_042315_1985__ESP_037396_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_042315_1985_ESP_037396_1985_DEM/ESP_042315_1985_ESP_037396_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_042315_1985__ESP_037396_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_042315_1985_ESP_037396_1985_CTR/ESP_042315_1985_ESP_037396_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+
+
+<Folder>
+<name>ESP_046060_1985__ESP_045994_1985</name>
+<description></description>
+<NetworkLink>
+    <name>ESP_046060_1985__ESP_045994_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_046060_1985_ESP_045994_1985_DEM/ESP_046060_1985_ESP_045994_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>ESP_046060_1985__ESP_045994_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/ESP_046060_1985_ESP_045994_1985_CTR/ESP_046060_1985_ESP_045994_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>PSP_002387_1985__PSP_003798_1985</name>
+<description></description>
+<NetworkLink>
+    <name>PSP_002387_1985_PSP_003798_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/PSP_002387_1985_PSP_003798_1985_DEM/PSP_002387_1985_PSP_003798_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>PSP_002387_1985__PSP_003798_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/PSP_002387_1985_PSP_003798_1985_CTR/PSP_002387_1985_PSP_003798_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+<Folder>
+<name>PSP_003442_1985__PSP_001820_1985</name>
+<description></description>
+<NetworkLink>
+    <name>PSP_003442_1985__PSP_001820_1985</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/PSP_003442_1985_PSP_001820_1985_DEM/PSP_003442_1985_PSP_001820_1985_DEM.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>PSP_003442_1985__PSP_001820_1985 (10m Contours)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>18.881</north><south>17.942</south>
+          <east>77.992</east><west>77.132</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/HiRISE_DEM/PSP_003442_1985_PSP_001820_1985_CTR/PSP_003442_1985_PSP_001820_1985_CTR.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+</Folder>
+
+</Folder>
+
+
+
+
+<NetworkLink>
+    <name>THEMIS Thermal Inertia (Qualitative)</name>
+    <visibility>0</visibility>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>20.888</north><south>15.521</south>
+          <east>80.502</east><west>71.596</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>-1</minLodPixels>
+        <maxLodPixels>-1</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/ThermalInertiaRainbow/THEMIS_ThermalInertia.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+<NetworkLink>
+    <name>HiRISE/CTX Mosaic</name>
+    <draworder>10</draworder>
+    <Region>
+      <LatLonAltBox>
+          <north>22.5</north><south>11.25</south>
+          <east>84.375</east><west>73.125</west>
+      </LatLonAltBox>
+      <Lod>
+	<minLodPixels>128</minLodPixels>
+        <maxLodPixels>2024</maxLodPixels>
+      </Lod>
+    </Region>
+    <Link>
+      <href>http://murray-lab.caltech.edu/Mars2020/kml/2020LSWG2_v3/2020LSWG2_v3.kml</href>
+      <viewRefreshMode>onRegion</viewRefreshMode>
+    </Link>
+  </NetworkLink>
+    </Folder>
+  </kml>
