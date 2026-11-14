@@ -42,6 +42,12 @@ The **Science Targets** explorer keeps a Jezero catalog and a global Mars catalo
 
 Use **Switch to synthetic demo** or `?mode=demo` for the separate illustrative dataset. The synthetic mode includes illustrative hazards and thermal coloring. Measured CTX mode has **no** thermal or verified hazard layer.
 
+## Custom Mission Builder (Phase 8.1)
+
+Create your own measured CTX missions with **New mission**, or select one of the 30 catalog scenarios and use **Duplicate selected** to edit a copy. Add valid grid stops by clicking the map, drag an existing stop to move it, drag a grip in the left panel to reorder it, or use ↑/↓ for keyboard-friendly reordering. Choose **Pan map**, **Drag stops** or **Add stop on map** to avoid conflicting gestures. A custom mission supports 2–8 fixed-order stops and up to 30 undo steps, recalculating two A* alternatives on each accepted change.
+
+**Save mission JSON** exports the editable blueprint; **Load JSON** reopens that specific file format after validating measured-dataset compatibility and grid cells. The calculated mission report is a separate export. No account, server-side storage, or unverified EVA safety model is implied. See [Phase 8.1 guide and QA](docs/PHASE8_1_CUSTOM_MISSION_BUILDER.md).
+
 ## Measured data
 
 The bundled `JEZ_ctx_B_soc_008` pair comes from the [USGS Astrogeology Mars 2020 CTX archive](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/index.html). The source optical mosaic is 6 m/pixel and the DEM is 20 m/pixel, both in the Mars Equirectangular IAU sphere projected CRS. The selected crop covers E 4,586,000–4,589,200 m and N 1,091,000–1,093,400 m. Routing uses 80 × 60 cells at 40 m spacing. The two WebP display layers share the crop bounds; numerical heights come from the DEM array in `public/data/mission-pack.json`.
@@ -60,6 +66,7 @@ Phase 4+5 evidence and presentation: [intake audit](docs/PHASE4_5_INTAKE_AUDIT.m
 - `src/data/mission-pack.js`, `src/data/mission-mode.js`: validation and dataset selection
 - `src/data/science-catalog.js`, `src/data/donki.js`, `src/data/briefing.js`: catalog coverage, observed solar events and export serialization
 - `src/data/mission-library.js`, `data/scenarios/measured-missions.json`: Phase 8 catalog validation, fixed-order multi-leg planner, canonical 30-scenario definitions
+- `src/data/mission-builder.js`: validated editable missions, stop operations, JSON blueprint import/export and measured CTX compatibility
 - `public/data/`: measured pack and aligned display layers
 - `src/data/demo-terrain.json`, `public/mars-demo-*.webp`: separate synthetic demo
 - `tools/import_mars_rasters.py`: offline GeoTIFF import
