@@ -26,3 +26,4 @@ venv/
 *.ovr
 # Local scientific source tree; small intentional assets in public/ remain trackable.
 /ARES-DATA/
+/incoming/

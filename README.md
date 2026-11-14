@@ -22,6 +22,8 @@ npm run check    # tests and build
 3. Compare **Shortest** and **Terrain preferred** in the right panel. The selected column determines which line is emphasized. Drag to pan; use the zoom controls to inspect the map.
 4. Open **Details** for source URLs, CRS, bounds, vertical reference, resolution and coverage. Export the route briefing as JSON if needed.
 
+The **Science Targets** explorer keeps a Jezero catalog and a global Mars catalog separate. Its submitted Jezero coordinates currently lie outside the measured crop, or have no single point, so none becomes a named route preset. The collapsed **Space Weather** drawer makes a read-only NASA CCMC DONKI request for observed solar events when opened. It reports UTC event and retrieval times and displays an unavailable state if the request fails. These events do not measure local Mars radiation or establish EVA safety.
+
 Use **Switch to synthetic demo** or `?mode=demo` for the separate illustrative dataset. The synthetic mode includes illustrative hazards and thermal coloring. Measured CTX mode has **no** thermal or verified hazard layer.
 
 ## Measured data
@@ -32,12 +34,15 @@ The source DEM metadata states elevation units of metres relative to the Mars 20
 
 See [REALITY_CHECK.md](docs/REALITY_CHECK.md) for independent data and algorithm checks, [UI_REFINEMENT_REPORT.md](docs/UI_REFINEMENT_REPORT.md) for UI verification, and [IMPORT_REAL_DATA.md](IMPORT_REAL_DATA.md) for the importer command.
 
+Phase 4+5 evidence and presentation: [intake audit](docs/PHASE4_5_INTAKE_AUDIT.md), [DONKI report](docs/PHASE4_SOLAR_INTEGRATION_REPORT.md), [science/mission report](docs/PHASE5_SCIENCE_INTEGRATION_REPORT.md), [QA report](docs/PHASE5_QA_REPORT.md), and [jury runbook](docs/FINAL_DEMO_RUNBOOK.md). The submitted research ZIP is intake material, not a verified implementation report.
+
 ## Layout and code
 
 - `index.html`, `planner.css`, `src/main.js`: planner UI and interactions
 - `src/engine/routing.js`: A* and route metrics
 - `src/engine/map-grid.js`: click-to-grid conversion under zoom and pan
 - `src/data/mission-pack.js`, `src/data/mission-mode.js`: validation and dataset selection
+- `src/data/science-catalog.js`, `src/data/donki.js`, `src/data/briefing.js`: catalog coverage, observed solar events and export serialization
 - `public/data/`: measured pack and aligned display layers
 - `src/data/demo-terrain.json`, `public/mars-demo-*.webp`: separate synthetic demo
 - `tools/import_mars_rasters.py`: offline GeoTIFF import

@@ -3,6 +3,9 @@ import {planRoute,isBlocked} from './engine/routing.js';
 import {clientPointToCell,clampPan,cellToSvg} from './engine/map-grid.js';
 import {validateMissionPack,mapDisplayCoordinates} from './data/mission-pack.js';
 import {selectMissionData,layerForMode} from './data/mission-mode.js';
+import {validateScienceCatalog,scienceCoverage,coordinateEvidence} from './data/science-catalog.js';
+import {fetchDonki} from './data/donki.js';
+import {buildBriefing} from './data/briefing.js';
 
 const $=s=>document.querySelector(s);
 const DEMO_WAYPOINTS=[
@@ -11,6 +14,7 @@ const DEMO_WAYPOINTS=[
   {id:'basin',name:'Ancient lakebed',type:'Illustrative study target',x:43,y:47,code:'EX-03',desc:'Example point on the synthetic map.'},
 ];
 const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false};
+const research={catalogs:{jezero:null,global:null},scope:'jezero',selected:null,weatherLoaded:false};
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDistance=m=>m>=1000?`${(m/1000).toFixed(2)} km`:`${Math.round(m)} m`;
 const fmtSlope=d=>`${d.toFixed(1)}°`;
@@ -21,7 +25,6 @@ function announce(message,error=false){$('#pointFeedback').textContent=message;$
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),2500);}
 function linePath(route){return route?.cells.map((p,i)=>{const q=svgPoint(p);return `${i?'L':'M'}${q.x.toFixed(2)},${q.y.toFixed(2)}`}).join(' ')||'';}
 function marker(point,letter,kind){const q=svgPoint(point);return `<g class="map-marker ${kind}" transform="translate(${q.x},${q.y})"><circle r="14"/><text y="1">${letter}</text></g>`;}
-function routeSummary(route){return route?{distanceMeters:route.meters,maximumStepSlopeDegrees:route.maxSlope,totalAscentMeters:route.ascending,totalCost:route.totalCost,plannedCells:route.cells}:null;}
 function calculateRoutes(){const hazard=state.kind==='demo'&&state.hazards;state.routes.distance=planRoute(state.data,state.start,state.destination,'distance',hazard);state.routes.terrain=planRoute(state.data,state.start,state.destination,'terrain',hazard);renderMap();renderComparison();}
 function renderMap(){
   const d=state.data;const stage=$('#mapStage');const world=$('#mapWorld');
@@ -67,7 +70,31 @@ function setLayer(name){if(state.kind==='measured'&&!layerForMode(state.kind,sta
 function setPick(which){state.pick=state.pick===which?null:which;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}announce(state.pick?`Click a valid map cell to set ${state.pick}. Drag the map to pan.`:'Select a point tool to plan your own route.');}
 function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
-function exportBriefing(){const d=state.data,briefing={title:'ARES route briefing',generatedAt:new Date().toISOString(),warning:'Research prototype. Routes are not verified safe for EVA.',dataset:{kind:state.kind,name:d.site??'Synthetic Jezero illustration',boundsMeters:d.boundsMeters??null,crsWkt:d.crsWkt??null,cellMeters:d.cellMeters??d.demoCellMeters,verticalReference:d.verticalReference??null,layers:d.layers??null},start:state.start,destination:state.destination,preference:state.mode,syntheticHazardsEnabled:state.kind==='demo'?state.hazards:null,routes:{shortest:routeSummary(state.routes.distance),terrainPreferred:routeSummary(state.routes.terrain)}};const blob=new Blob([JSON.stringify(briefing,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='ARES-route-briefing.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);toast('Route briefing exported');}
+function exportBriefing(){const briefing=buildBriefing(state);const blob=new Blob([JSON.stringify(briefing,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='ARES-route-briefing.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);toast('Route briefing exported');}
+function renderScience(){
+  const catalog=research.catalogs[research.scope],list=$('#scienceList'),detail=$('#scienceDetail');
+  if(!catalog){list.textContent='Catalog unavailable or still loading.';detail.textContent='';return;}
+  list.innerHTML=catalog.points.map(p=>`<button type="button" data-science="${escapeHtml(p.id)}" class="science-item" aria-pressed="${research.selected===p.id}">${escapeHtml(p.name.en)} <small>${escapeHtml(p.geological_category)}</small></button>`).join('');
+  const p=catalog.points.find(x=>x.id===research.selected);
+  if(!p){detail.textContent='Select a target to inspect its source and location status.';return;}
+  const coverage=research.scope==='global'?{label:'Global Mars research context. Not eligible for this local map.',eligible:false}:state.kind!=='measured'?{label:'Measured CTX map required for coverage check.',eligible:false}:scienceCoverage(p,state.data,false);
+  const c=p.coordinates,geo=c&&c.latitude!=null?`${c.latitude}° N, ${c.longitude_east}° E (submitted)`:'No single coordinate';
+  const projected=coverage.projected?`E ${coverage.projected.east.toFixed(1)} m · N ${coverage.projected.north.toFixed(1)} m`:'';
+  const evidence=coordinateEvidence[p.id];
+  detail.innerHTML=`<h3>${escapeHtml(p.name.en)} <small>${escapeHtml(p.name.tr)}</small></h3><p>${escapeHtml(p.scientific_description.en)}</p><p lang="tr">${escapeHtml(p.scientific_description.tr)}</p><dl><dt>Scientific objective</dt><dd>${escapeHtml(p.scientific_target)}</dd><dt>Coordinate meaning</dt><dd>${escapeHtml(c?.represents??'Regional reference or unavailable')}</dd><dt>Submitted coordinate</dt><dd>${escapeHtml(geo)}</dd><dt>Projected position</dt><dd>${escapeHtml(projected||'Unavailable')}</dd><dt>Source verification</dt><dd>${evidence?`${escapeHtml(evidence.status)} · <a href="${escapeHtml(evidence.url)}" target="_blank" rel="noopener noreferrer">Coordinate evidence ↗</a>`:'Candidate claim; original coordinate source not independently authenticated.'}</dd><dt>Coordinate uncertainty</dt><dd>Not quantified in the submitted catalog; point meaning limits interpretation.</dd><dt>Map coverage / route eligibility</dt><dd><strong>${escapeHtml(coverage.label)}</strong> No ARES route generated.</dd><dt>Image attribution</dt><dd>${escapeHtml(p.image.credit)} · <a href="${escapeHtml(p.image.url)}" target="_blank" rel="noopener noreferrer">Image source ↗</a></dd></dl><a href="${escapeHtml(p.nasa_source_url)}" target="_blank" rel="noopener noreferrer">Research source ↗</a>`;
+}
+async function loadScience(){
+  for(const [scope,file] of [['jezero','jezero-science-points.json'],['global','science-points.json']]){
+    try{const response=await fetch(`./${file}`,{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);research.catalogs[scope]=validateScienceCatalog(await response.json(),scope);}catch(error){console.warn(`${scope} catalog unavailable`,error);}
+  }
+  renderScience();
+}
+async function loadWeather(){
+  const button=$('#weatherRefresh'),status=$('#weatherStatus'),container=$('#weatherEvents');button.disabled=true;status.textContent='Retrieving FLR, CME and SEP events from NASA DONKI…';container.replaceChildren();
+  try{const result=await fetchDonki();status.textContent=`${result.message} Query ${result.startDate}–${result.endDate} UTC · Retrieved ${result.retrievedAt} · ${result.types.map(t=>`${t.type}: ${t.ok?t.count:'unavailable'}`).join(', ')}.`;
+    for(const event of result.events.slice(0,12)){const row=document.createElement('div');row.className='weather-event';const title=document.createElement('strong');title.textContent=`${event.type} · ${new Date(event.time).toLocaleString('en-GB',{timeZone:'UTC',dateStyle:'medium',timeStyle:'short'})} UTC`;const sub=document.createElement('small');sub.textContent=`${event.catalog} · ${event.source}`;row.append(title,sub);if(event.link){const a=document.createElement('a');a.href=event.link;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Source record ↗';row.append(a);}container.append(row);}
+  }catch(error){status.textContent='DONKI unavailable. No events are being substituted.';console.warn('DONKI request failed',error);}finally{button.disabled=false;}
+}
 function attach(){
   $('#layerIcons').addEventListener('click',e=>{const b=e.target.closest('[data-layer]');if(b&&!b.disabled)setLayer(b.dataset.layer);});
   $('#waypoints').addEventListener('click',e=>{const b=e.target.closest('[data-waypoint]');if(!b)return;const p=state.waypoints.find(x=>x.id===b.dataset.waypoint);if(p){state.destination=p;state.presetId=p.id;calculateRoutes();announce(`Example destination selected: ${p.name}.`);}});
@@ -77,6 +104,10 @@ function attach(){
   $('#zoomIn').addEventListener('click',()=>setZoom(state.zoom+.2));$('#zoomOut').addEventListener('click',()=>setZoom(state.zoom-.2));$('#panReset').addEventListener('click',()=>{state.zoom=1;state.panX=0;state.panY=0;renderMap();});
   $('#routeButton').addEventListener('click',()=>{calculateRoutes();toast('Routes recalculated');});$('#briefingExport').addEventListener('click',exportBriefing);
   $('#datasetSwitch').addEventListener('click',()=>{const url=new URL(location.href);if(state.kind==='measured')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.href=url.href;});
+  $('#scienceScope').addEventListener('change',e=>{research.scope=e.target.value;research.selected=null;renderScience();});
+  $('#scienceList').addEventListener('click',e=>{const b=e.target.closest('[data-science]');if(b){research.selected=b.dataset.science;renderScience();}});
+  $('#weatherDrawer').addEventListener('toggle',e=>{if(e.target.open&&!research.weatherLoaded){research.weatherLoaded=true;loadWeather();}});
+  $('#weatherRefresh').addEventListener('click',loadWeather);
   for(const id of ['dataInspect','provenanceButton'])$(`#${id}`).addEventListener('click',()=>$('#dataDialog').showModal());$('#dataClose').addEventListener('click',()=>$('#dataDialog').close());
   $('#fullscreenButton').addEventListener('click',()=>{const el=$('#mapStage');if(!document.fullscreenElement)el.requestFullscreen?.().catch(()=>toast('Fullscreen unavailable'));else document.exitFullscreen?.();});
   $('#evaButton').addEventListener('click',()=>{state.eva=!state.eva;document.body.classList.toggle('eva-active',state.eva);$('#evaButton').setAttribute('aria-pressed',String(state.eva));});$('#evaExit').addEventListener('click',()=>{state.eva=false;document.body.classList.remove('eva-active');$('#evaButton').setAttribute('aria-pressed','false');});
@@ -87,7 +118,7 @@ function attach(){
   stage.addEventListener('pointercancel',()=>{drag=null;stage.classList.remove('panning');});
   window.addEventListener('resize',()=>{state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();});
 }
-async function loadMeasured(){try{const response=await fetch('./public/data/mission-pack.json',{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);const measured=validateMissionPack(await response.json());const selected=selectMissionData(demo,measured,location.search);if(selected.kind==='measured'){state.data=selected.terrain;state.kind='measured';state.waypoints=measured.waypoints;state.start={...measured.start};state.destination=measured.waypoints[0];state.presetId=state.destination.id;state.hazards=false;state.layer='optical';}renderDataset();calculateRoutes();}catch(error){console.warn('Measured pack unavailable; synthetic demo retained',error);renderDataset();calculateRoutes();toast('Measured pack unavailable; synthetic demo active');}}
+async function loadMeasured(){try{const response=await fetch('./public/data/mission-pack.json',{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);const measured=validateMissionPack(await response.json());const selected=selectMissionData(demo,measured,location.search);if(selected.kind==='measured'){state.data=selected.terrain;state.kind='measured';state.waypoints=measured.waypoints;state.start={...measured.start};state.destination=measured.waypoints[0];state.presetId=state.destination.id;state.hazards=false;state.layer='optical';}renderDataset();calculateRoutes();renderScience();}catch(error){console.warn('Measured pack unavailable; synthetic demo retained',error);renderDataset();calculateRoutes();renderScience();toast('Measured pack unavailable; synthetic demo active');}}
 attach();
 // The default measured page never paints synthetic terrain while its pack loads.
 if(new URLSearchParams(location.search).get('mode')==='demo'){
@@ -95,3 +126,4 @@ if(new URLSearchParams(location.search).get('mode')==='demo'){
   calculateRoutes();
 }
 loadMeasured();
+loadScience();
