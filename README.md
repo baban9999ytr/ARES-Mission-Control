@@ -32,6 +32,12 @@ npm run check    # tests and build
 3. Compare **Shortest** and **Terrain preferred** in the right panel. The selected column determines which line is emphasized. Drag to pan; use the zoom controls to inspect the map.
 4. Open **Details** for source URLs, CRS, bounds, vertical reference, resolution and coverage. Export the route briefing as JSON if needed.
 
+## Mission Library (Phase 8)
+
+Use the **Mission Library** sidebar to browse 30 measured-grid scenarios (10 Explorer, 10 Scientist, 10 Commander). Filter by phase, search by title/ID/objective, then select a scenario to load its ordered stops. The map shows the aggregate route through every fixed-order leg. The right panel compares summed distances/ascent and maximum sampled step slope, and lets you export all calculated legs and metadata as JSON. **Exit mission** returns to the original comparison. See [Phase 8 implementation and QA](docs/PHASE8_MISSION_LIBRARY.md).
+
+The Commander plans do **not** optimize the order of stops; each leg runs separately on the existing A* algorithm. All mission coordinates are illustrative measured-grid exercises, **not** independently identified Jezero science targets or EVA-safe routes. The canonical catalog is `data/scenarios/measured-missions.json` and is bundled into `dist/data/scenarios/` by the build.
+
 The **Science Targets** explorer keeps a Jezero catalog and a global Mars catalog separate. Its submitted Jezero coordinates currently lie outside the measured crop, or have no single point, so none becomes a named route preset. The collapsed **Space Weather** drawer makes a read-only NASA CCMC DONKI request for observed solar events when opened. It reports UTC event and retrieval times and displays an unavailable state if the request fails. These events do not measure local Mars radiation or establish EVA safety.
 
 Use **Switch to synthetic demo** or `?mode=demo` for the separate illustrative dataset. The synthetic mode includes illustrative hazards and thermal coloring. Measured CTX mode has **no** thermal or verified hazard layer.
@@ -53,6 +59,7 @@ Phase 4+5 evidence and presentation: [intake audit](docs/PHASE4_5_INTAKE_AUDIT.m
 - `src/engine/map-grid.js`: click-to-grid conversion under zoom and pan
 - `src/data/mission-pack.js`, `src/data/mission-mode.js`: validation and dataset selection
 - `src/data/science-catalog.js`, `src/data/donki.js`, `src/data/briefing.js`: catalog coverage, observed solar events and export serialization
+- `src/data/mission-library.js`, `data/scenarios/measured-missions.json`: Phase 8 catalog validation, fixed-order multi-leg planner, canonical 30-scenario definitions
 - `public/data/`: measured pack and aligned display layers
 - `src/data/demo-terrain.json`, `public/mars-demo-*.webp`: separate synthetic demo
 - `tools/import_mars_rasters.py`: offline GeoTIFF import
