@@ -1,0 +1,26 @@
+{
+  "id": "SC-04",
+  "name": "Doğu-batı maliyet farkı",
+  "phase": "SCIENTIST",
+  "status": "scenario_ready_pending_ctx_execution",
+  "scientific_aim": "Mesafe ile eğim ağırlığının rota maliyetine etkisini incelemek.",
+  "dataset": {
+    "name": "USGS Mars 2020 Science Investigation CTX DEM Mosaic",
+    "resolution_m_per_pixel": 20
+  },
+  "start": {
+    "lat": 18.46,
+    "lon": 77.29
+  },
+  "end": {
+    "lat": 18.46,
+    "lon": 77.59
+  },
+  "observations": [],
+  "interpretation": [],
+  "limitations": [
+    "Gerçek CTX rasterı ARES'e yüklenmeden rota metriği doğrulanamaz.",
+    "ARES operasyonel EVA güvenlik sistemi değildir.",
+    "Bilimsel yorum gözlemden ayrı tutulmalıdır."
+  ]
+}
