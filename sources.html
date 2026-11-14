@@ -1,1 +1,40 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARES / Scientific Sources</title><link rel="stylesheet" href="./styles.css"></head><body><div class="sources-page"><header class="sources-top"><a href="./" class="brand"><span class="brand-mark"><span class="planet"></span><span class="orbit-ring"></span></span><span class="brand-word">ARES<span class="brand-slash">/</span></span></a><a class="sources-back" href="./">← BACK TO MISSION CONTROL</a></header><div class="sources-container"><div class="eyebrow">DATA INTEGRITY / MISSION REFERENCE</div><h1>Evidence before aesthetics<span class="highlight-dot">.</span></h1><p class="sources-lead">ARES begins as an interactive research prototype. The route planner is functional, but the initial map layers, elevations, hazards, waypoint positions and planning distances are synthetic. We will integrate georeferenced science datasets next.</p><div class="sources-warning"><strong>PROTOTYPE STATUS</strong><span>SIMULATED TERRAIN · NOT NASA DATA · NOT APPROVED EVA NAVIGATION</span></div><h2>NASA & USGS resources</h2><div class="sources-grid"><a href="https://trek.nasa.gov/mars/" target="_blank" rel="noopener"><span>01 / NASA JPL</span><strong>Mars Trek</strong><p>Planetary science layers and Mars imagery data services.</p><em>OPEN RESOURCE ↗</em></a><a href="https://astrogeology.usgs.gov/search/map/mars-2020-jezero-crater-landing-site-products" target="_blank" rel="noopener"><span>02 / USGS ASTROGEOLOGY</span><strong>Jezero Terrain Datasets</strong><p>Official crater terrain models and orthoimage mosaics.</p><em>OPEN RESOURCE ↗</em></a><a href="https://science.nasa.gov/mission/mars-2020-perseverance/location-map/" target="_blank" rel="noopener"><span>03 / NASA SCIENCE</span><strong>Perseverance Location Map</strong><p>Mission routes, topography and controlled surface imagery.</p><em>OPEN RESOURCE ↗</em></a><a href="https://mars.nasa.gov/mars2020/multimedia/raw-images/" target="_blank" rel="noopener"><span>04 / NASA MARS 2020</span><strong>Rover Ground Photography</strong><p>Documented photographic observations from the surface.</p><em>OPEN RESOURCE ↗</em></a></div><h2>What is real in v0.1?</h2><div class="sources-facts"><div><strong>Working software</strong><p>8-neighbor A* pathfinding, selectable waypoints, routing alternatives, dynamic exclusion zones, slope and ascent calculations, route rendering and EVA-mode controls.</p></div><div><strong>Illustrative inputs</strong><p>Procedurally created terrain, elevation values, visual layer colors, grid spacing, waypoints and hazard polygons. No coordinate registration to Jezero.</p></div></div><p class="sources-end">Independent project for NASA Space Apps Challenge 2026. NASA does not endorse ARES. <a href="./DATA_SOURCES.md" target="_blank">Complete provenance and upgrade plan ↗</a></p></div></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Measured Jezero CTX optical and elevation data, route-model provenance and research limitations for ARES Mission Control.">
+  <base href="/">
+  <title>ARES / Scientific Sources</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="sources-page">
+  <header class="sources-top">
+    <a href="./" class="brand" aria-label="ARES mission planner"><span class="brand-mark"><span class="planet"></span><span class="orbit-ring"></span></span><span class="brand-word">ARES<span class="brand-slash">/</span></span></a>
+    <a class="sources-back" href="./">← BACK TO MISSION CONTROL</a>
+  </header>
+  <div class="sources-container">
+    <div class="eyebrow">DATA INTEGRITY / MISSION REFERENCE</div>
+    <h1>Evidence before aesthetics<span class="highlight-dot">.</span></h1>
+    <p class="sources-lead">ARES now loads a measured Jezero CTX optical mosaic and digital elevation model (DEM) crop by default. The app compares routes on a sampled grid; the optional synthetic demo remains clearly separate.</p>
+    <div class="sources-warning"><strong>RESEARCH PROTOTYPE</strong><span>MEASURED CTX CROP · ILLUSTRATIVE ROUTING COSTS · NOT CERTIFIED EVA NAVIGATION</span></div>
+    <h2>NASA & USGS resources</h2>
+    <div class="sources-grid">
+      <a href="https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/index.html" target="_blank" rel="noopener noreferrer"><span>01 / USGS ASTROGEOLOGY</span><strong>Mars 2020 CTX products</strong><p>Provenance archive for the registered 6 m/pixel orthomosaic and 20 m/pixel terrain model used to generate the current study crop.</p><em>OPEN RESOURCE ↗</em></a>
+      <a href="https://trek.nasa.gov/mars/" target="_blank" rel="noopener noreferrer"><span>02 / NASA</span><strong>Mars Trek</strong><p>Planetary context, imagery, map products and other resources; not an input to the current ARES route optimizer.</p><em>OPEN RESOURCE ↗</em></a>
+      <a href="https://science.nasa.gov/mission/mars-2020-perseverance/location-map/" target="_blank" rel="noopener noreferrer"><span>03 / NASA SCIENCE</span><strong>Perseverance location map</strong><p>Mission traverse context. Rover positions and named outcrops are not automatically identified by the ARES route grid.</p><em>OPEN RESOURCE ↗</em></a>
+      <a href="https://ccmc.gsfc.nasa.gov/tools/DONKI/" target="_blank" rel="noopener noreferrer"><span>04 / NASA CCMC</span><strong>DONKI solar events</strong><p>Observed solar-event context; not a measurement of local Mars surface radiation or EVA safety.</p><em>OPEN RESOURCE ↗</em></a>
+    </div>
+    <h2>What is real in ARES v0.2?</h2>
+    <div class="sources-facts">
+      <div><strong>Measured CTX study crop</strong><p>Jezero optical mosaic and DEM data are processed into aligned WebP layers and a 80 × 60 height grid at 40 m cell spacing. Map coverage: projected E 4,586,000–4,589,200 m and N 1,091,000–1,093,400 m. Original optical sampling is 6 m/pixel; DEM sampling is 20 m/pixel.</p></div>
+      <div><strong>Route computation</strong><p>Eight-neighbour A* computes shortest grid distance or a terrain-preferred path with an illustrative slope-cost weighting. The displayed maximum slope is between adjacent 40 m sampled grid cells, not a maximum physical surface slope.</p></div>
+      <div><strong>Separate synthetic demonstration</strong><p>The optional demo mode uses procedurally generated height values, imagery, hazard zones and thermal colouring. No measured CTX thermal or verified hazard layer is provided.</p></div>
+      <div><strong>Known scientific limits</strong><p>ARES does not resolve rocks or sand at EVA scale, certify traversability, model life-support constraints, or calculate local Mars radiation exposure. User-selected points and example waypoints are not authenticated named geological targets. Outside-crop targets are not routed.</p></div>
+    </div>
+    <p class="sources-end">Independent research prototype for NASA Space Apps Challenge 2026; NASA does not endorse ARES. <a href="./DATA_SOURCES.md" target="_blank" rel="noopener noreferrer">Source and processing details ↗</a> <a href="./IMPORT_REAL_DATA.md" target="_blank" rel="noopener noreferrer">Importer documentation ↗</a></p>
+  </div>
+</div>
+</body>
+</html>
