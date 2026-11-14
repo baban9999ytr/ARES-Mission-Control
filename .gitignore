@@ -18,6 +18,7 @@ venv/
 *.TIFF
 *.part
 *.crdownload
+.wrangler
 *.download
 *.tmp
 *.temp
