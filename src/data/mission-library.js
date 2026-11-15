@@ -59,7 +59,7 @@ function aggregate(routes, mode) {
 }
 
 /** Each consecutive stop pair is an independent A* calculation, NOT an optimized tour. */
-export function planMission(data, mission) {
+export function planMission(data, mission, slopeWeight=4) {
   if (!mission || !Array.isArray(mission.stops) || mission.stops.length < 2 ||
       mission.stops.length > 8) return null;
   const legs = [];
@@ -67,7 +67,7 @@ export function planMission(data, mission) {
     const from = mission.stops[i - 1], to = mission.stops[i];
     if (!from || !to) return null;
     const distance = planRoute(data, from, to, 'distance', false);
-    const terrain = planRoute(data, from, to, 'terrain', false);
+    const terrain = planRoute(data, from, to, 'terrain', false, slopeWeight);
     if (!distance || !terrain) return null;
     legs.push({ index: i, from, to, distance, terrain });
   }
@@ -90,7 +90,7 @@ const summarizeRoute = route => ({
 });
 
 /** Offline reproducible briefing: no implied EVA safety, science-site identity, or global tour optimization. */
-export function buildMissionReport(plan, pack, preference, generatedAt = new Date().toISOString()) {
+export function buildMissionReport(plan, pack, preference, generatedAt = new Date().toISOString(), slopeWeight=4) {
   if (!plan || !plan.mission || !plan.legs.length) throw new Error('No selected mission plan.');
   return {
     schemaVersion: 1,
@@ -115,6 +115,7 @@ export function buildMissionReport(plan, pack, preference, generatedAt = new Dat
       gridStops: plan.mission.stops,
     },
     selectedPreference: preference,
+    modelAssumptions: {terrainSlopeCoefficient:slopeWeight,slopeScaleDegrees:20,formula:'L * [1 + w * (sampledStepSlope / 20 degrees)^2]'},
     totals: {
       shortest: summarizeRoute(plan.routes.distance),
       terrainPreferred: summarizeRoute(plan.routes.terrain),

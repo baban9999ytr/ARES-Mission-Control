@@ -1,5 +1,5 @@
 import demo from './data/demo-terrain.json' with {type:'json'};
-import {planRoute,isBlocked} from './engine/routing.js';
+import {planRoute,isBlocked,DEFAULT_SLOPE_WEIGHT} from './engine/routing.js';
 import {clientPointToCell,clampPan,cellToSvg,stepKeyboardCell} from './engine/map-grid.js';
 import {validateMissionPack,validateCompatibleRegion,mapDisplayCoordinates} from './data/mission-pack.js';
 import {selectMissionData} from './data/mission-mode.js';
@@ -10,7 +10,9 @@ import {validateMissionLibrary,planMission,buildMissionReport} from './data/miss
 import {createCustomMission,validateCustomMission,editCustomMission,serializeCustomMission,parseCustomMission,MAX_CUSTOM_STOPS} from './data/mission-builder.js';
 import {DEFAULT_MEASURED_LAYERS,updateMeasuredLayers,layerPresentation,elevationScale,elevationGradient} from './data/layer-compositing.js';
 import {routeSegments} from './data/route-segments.js';
-import {comparisonFacts,decisionExplanation} from './data/route-comparison.js';
+import {comparisonFacts,decisionExplanation,tradeoffExplanation} from './data/route-comparison.js';
+import {profileData,profileSvg} from './data/elevation-profile.js';
+import {decisionReport} from './data/decision-report.js';
 import {visibleRouteModes,routePathsMarkup} from './data/route-visualization.js';
 import {JEZERO_LANDMARKS,eligibleLandmarks,projectedToSvg} from './data/landmarks.js';
 import {t,locale,setLanguage,applyStaticTranslations} from './i18n.js';
@@ -22,7 +24,7 @@ const DEMO_WAYPOINTS=[
   {id:'basin',name:'Ancient lakebed',nameTr:'Antik göl yatağı',type:'Illustrative study target',typeTr:'Örnek çalışma hedefi',x:43,y:47,code:'EX-03',desc:'Example point on the synthetic map.',descTr:'Sentetik haritadaki örnek nokta.'},
 ];
 const landmarkPreference=()=>{try{return localStorage.getItem('ares.showLandmarks')!=='false';}catch{return true;}};
-const state={data:demo,kind:'demo',region:'crop',regionPacks:{crop:null,expanded:null},waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',layers:{...DEFAULT_MEASURED_LAYERS},mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routeVisible:{distance:true,terrain:true},showLandmarks:landmarkPreference(),selectedLandmark:null,routes:{distance:null,terrain:null},segments:{distance:[],terrain:[]},inspected:null,inspectionPinned:false,overview:false,zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
+const state={data:demo,kind:'demo',region:'crop',regionPacks:{crop:null,expanded:null},waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',layers:{...DEFAULT_MEASURED_LAYERS},mode:'terrain',slopeWeight:DEFAULT_SLOPE_WEIGHT,referenceTerrain:null,pick:null,keyboardCell:null,hazards:true,showRoutes:true,routeVisible:{distance:true,terrain:true},showLandmarks:landmarkPreference(),selectedLandmark:null,routes:{distance:null,terrain:null},segments:{distance:[],terrain:[]},inspected:null,inspectionPinned:false,overview:false,zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
 const OVERVIEW={west:4574000,south:1080000,east:4604000,north:1102500,width:1600,height:1200};
 const library={missions:[],loaded:false,error:null,phase:'All',search:''};
 const editor={mode:'edit',undo:[],redo:[],drag:null,listDrag:null,selectedStop:null};
@@ -76,15 +78,16 @@ function setRegion(region,force=false){
 }
 function calculateRoutes(){
   if(state.kind==='measured'&&state.activeMission){
-    const plan=planMission(state.data,state.activeMission);
+    const plan=planMission(state.data,state.activeMission,state.slopeWeight);
     if(plan){state.missionLegs=plan.legs;state.routes=plan.routes;}
     else{state.missionLegs=[];state.routes={distance:null,terrain:null};announce(L('One or more mission legs have no valid measured-CTX route.','Bir veya daha fazla görev ayağı için geçerli ölçümlü CTX rotası yok.'),true);}
   }else{
     state.missionLegs=[];
     const hazard=state.kind==='demo'&&state.hazards;
     state.routes.distance=planRoute(state.data,state.start,state.destination,'distance',hazard);
-    state.routes.terrain=planRoute(state.data,state.start,state.destination,'terrain',hazard);
+    state.routes.terrain=planRoute(state.data,state.start,state.destination,'terrain',hazard,state.slopeWeight);
   }
+  state.referenceTerrain=state.slopeWeight===DEFAULT_SLOPE_WEIGHT?state.routes.terrain:state.activeMission?planMission(state.data,state.activeMission,DEFAULT_SLOPE_WEIGHT)?.routes.terrain??null:planRoute(state.data,state.start,state.destination,'terrain',state.kind==='demo'&&state.hazards,DEFAULT_SLOPE_WEIGHT);
   state.segments={distance:routeSegments(state.routes.distance,state.data,state.missionLegs),terrain:routeSegments(state.routes.terrain,state.data,state.missionLegs)};
   state.inspected=null;state.inspectionPinned=false;
   renderMap();renderComparison();
@@ -97,6 +100,7 @@ function inspectSegment(mode,index,pin=false){
   $('#segmentInspection').hidden=false;
   $('#segmentInspection').innerHTML=`<strong>${t('segment.title',{number:segment.number,mode:t(mode==='distance'?'compare.shortest':'compare.terrain')})}</strong><dl><div><dt>${t('segment.length')}</dt><dd>${format(segment.lengthMeters)} m</dd></div><div><dt>${t('segment.start')}</dt><dd>${format(segment.startElevation)} m</dd></div><div><dt>${t('segment.end')}</dt><dd>${format(segment.endElevation)} m</dd></div><div><dt>${t('segment.mean')}</dt><dd>${format(segment.endpointMeanElevation)} m</dd></div><div><dt>${t('segment.change')}</dt><dd>${segment.elevationChange>=0?'+':''}${format(segment.elevationChange)} m</dd></div><div><dt>${t('segment.slope')}</dt><dd>${format(segment.slopeDegrees)}°</dd></div><div><dt>${t('segment.cumulative')}</dt><dd>${format(segment.cumulativeMeters)} m</dd></div>${segment.leg?`<div><dt>${t('segment.leg')}</dt><dd>${segment.leg}</dd></div>`:''}</dl><small>${t('segment.caveat')}</small>`;
   $('#segmentSelect').value=`${mode}:${index}`;
+  document.querySelectorAll('[data-profile-mode]').forEach(path=>path.classList.toggle('selected',path.dataset.profileMode===mode&&Number(path.dataset.profileIndex)===index));
   updateInspectedHighlight();
 }
 function updateInspectedHighlight(){
@@ -192,6 +196,14 @@ function renderComparison(){
   $('#routeExplainer').textContent=!selected?L('No route exists through the available cells. Choose two valid points.','Kullanılabilir hücrelerden rota bulunamadı. İki geçerli nokta seçin.'):state.kind==='measured'?L('Both routes use sampled CTX DEM elevations. Terrain preferred adds an illustrative slope cost; shortest minimizes grid distance. Neither assesses safety.','İki rota da örneklenmiş CTX yüksekliklerini kullanır. Arazi önceliği örnek eğim maliyeti ekler; en kısa rota grid mesafesini azaltır. Hiçbiri güvenliği değerlendirmez.'):L('Both routes use synthetic height values. Terrain preferred adds an illustrative slope cost.','İki rota da sentetik yükseklikleri kullanır. Arazi önceliği örnek eğim maliyeti ekler.');
   const facts=comparisonFacts(a,b,state.data,state.missionLegs);
   $('#routeDecision').textContent=decisionExplanation(facts,locale());
+  $('#routeTradeoffs').textContent=tradeoffExplanation(facts,locale());
+  const profile=profileData(state.routes,state.data,state.missionLegs);
+  $('#profileChart').innerHTML=profileSvg(profile,{language:locale()})||L('No sampled elevation profile is available.','Örneklenmiş yükseklik profili kullanılamıyor.');
+  $('#profileDatum').textContent=state.kind==='measured'?L(`DEM heights in metres relative to ${state.data.verticalReference}. Shared distance and elevation axes.`,`DEM yükseklikleri ${state.data.verticalReference} referansına göre metredir. Ortak mesafe ve yükseklik eksenleri.`):L('Synthetic height values in illustrative metres; no geographic vertical datum.','Sentetik yükseklik değerleri örnek metredir; coğrafi düşey datum yok.');
+  const changed=state.referenceTerrain&&b&&JSON.stringify(state.referenceTerrain.cells)!==JSON.stringify(b.cells);
+  const reference=state.referenceTerrain;
+  const response=reference&&b&&state.slopeWeight!==DEFAULT_SLOPE_WEIGHT?L(`Versus w = 4: distance ${signed(b.meters-reference.meters,1)} m, maximum sampled slope ${signed(b.maxSlope-reference.maxSlope,1)}°, ascent ${signed(b.ascending-reference.ascending,1)} m.`,`w = 4 değerine göre: mesafe ${signed(b.meters-reference.meters,1)} m, maksimum örnek eğim ${signed(b.maxSlope-reference.maxSlope,1)}°, yükseliş ${signed(b.ascending-reference.ascending,1)} m.`):'';
+  $('#sensitivityNote').textContent=L(`w = ${state.slopeWeight}; C = L × [1 + w × (sampled slope / 20°)²]. ${state.slopeWeight===DEFAULT_SLOPE_WEIGHT?'Default model.':changed?'Chosen path changes versus w = 4.':'Chosen path matches w = 4.'} ${response} This changes a model assumption, not measured terrain.`,`w = ${state.slopeWeight}; C = L × [1 + w × (örnek eğim / 20°)²]. ${state.slopeWeight===DEFAULT_SLOPE_WEIGHT?'Varsayılan model.':changed?'Seçilen yol w = 4 değerine göre değişiyor.':'Seçilen yol w = 4 ile aynı.'} ${response} Bu, ölçülen araziyi değil model varsayımını değiştirir.`);
   const slopeValue=facts?new Intl.NumberFormat(locale(),{maximumFractionDigits:1}).format(Math.abs(facts.slopeReduction)):'0';
   const distancePhrase=facts?Math.abs(facts.distanceDelta)<.5?L('the same length','aynı uzunlukta'):L(`${Math.round(facts.distanceDelta)} m longer`,`${Math.round(facts.distanceDelta)} m daha uzun`):'';
   $('#routeDifference').textContent=!facts?L('No comparison is available for these points.','Bu noktalar için karşılaştırma yok.'):facts.identical?L('Both planning objectives selected the same grid route for these endpoints.','İki planlama amacı da bu uç noktalar için aynı grid rotasını seçti.'):facts.meaningful?L(`Terrain-preferred is ${distancePhrase}, ${facts.slopeReduction>=0?'reduces':'increases'} maximum sampled step slope by ${slopeValue}°, and ${facts.ascentReduction>=0?'reduces':'increases'} ascent by ${Math.abs(Math.round(facts.ascentReduction))} m.`,`Arazi öncelikli rota ${distancePhrase}; maksimum örneklenmiş adım eğimini ${slopeValue}° ${facts.slopeReduction>=0?'azaltıyor':'artırıyor'} ve toplam yükselişi ${Math.abs(Math.round(facts.ascentReduction))} m ${facts.ascentReduction>=0?'azaltıyor':'artırıyor'}.`):L(`The routes follow different grid cells, but their distance and sampled metrics are similar: ${Math.round(facts.distanceDelta)} m distance difference, ${new Intl.NumberFormat(locale(),{maximumFractionDigits:1}).format(facts.slopeReduction)}° step-slope difference.`,`Rotalar farklı grid hücrelerini izliyor, ancak mesafe ve örneklenmiş ölçüleri benzer: ${Math.round(facts.distanceDelta)} m mesafe, ${new Intl.NumberFormat(locale(),{maximumFractionDigits:1}).format(facts.slopeReduction)}° adım eğimi farkı.`);
@@ -253,7 +265,8 @@ function setPick(which){state.pick=state.pick===which?null:which;state.keyboardC
 function setPoint(which,cell){if(!cell){announce(L('Click inside the mapped footprint.','Haritalanan alanın içine tıklayın.'),true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce(L('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.','Bu grid hücresinde kullanılabilir DEM yüksekliği yok veya etkin demo tehlikesi içinde. Başka hücre seçin.'),true);return;}if(state.activeMission){state.activeMission=null;state.missionLegs=[];editor.mode='navigate';editor.undo=[];editor.redo=[];renderMissionLibrary();}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',nameTr:'Özel hedef',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(L(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`,`${which==='start'?'Başlangıç':'Hedef'} ${coordinates(cell)} olarak ayarlandı. Rotalar yeniden hesaplandı.`));}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
 function downloadJson(payload,filename){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=filename;link.click();setTimeout(()=>URL.revokeObjectURL(url),0);}
-function exportBriefing(){if(state.activeMission&&state.missionLegs.length){downloadJson(buildMissionReport({mission:state.activeMission,legs:state.missionLegs,routes:state.routes},state.data,state.mode),'ARES-mission-'+state.activeMission.id+'.json');toast(L('Mission briefing exported','Görev brifingi dışa aktarıldı'));return;}downloadJson(buildBriefing(state),'ARES-route-briefing.json');toast(L('Route briefing exported','Rota brifingi dışa aktarıldı'));}
+function exportBriefing(){if(state.activeMission&&state.missionLegs.length){downloadJson(buildMissionReport({mission:state.activeMission,legs:state.missionLegs,routes:state.routes},state.data,state.mode,new Date().toISOString(),state.slopeWeight),'ARES-mission-'+state.activeMission.id+'.json');toast(L('Mission briefing exported','Görev brifingi dışa aktarıldı'));return;}downloadJson(buildBriefing(state),'ARES-route-briefing.json');toast(L('Route briefing exported','Rota brifingi dışa aktarıldı'));}
+function printBriefing(){const html=decisionReport({data:state.data,kind:state.kind,start:state.activeMission?.stops?.[0]??state.start,destination:state.activeMission?.stops?.at(-1)??state.destination,routes:state.routes,mission:state.activeMission,legs:state.missionLegs,slopeWeight:state.slopeWeight,language:locale()});const win=window.open('','_blank');if(!win){toast(L('Allow a new tab to open the briefing.','Brifing için yeni sekmeye izin verin.'));return;}win.document.open();win.document.write(html);win.document.close();}
 
 function renderMissionBuilder(){
   const measured=state.kind==='measured',active=customActive(),mission=state.activeMission;
@@ -450,6 +463,11 @@ function attach(){
   $('#waypoints').addEventListener('click',e=>{const add=e.target.closest('[data-preset-add]');if(add){const p=state.waypoints.find(x=>x.id===add.dataset.presetAdd);if(!p||state.kind!=='measured')return;try{if(!customActive())installCustomMission(createCustomMission(state.data,state.activeMission,locale()));const last=state.activeMission.stops.at(-1);if(last.x!==p.x||last.y!==p.y)applyCustomEdit({type:'add',point:{x:p.x,y:p.y}});$('#missionEditorStatus').textContent=`${locale()==='tr'?p.nameTr:p.name} · ${coordinates(p)} · ${L('illustrative mission stop.','örnek görev durağı.')}`;}catch(error){announce(userError(error),true);}return;}const b=e.target.closest('[data-waypoint]');if(!b)return;const p=state.waypoints.find(x=>x.id===b.dataset.waypoint);if(p){editor.mode='navigate';editor.undo=[];editor.redo=[];state.activeMission=null;state.missionLegs=[];state.destination=p;state.presetId=p.id;calculateRoutes();renderMissionLibrary();announce(L(`Example destination selected: ${p.name}.`,`Örnek hedef seçildi: ${p.nameTr||p.name}.`));}});
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;renderMap();renderComparison();}));
   $('#segmentSelect').addEventListener('change',e=>{const [mode,index]=e.target.value.split(':');inspectSegment(mode,Number(index),true);});
+  $('#profileChart').addEventListener('pointerover',e=>{const hit=e.target.closest('[data-profile-mode]');if(hit)inspectSegment(hit.dataset.profileMode,Number(hit.dataset.profileIndex));});
+  $('#profileChart').addEventListener('focusin',e=>{const hit=e.target.closest('[data-profile-mode]');if(hit)inspectSegment(hit.dataset.profileMode,Number(hit.dataset.profileIndex),true);});
+  $('#profileChart').addEventListener('click',e=>{const hit=e.target.closest('[data-profile-mode]');if(hit)inspectSegment(hit.dataset.profileMode,Number(hit.dataset.profileIndex),true);});
+  $('#profileChart').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-profile-mode]')){e.preventDefault();inspectSegment(e.target.dataset.profileMode,Number(e.target.dataset.profileIndex),true);}});
+  $('#slopeWeight').addEventListener('change',e=>{state.slopeWeight=Number(e.target.value);calculateRoutes();});
   $('#pickStart').addEventListener('click',()=>setPick('start'));$('#pickDestination').addEventListener('click',()=>setPick('destination'));
   $('#routeToggle').addEventListener('change',e=>{state.showRoutes=e.target.checked;renderMap();});$('#hazardToggle').addEventListener('change',e=>{state.hazards=e.target.checked;calculateRoutes();});
   $('#landmarkToggle').checked=state.showLandmarks;$('#landmarkToggle').addEventListener('change',e=>{state.showLandmarks=e.target.checked;try{localStorage.setItem('ares.showLandmarks',String(state.showLandmarks));}catch{}if(!state.showLandmarks)$('#landmarkPopup').hidden=true;renderMap();});
@@ -462,7 +480,7 @@ function attach(){
   $('#landmarkClose').addEventListener('click',()=>{$('#landmarkPopup').hidden=true;state.selectedLandmark=null;});
   $('#landmarkAdd').addEventListener('click',()=>{const id=state.selectedLandmark;if(!id)return;const button=$(`#waypoints [data-${state.kind==='measured'?'preset-add':'waypoint'}="${id}"]`);button?.click();$('#landmarkPopup').hidden=true;});
   $('#zoomIn').addEventListener('click',()=>setZoom(state.zoom+.2));$('#zoomOut').addEventListener('click',()=>setZoom(state.zoom-.2));$('#panReset').addEventListener('click',()=>{state.zoom=1;state.panX=0;state.panY=0;renderMap();});
-  $('#routeButton').addEventListener('click',()=>{calculateRoutes();toast(L('Routes recalculated','Rotalar yeniden hesaplandı'));});$('#briefingExport').addEventListener('click',exportBriefing);
+  $('#routeButton').addEventListener('click',()=>{calculateRoutes();toast(L('Routes recalculated','Rotalar yeniden hesaplandı'));});$('#briefingExport').addEventListener('click',exportBriefing);$('#briefingPrint').addEventListener('click',printBriefing);
   $('#datasetSwitch').addEventListener('click',()=>{const url=new URL(location.href);if(state.kind==='measured')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.href=url.href;});
   $('#overviewToggle').addEventListener('click',()=>{state.overview=!state.overview;state.zoom=1;state.panX=0;state.panY=0;const active=state.overview;$('#overviewToggle').setAttribute('aria-pressed',String(active));$('#segmentInspection').hidden=active;renderDataset();renderMap();});
   $('#missionPhase').addEventListener('change',e=>{library.phase=e.target.value;renderMissionLibrary();});

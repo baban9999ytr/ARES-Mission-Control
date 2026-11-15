@@ -32,6 +32,8 @@ npm run check    # tests and build
 3. Compare **Shortest** and **Terrain preferred** in the right panel. The selected column determines which line is emphasized. Drag to pan; use the zoom controls to inspect the map.
 4. Open **Details** for source URLs, CRS, bounds, vertical reference, resolution and coverage. Export the route briefing as JSON if needed.
 
+The comparison now includes a sampled elevation profile with keyboard and touch segment inspection, a controlled slope-cost coefficient (0, 1, 2, 4 or 8), and a print-friendly decision briefing. The shortest-distance baseline stays fixed as the coefficient changes. The coefficient is an illustrative model assumption; changing it does not change measured CTX terrain. See [explainable route decision verification](docs/EXPLAINABLE_ROUTE_DECISION.md).
+
 ## Mission Library (Phase 8)
 
 Use the **Mission Library** sidebar to browse 30 measured-grid scenarios (10 Explorer, 10 Scientist, 10 Commander). Filter by phase, search by title/ID/objective, then select a scenario to load its ordered stops. The map shows the aggregate route through every fixed-order leg. The right panel compares summed distances/ascent and maximum sampled step slope, and lets you export all calculated legs and metadata as JSON. **Exit mission** returns to the original comparison. See [Phase 8 implementation and QA](docs/PHASE8_MISSION_LIBRARY.md).
