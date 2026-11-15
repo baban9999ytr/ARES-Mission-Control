@@ -31,10 +31,13 @@
         "latitude": null,
         "longitude_east": null,
         "represents": "Jezero western delta feature; NASA source does not provide a single verified point coordinate for the entire delta",
-        "status": "null — feature is an extended geological unit"
+        "status": "null — feature is an extended geological unit",
+        "represents_tr": "Jezero batı deltası özelliği; NASA kaynağı tüm delta için tek doğrulanmış nokta koordinatı sağlamaz"
       },
       "geological_category": "ancient river delta / sedimentary deposit",
-      "jury_description_en": "Jezero’s ancient delta records where a river once entered a lake, preserving layered sediments deposited in a potentially habitable environment. It is one of the mission’s key locations for searching for preserved evidence of ancient life."
+      "jury_description_en": "Jezero’s ancient delta records where a river once entered a lake, preserving layered sediments deposited in a potentially habitable environment. It is one of the mission’s key locations for searching for preserved evidence of ancient life.",
+      "geological_category_tr": "antik nehir deltası / tortul birikim",
+      "scientific_target_tr": "Antik göl ortamı, delta tortullaşması, yaşanabilirlik ve biyolojik izlerin korunması"
     },
     {
       "id": "jezero-002",
@@ -56,10 +59,13 @@
         "latitude": null,
         "longitude_east": null,
         "represents": "Kodiak delta remnant; NASA source confirms the feature but does not publish a single verified coordinate",
-        "status": "null — named outcrop/remnant"
+        "status": "null — named outcrop/remnant",
+        "represents_tr": "Kodiak delta kalıntısı; NASA kaynağı özelliği doğrular ancak tek doğrulanmış koordinat yayımlamaz"
       },
       "geological_category": "delta remnant / sedimentary stratigraphy",
-      "jury_description_en": "Kodiak is a preserved remnant of Jezero’s ancient delta, exposing sedimentary layers formed by a former river-and-lake system. Its stratigraphy helps reconstruct how water and sediment moved through the crater."
+      "jury_description_en": "Kodiak is a preserved remnant of Jezero’s ancient delta, exposing sedimentary layers formed by a former river-and-lake system. Its stratigraphy helps reconstruct how water and sediment moved through the crater.",
+      "geological_category_tr": "delta kalıntısı / tortul tabakalanma",
+      "scientific_target_tr": "Delta tabakalanması, tortul birikim ve antik hidroloji"
     },
     {
       "id": "jezero-003",
@@ -81,10 +87,13 @@
         "latitude": 18.43074,
         "longitude_east": 77.44437,
         "represents": "Rochette/Bellegarde sample locality within the Máaz formation",
-        "status": "verified sample-site coordinate; not the centroid of the entire Máaz formation"
+        "status": "verified sample-site coordinate; not the centroid of the entire Máaz formation",
+        "represents_tr": "Máaz oluşumundaki Rochette/Bellegarde numune konumu"
       },
       "geological_category": "igneous formation / basaltic lava flows",
-      "jury_description_en": "Máaz is a basaltic lava-flow formation on the Jezero crater floor. Perseverance’s samples from this unit help scientists reconstruct Martian volcanism and the chemical alteration that affected the crater floor."
+      "jury_description_en": "Máaz is a basaltic lava-flow formation on the Jezero crater floor. Perseverance’s samples from this unit help scientists reconstruct Martian volcanism and the chemical alteration that affected the crater floor.",
+      "geological_category_tr": "magmatik oluşum / bazaltik lav akışları",
+      "scientific_target_tr": "Bazaltik volkanizma, değişim, mineraloji ve krater tabanı tarihi"
     },
     {
       "id": "jezero-004",
@@ -106,10 +115,13 @@
         "latitude": 18.43397,
         "longitude_east": 77.44301,
         "represents": "Brac/Dourbes sample locality within the Séítah formation",
-        "status": "verified sample-site coordinate; not the centroid of the entire Séítah formation"
+        "status": "verified sample-site coordinate; not the centroid of the entire Séítah formation",
+        "represents_tr": "Séítah oluşumundaki Brac/Dourbes numune konumu"
       },
       "geological_category": "igneous formation / ultramafic olivine-rich cumulate",
-      "jury_description_en": "Séítah exposes olivine-rich igneous rocks that formed deep within the Martian crust before being exposed at the crater floor. Its samples provide a window into the early magmatic history of Jezero."
+      "jury_description_en": "Séítah exposes olivine-rich igneous rocks that formed deep within the Martian crust before being exposed at the crater floor. Its samples provide a window into the early magmatic history of Jezero.",
+      "geological_category_tr": "magmatik oluşum / ultramafik olivinli kümülat",
+      "scientific_target_tr": "Olivinli magmatik kayaçlar, kümülat oluşumu ve krater tabanı evrimi"
     },
     {
       "id": "jezero-005",
@@ -131,10 +143,13 @@
         "latitude": 18.45369687,
         "longitude_east": 77.41359752,
         "represents": "USGS Astrogeology reference point near the Three Forks location and western delta front",
-        "status": "verified reference point; not a surveyed centroid of the named area"
+        "status": "verified reference point; not a surveyed centroid of the named area",
+        "represents_tr": "Three Forks konumu ve batı delta önüne yakın USGS Astrogeology referans noktası"
       },
       "geological_category": "delta-front terrain / rover sample-depot site",
-      "jury_description_en": "Three Forks marks the gateway to Jezero’s western delta and became the site of Perseverance’s first surface sample depot. It is especially important for linking rover navigation, delta geology, and future sample-retrieval planning."
+      "jury_description_en": "Three Forks marks the gateway to Jezero’s western delta and became the site of Perseverance’s first surface sample depot. It is especially important for linking rover navigation, delta geology, and future sample-retrieval planning.",
+      "geological_category_tr": "delta önü arazisi / gezgin numune deposu",
+      "scientific_target_tr": "Delta önü jeolojisi, numune deposu bağlamı ve gezgin rota planlaması"
     },
     {
       "id": "jezero-006",
@@ -156,10 +171,13 @@
         "latitude": null,
         "longitude_east": null,
         "represents": "Named mission feature within the delta-front campaign; no verified single coordinate found in the checked NASA sources",
-        "status": "null — coordinate not verified"
+        "status": "null — coordinate not verified",
+        "represents_tr": "Delta önü kampanyasındaki adlandırılmış görev özelliği; denetlenen NASA kaynaklarında tek doğrulanmış koordinat bulunmadı"
       },
       "geological_category": "delta-front terrain / sedimentary environment",
-      "jury_description_en": "Enchanted Lake is one of the named features explored during Perseverance’s investigation of Jezero’s delta front. It belongs to the broader ancient river-and-lake environment that makes the delta scientifically valuable."
+      "jury_description_en": "Enchanted Lake is one of the named features explored during Perseverance’s investigation of Jezero’s delta front. It belongs to the broader ancient river-and-lake environment that makes the delta scientifically valuable.",
+      "geological_category_tr": "delta önü arazisi / tortul ortam",
+      "scientific_target_tr": "Delta önü tortul jeolojisi ve antik nehir-göl sistemi"
     },
     {
       "id": "jezero-007",
@@ -181,10 +199,13 @@
         "latitude": 18.456223,
         "longitude_east": 77.31508121,
         "represents": "Perseverance rover location reported by NASA on May 3, 2024 in the Belva area; not Belva crater center",
-        "status": "verified NASA rover-location reference; not a crater-centroid coordinate"
+        "status": "verified NASA rover-location reference; not a crater-centroid coordinate",
+        "represents_tr": "NASA’nın 3 Mayıs 2024 tarihinde Belva çevresinde bildirdiği Perseverance konumu; Belva krater merkezi değil"
       },
       "geological_category": "impact crater / exposed delta-margin geology",
-      "jury_description_en": "Belva is a small impact crater in the western Jezero region that exposes local geology in a useful stratigraphic setting. Perseverance’s observations there help place the delta and its sedimentary rocks into a broader geological context."
+      "jury_description_en": "Belva is a small impact crater in the western Jezero region that exposes local geology in a useful stratigraphic setting. Perseverance’s observations there help place the delta and its sedimentary rocks into a broader geological context.",
+      "geological_category_tr": "çarpma krateri / açığa çıkmış delta kenarı jeolojisi",
+      "scientific_target_tr": "Çarpma kazısı, açığa çıkmış tabakalanma ve delta jeolojisi"
     },
     {
       "id": "jezero-008",
@@ -206,10 +227,13 @@
         "latitude": 18.4907,
         "longitude_east": 77.48205542,
         "represents": "Perseverance rover location reported by NASA on June 21, 2024 during proximity science at Bright Angel; not the outcrop centroid",
-        "status": "verified NASA rover-location reference; not a surveyed feature centroid"
+        "status": "verified NASA rover-location reference; not a surveyed feature centroid",
+        "represents_tr": "NASA’nın 21 Haziran 2024 tarihinde Bright Angel yakın bilim çalışması sırasında bildirdiği Perseverance konumu; yüzlek merkezi değil"
       },
       "geological_category": "ancient river-channel outcrop / layered sedimentary or exposed bedrock",
-      "jury_description_en": "Bright Angel exposes light-toned, layered rocks beside an ancient river channel that once fed Jezero’s lake. The outcrop is important for testing whether its rocks record channel-fill sediment or older bedrock revealed by erosion."
+      "jury_description_en": "Bright Angel exposes light-toned, layered rocks beside an ancient river channel that once fed Jezero’s lake. The outcrop is important for testing whether its rocks record channel-fill sediment or older bedrock revealed by erosion.",
+      "geological_category_tr": "antik nehir kanalı yüzleği / tabakalı tortul veya açığa çıkmış ana kaya",
+      "scientific_target_tr": "Antik nehir kanalı birikimleri, tabakalanma ve sulu ortam tarihi"
     }
   ]
 }
