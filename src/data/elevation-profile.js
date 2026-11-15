@@ -24,9 +24,16 @@ const fmt=(value,locale,digits=1)=>new Intl.NumberFormat(locale==='tr'?'tr-TR':'
   minimumFractionDigits:digits,maximumFractionDigits:digits
 }).format(value);
 
-export function renderElevationProfile(container,{routes,segments,locale='en',selected=null,onSelect=()=>{}}){
+export function renderElevationProfile(container,{routes,segments,locale='en',selected=null,onSelect=()=>{},measured=true}){
   if(!container)return;
   container.replaceChildren();
+  if(!measured){
+    const empty=document.createElement('p');
+    empty.className='elevation-profile-empty';
+    empty.textContent=locale==='tr'?'Yükseklik profili yalnızca ölçümlü CTX DEM verisinde gösterilir.':'The elevation profile is available only for measured CTX DEM data.';
+    container.append(empty);
+    return;
+  }
   const hasData=routes?.distance&&routes?.terrain&&segments?.distance?.length&&segments?.terrain?.length;
   if(!hasData){
     const empty=document.createElement('p');
