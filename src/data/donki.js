@@ -21,7 +21,12 @@ export function weatherState(results, retrievedAt, now = new Date()) {
   return {status:failures?'partial':events.length?'ready':'empty',events,message:failures?'Some event types could not be retrieved.':events.length?'Observed solar events from DONKI.':'No FLR, CME or SEP records in this query window.'};
 }
 
-export function formatDonkiStatus(result){
+export function formatDonkiStatus(result, language='en'){
+  if(language==='tr'){
+    const message={stale:'Sorgu eski veya zaman damgası geçersiz.',unavailable:'DONKI kullanılamıyor. Yerine olay üretilmiyor.',partial:'Bazı olay türleri getirilemedi.',ready:'DONKI kaynaklı gözlenmiş Güneş olayları.',empty:'Bu sorgu aralığında FLR, CME veya SEP kaydı yok.'}[result.status];
+    const label=result.status==='unavailable'?'Denendi':result.status==='partial'?'Kısmen getirildi':'Getirildi';
+    return `${message} Sorgu ${result.startDate}–${result.endDate} UTC · ${label} ${result.retrievedAt} · ${result.types.map(t=>`${t.type}: ${t.ok?t.count:'kullanılamıyor'}`).join(', ')}.`;
+  }
   const label=result.status==='unavailable'?'Attempted':result.status==='partial'?'Partially retrieved':'Retrieved';
   return `${result.message} Query ${result.startDate}–${result.endDate} UTC · ${label} ${result.retrievedAt} · ${result.types.map(t=>`${t.type}: ${t.ok?t.count:'unavailable'}`).join(', ')}.`;
 }

@@ -25,7 +25,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kısa alan geçişi",
+      "objective_tr": "Kısa doğu geçişinde iki rota modunu karşılaştır",
+      "researchQuestion_tr": "Rota maliyetini geometrik mesafeyle karşılaştır."
     },
     {
       "id": "EX-02",
@@ -46,7 +49,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Uzun çapraz rota",
+      "objective_tr": "Yükseklik değişimleriyle çapraz geçişi gözlemle",
+      "researchQuestion_tr": "Arazi cezasının geniş çapraz rotayı nasıl değiştirdiğini denetle."
     },
     {
       "id": "EX-03",
@@ -67,7 +73,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Batıdan doğuya kesit",
+      "objective_tr": "Geniş batı-doğu kesitini izle",
+      "researchQuestion_tr": "Birikimli yükselişi ve rota mesafesini karşılaştır."
     },
     {
       "id": "EX-04",
@@ -88,7 +97,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kuzeyden güneye kesit",
+      "objective_tr": "Kuzey-güney arazi eğimlerini karşılaştır",
+      "researchQuestion_tr": "Komşu hücreler arasındaki maksimum adım eğimini incele."
     },
     {
       "id": "EX-05",
@@ -109,7 +121,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Köşeden merkeze",
+      "objective_tr": "Batı bölgesinden merkez hücrelere git",
+      "researchQuestion_tr": "İki modu karşılaştır; adlandırılmış bilimsel konum iddiasından kaçın."
     },
     {
       "id": "EX-06",
@@ -130,7 +145,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Güney sınırına yaklaşım",
+      "objective_tr": "Güney bölgesindeki yaklaşımı incele",
+      "researchQuestion_tr": "Çoğunlukla yatay yer değiştirmede yükselişi karşılaştır."
     },
     {
       "id": "EX-07",
@@ -151,7 +169,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kuzeydoğu aktarımı",
+      "objective_tr": "Kuzeydoğu yönünde rota seçimini incele",
+      "researchQuestion_tr": "Eğim ve uzunluk değişimlerini incele."
     },
     {
       "id": "EX-08",
@@ -172,7 +193,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Batıda kısa döngü ayağı",
+      "objective_tr": "Batıda yakın noktaları dene",
+      "researchQuestion_tr": "Rotaların çakışabileceği kısa yolculuğu belgele."
     },
     {
       "id": "EX-09",
@@ -193,7 +217,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Çapraz eksen rotası",
+      "objective_tr": "Kuzey-güney ve doğu-batı yolculuğunu karşılaştır",
+      "researchQuestion_tr": "Eğim ağırlığının etkisini nicelleştir."
     },
     {
       "id": "EX-10",
@@ -214,7 +241,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Örnek durak provası",
+      "objective_tr": "Ön ayarlı başlangıçtan örnek grid durağına rota çiz",
+      "researchQuestion_tr": "Grid durağını gerçek Jezero Deltası olarak tanımlama."
     },
     {
       "id": "SC-01",
@@ -235,7 +265,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Yükseklik profili A",
+      "objective_tr": "Kuzey kesitinde yüzey yüksekliği değişimini karşılaştır",
+      "researchQuestion_tr": "Rota ölçüleriyle yalnızca örneklenmiş DEM topografyasını tartış."
     },
     {
       "id": "SC-02",
@@ -256,7 +289,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Yükseklik profili B",
+      "objective_tr": "Güney kesitinde yüzey yüksekliği değişimini karşılaştır",
+      "researchQuestion_tr": "SC-01 ile karşılaştır; belirli kaya türü iddiasından kaçın."
     },
     {
       "id": "SC-03",
@@ -277,7 +313,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Doğuya yükseliş karşılaştırması",
+      "objective_tr": "Yakın başlangıçlardan doğuya iki rotayı karşılaştır",
+      "researchQuestion_tr": "Modellenmiş yükselişi raporla; fiziksel enerji tüketimi çıkarma."
     },
     {
       "id": "SC-04",
@@ -298,7 +337,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Doğuya yükseliş tekrarı",
+      "objective_tr": "Doğuya geçiş deneyini başka enlemde tekrarla",
+      "researchQuestion_tr": "Farkları SC-03 ile karşılaştır."
     },
     {
       "id": "SC-05",
@@ -319,7 +361,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kuzeybatı eğim örneklemesi",
+      "objective_tr": "Kuzeybatı yönünde uzun geçişi örnekle",
+      "researchQuestion_tr": "Komşu hücreler arasında büyük eğim farklarını belirle."
     },
     {
       "id": "SC-06",
@@ -340,7 +385,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Güneybatı eğim örneklemesi",
+      "objective_tr": "Güneybatı yönünde uzun geçişi örnekle",
+      "researchQuestion_tr": "Aynı maliyet modelinde SC-05 ile karşılaştır."
     },
     {
       "id": "SC-07",
@@ -361,7 +409,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Merkez DEM kesiti",
+      "objective_tr": "Merkezi dikey kesitte rota çiz",
+      "researchQuestion_tr": "40 m hücreleri kaba yükseklik örnekleri olarak yorumla."
     },
     {
       "id": "SC-08",
@@ -382,7 +433,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Çevre DEM kesiti",
+      "objective_tr": "Daha doğudaki kesitte deneyi tekrarla",
+      "researchQuestion_tr": "Tehlike çıkarımı yapmadan SC-07 ile karşılaştır."
     },
     {
       "id": "SC-09",
@@ -403,7 +457,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Rota modeli duyarlılığı",
+      "objective_tr": "Maliyet ağırlığı farkını gösterebilecek uç noktalar seç",
+      "researchQuestion_tr": "Rotaların ayrıldığı veya birleştiği durumları kaydet."
     },
     {
       "id": "SC-10",
@@ -424,7 +481,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Mesafe ve yükseliş",
+      "objective_tr": "Mesafe ve toplam yükselişin değiş tokuşunu incele",
+      "researchQuestion_tr": "Ölçüleri karşılaştır; oksijen veya güvenli EVA süresi çıkarma."
     },
     {
       "id": "CM-01",
@@ -453,7 +513,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Üç ayaklı batı araştırması",
+      "objective_tr": "Bağımsız hesaplanan üç yerel rota ayağını sırala",
+      "researchQuestion_tr": "Rota mesafelerini topla; doğal çok duraklı optimizasyon iddiasında bulunma."
     },
     {
       "id": "CM-02",
@@ -482,7 +545,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kuzey geçiş zinciri",
+      "objective_tr": "Kuzey bölgesinde çok ayaklı güzergâhı dene",
+      "researchQuestion_tr": "Her ayakta iki modun toplamını karşılaştır."
     },
     {
       "id": "CM-03",
@@ -511,7 +577,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Güney geçiş zinciri",
+      "objective_tr": "Güney bölgesinde çok ayaklı güzergâhı dene",
+      "researchQuestion_tr": "Yükselişi her ayak için ayrı kaydet."
     },
     {
       "id": "CM-04",
@@ -544,7 +613,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Merkezi kare alıştırması",
+      "objective_tr": "Dört hücreyi ziyaret edip ilkine dön",
+      "researchQuestion_tr": "Bağımsız grid rotalarıyla kapalı turu denetle."
     },
     {
       "id": "CM-05",
@@ -569,7 +641,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Gidiş ve dönüş",
+      "objective_tr": "Dışarı git ve uç noktaları tersine çevir",
+      "researchQuestion_tr": "Mesafeler eşitken gidiş ve dönüş yükselişini karşılaştır."
     },
     {
       "id": "CM-06",
@@ -594,7 +669,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Üç bölgeli aktarım",
+      "objective_tr": "Batı, merkez ve doğu hücrelerini ziyaret et",
+      "researchQuestion_tr": "Desteksiz süre tahmini olmadan genel yükselişi incele."
     },
     {
       "id": "CM-07",
@@ -619,7 +697,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Kuzey-güney aktarımı",
+      "objective_tr": "Ara grid noktası üzerinden dikey bölgeleri geç",
+      "researchQuestion_tr": "Parçalı rotaları doğrudan görevle karşılaştır."
     },
     {
       "id": "CM-08",
@@ -644,7 +725,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Durak değerlendirmesi",
+      "objective_tr": "Varsayılan başlangıçtan iki örnek konumu ziyaret et",
+      "researchQuestion_tr": "Duraklar doğrulanmış bilim hedefleri değil, grid örnekleridir."
     },
     {
       "id": "CM-09",
@@ -673,7 +757,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Sınıra duyarlı prova",
+      "objective_tr": "Dört veri sınırının içinde kalan konumları geç",
+      "researchQuestion_tr": "Alan dışına erişim değil, sınırlı grid rotasını dene."
     },
     {
       "id": "CM-10",
@@ -706,7 +793,10 @@
       "category": "illustrative measured-grid exercise",
       "sourceDataset": "Jezero CTX measured study crop",
       "routeStatus": "requires executed route verification",
-      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells."
+      "scienceClaim": "No named geographic feature or verified science site is asserted at these grid cells.",
+      "title_tr": "Tam grid keşif alıştırması",
+      "objective_tr": "Ölçümlü alanı kapsayan dört ayaklı diziyi izle",
+      "researchQuestion_tr": "Toplam modellenmiş maliyeti, yükselişi ve mesafeyi karşılaştır; yaşam desteği bütçesi yok."
     }
   ]
 }
