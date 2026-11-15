@@ -67,6 +67,33 @@ test('SC-05 catalog selection describes equal distance without saying farther',a
   await expect(page.locator('#routeDecision')).not.toContainText('daha uzun');
 });
 
+
+test('SC-01 elevation profile uses measured samples and supports point selection',async({page})=>{
+  await ready(page);
+  await page.locator('#juryExample').click();
+  await expect(page.locator('#routeContext')).toContainText('SC-01');
+  await expect(page.locator('#elevationProfile')).toBeVisible();
+  await expect(page.locator('#elevationProfile .elevation-profile-line.terrain')).toHaveAttribute('stroke','#16c7c8');
+  await expect(page.locator('#elevationProfile .elevation-profile-line.shortest')).toHaveAttribute('stroke','#f28c28');
+  await expect(page.locator('#elevationProfile .elevation-profile-point')).toHaveCountGreaterThan(2);
+  await page.locator('#elevationProfile .elevation-profile-point.terrain').first().click();
+  await expect(page.locator('#segmentInspection')).toBeVisible();
+  await expect(page.locator('#segmentSelect')).toHaveValue(/terrain:0/);
+});
+
+test('elevation profile remains usable at mobile widths in EN/TR',async({page})=>{
+  for(const [width,language] of [[390,'en'],[320,'tr']]){
+    await page.setViewportSize({width,height:844});
+    await ready(page);
+    await page.locator(`[data-language="${language}"]`).click();
+    await page.locator('#juryExample').click();
+    await expect(page.locator('#elevationProfile')).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.locator('#elevationProfile .elevation-profile-point.terrain').first().tap();
+    await expect(page.locator('#segmentInspection')).toBeVisible();
+  }
+});
+
 test('tablet comparison, keyboard map point and segment, mobile actions remain accessible',async({page})=>{
   await page.setViewportSize({width:768,height:1024});
   await ready(page);
