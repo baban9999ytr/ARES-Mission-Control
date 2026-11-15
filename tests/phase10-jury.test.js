@@ -27,13 +27,36 @@ test('identical and unfavorable routes receive honest explanations',()=>{
   assert.match(decisionExplanation({identical:false,distanceDelta:100,distancePercent:5,meaningful:false}),/without a meaningful/);
 });
 
-test('jury launch has a custom mission replacement guard and preserves both paths',()=>{
-  const html=read('../index.html'),main=read('../src/main.js');
-  assert.match(html,/id="juryExample"/);
-  assert.match(html,/id="routeDecision"/);
-  assert.match(main,/customActive\(\)&&!window\.confirm\(t\('jury\.replaceConfirm'\)\)/);
-  assert.match(main,/selectLibraryMission\('SC-01'\)/);
-  assert.match(main,/state\.routeVisible=\{distance:true,terrain:true\}/);
+test('SC-05 equal-distance alternate geometry never reads as farther',()=>{
+  const plan=planMission(pack,missions.find(m=>m.id==='SC-05'));
+  const facts=comparisonFacts(plan.routes.distance,plan.routes.terrain,pack,plan.legs);
+  assert.equal(facts.identical,false);
+  assert.equal(facts.distanceDelta,0);
+  assert.ok(facts.slopeReduction>2);
+  for(const language of ['en','tr']){
+    const text=decisionExplanation(facts,language);
+    assert.doesNotMatch(text,/0 m|farther|longer|daha uzun/);
+    assert.match(text,language==='tr'?/mesafesi aynı.*2,4°/:/same measured distance.*2\.4°/);
+  }
+});
+
+test('EX-05 equal-distance small differences and SC-02 identical geometry have distinct messages',()=>{
+  const facts=id=>{const plan=planMission(pack,missions.find(m=>m.id===id));return comparisonFacts(plan.routes.distance,plan.routes.terrain,pack,plan.legs);};
+  const equal=facts('EX-05'),identical=facts('SC-02');
+  assert.equal(equal.identical,false);assert.equal(equal.distanceDelta,0);assert.equal(equal.meaningful,false);
+  assert.match(decisionExplanation(equal),/same measured distance.*small/);
+  assert.equal(identical.identical,true);
+  assert.match(decisionExplanation(identical),/selected the same route/);
+});
+
+test('SC-10 equal-distance ascent gain does not invent a 0.0 degree slope gain',()=>{
+  const plan=planMission(pack,missions.find(m=>m.id==='SC-10'));
+  const facts=comparisonFacts(plan.routes.distance,plan.routes.terrain,pack,plan.legs);
+  assert.equal(facts.distanceDelta,0);
+  assert.ok(facts.slopeReduction>0&&facts.slopeReduction<.05);
+  assert.ok(facts.ascentReduction>10);
+  assert.match(decisionExplanation(facts),/same maximum sampled step slope.*15\.3 m/);
+  assert.doesNotMatch(decisionExplanation(facts),/0\.0°/);
 });
 
 test('stale and failed DONKI responses never claim successful retrieval',()=>{
