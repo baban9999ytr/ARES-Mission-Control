@@ -32,6 +32,8 @@ npm run check    # tests and build
 3. Compare **Shortest** and **Terrain preferred** in the right panel. The selected column determines which line is emphasized. Drag to pan; use the zoom controls to inspect the map.
 4. Open **Details** for source URLs, CRS, bounds, vertical reference, resolution and coverage. Export the route briefing as JSON if needed.
 
+The comparison now includes a sampled elevation profile with keyboard and touch segment inspection, a controlled slope-cost coefficient (0, 1, 2, 4 or 8), and a print-friendly decision briefing. The shortest-distance baseline stays fixed as the coefficient changes. The coefficient is an illustrative model assumption; changing it does not change measured CTX terrain. See [explainable route decision verification](docs/EXPLAINABLE_ROUTE_DECISION.md).
+
 ## Mission Library (Phase 8)
 
 Use the **Mission Library** sidebar to browse 30 measured-grid scenarios (10 Explorer, 10 Scientist, 10 Commander). Filter by phase, search by title/ID/objective, then select a scenario to load its ordered stops. The map shows the aggregate route through every fixed-order leg. The right panel compares summed distances/ascent and maximum sampled step slope, and lets you export all calculated legs and metadata as JSON. **Exit mission** returns to the original comparison. See [Phase 8 implementation and QA](docs/PHASE8_MISSION_LIBRARY.md).
@@ -39,6 +41,12 @@ Use the **Mission Library** sidebar to browse 30 measured-grid scenarios (10 Exp
 The Commander plans do **not** optimize the order of stops; each leg runs separately on the existing A* algorithm. All mission coordinates are illustrative measured-grid exercises, **not** independently identified Jezero science targets or EVA-safe routes. The canonical catalog is `data/scenarios/measured-missions.json` and is bundled into `dist/data/scenarios/` by the build.
 
 The **Science Targets** explorer keeps a Jezero catalog and a global Mars catalog separate. Its submitted Jezero coordinates currently lie outside the measured crop, or have no single point, so none becomes a named route preset. The collapsed **Space Weather** drawer makes a read-only NASA CCMC DONKI request for observed solar events when opened. It reports UTC event and retrieval times and displays an unavailable state if the request fails. These events do not measure local Mars radiation or establish EVA safety.
+
+## Science Mission Mode
+
+Choose **+ Science mission** to plan `base → science activity stop(s) → base` on the measured CTX crop. Move the base or stops, assign an activity and description, reorder activities, inspect outbound and return legs, and save or load the existing custom-mission JSON format. The return leg is routed independently and included in total distance, ascent, and maximum sampled step slope. **Science return demo** loads a measured example with a real calculated route trade-off; **Restore prior work** returns to the previous mission and map state. All activity stops are illustrative grid locations, not verified NASA science sites. The [science target coverage review](docs/phase11/SCIENCE_TARGET_COVERAGE.md) explains why no named catalog target is route-enabled.
+
+The comparison panel labels measured inputs, calculated values, illustrative model choices, and unknown operational hazards. The printable report and JSON exports include the mission plan and its assumptions. No route is certified safe for EVA.
 
 Use **Switch to synthetic demo** or `?mode=demo` for the separate illustrative dataset. The synthetic mode includes illustrative hazards and thermal coloring. Measured CTX mode has **no** thermal or verified hazard layer.
 

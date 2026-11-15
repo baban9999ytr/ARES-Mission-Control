@@ -9,7 +9,15 @@ export function comparisonFacts(shortest,terrain,data,legs=[]){
   const slopeReduction=shortest.maxSlope-terrain.maxSlope;
   const ascentReduction=shortest.ascending-terrain.ascending;
   const meaningful=slopeReduction>=2||ascentReduction>=10;
-  return {identical,shared,sharedPercent:Math.round(shared/Math.max(a.length,b.length,1)*100),distanceDelta,distancePercent:shortest.meters?distanceDelta/shortest.meters*100:0,slopeReduction,ascentReduction,meaningful};
+  const equalLength=Math.abs(distanceDelta)<.5;
+  const advantages=[],disadvantages=[],unresolved=[];
+  if(distanceDelta<-.5)advantages.push('distance');else if(distanceDelta>.5)disadvantages.push('distance');
+  if(slopeReduction>.05)advantages.push('maximum sampled step slope');else if(slopeReduction<-.05)disadvantages.push('maximum sampled step slope');
+  if(ascentReduction>.05)advantages.push('total ascent');else if(ascentReduction<-.05)disadvantages.push('total ascent');
+  if(!identical&&(advantages.length&&disadvantages.length))unresolved.push('metrics favor different routes');
+  if(!identical&&!advantages.length&&!disadvantages.length)unresolved.push('sampled metrics do not distinguish routes');
+  unresolved.push('small-scale obstacles and operational hazards are unmodeled');
+  return {identical,equalLength,equalLengthDifferentGeometry:equalLength&&!identical,shared,sharedPercent:Math.round(shared/Math.max(a.length,b.length,1)*100),distanceDelta,distancePercent:shortest.meters?distanceDelta/shortest.meters*100:0,slopeReduction,ascentReduction,meaningful,advantages,disadvantages,unresolved};
 }
 
 export function decisionExplanation(facts,language='en'){
@@ -33,4 +41,16 @@ export function decisionExplanation(facts,language='en'){
   }
   if(tr)return `En kısa rotaya göre arazi öncelikli rota ${distance} ${facts.distanceDelta>=0?'daha uzun':'daha kısa'}; maksimum örneklenmiş adım eğimi ${slope} ${facts.slopeReduction>=0?'azalıyor':'artıyor'}, toplam yükseliş ${ascent} ${facts.ascentReduction>=0?'azalıyor':'artıyor'}.`;
   return `Compared with the shortest route, the terrain-preferred route travels ${distance} ${facts.distanceDelta>=0?'farther':'less distance'}, ${facts.slopeReduction>=0?'reduces':'increases'} maximum sampled step slope by ${slope}, and ${facts.ascentReduction>=0?'reduces':'increases'} total ascent by ${ascent}.`;
+}
+
+export function tradeoffExplanation(facts,language='en'){
+  const tr=language==='tr';
+  if(!facts)return tr?'Geçerli rota verisi yok; karar verilemez.':'No valid route data; no decision can be made.';
+  if(facts.identical)return tr?'Geometri ve örneklenmiş ölçüler aynı. Küçük ölçekli tehlikeler modellenmiyor.':'Geometry and sampled metrics are identical. Small-scale hazards remain unmodeled.';
+  const names={distance:tr?'mesafe':'distance','maximum sampled step slope':tr?'maksimum örnek adım eğimi':'maximum sampled step slope','total ascent':tr?'toplam yükseliş':'total ascent'};
+  const join=items=>items.map(x=>names[x]).join(', ');
+  const good=facts.advantages.length?(tr?`Arazi öncelikli rota şu ölçülerde avantajlı: ${join(facts.advantages)}.`:`Terrain preference improves ${join(facts.advantages)}.`):(tr?'Örneklenmiş ölçülerde belirgin avantaj yok.':'No sampled metric advantage is established.');
+  const bad=facts.disadvantages.length?(tr?`Şu ölçülerde dezavantajlı: ${join(facts.disadvantages)}.`:`It worsens ${join(facts.disadvantages)}.`):'';
+  const unresolved=facts.advantages.length&&facts.disadvantages.length?(tr?'Bu ödünleşimin tek bir nesnel çözümü yok.':'These opposing metrics do not establish a single best route.'):facts.equalLengthDifferentGeometry?(tr?'Eşit uzunluk farklı geometriyi eşdeğer yapmaz.':'Equal length does not make the different geometries equivalent.'):'';
+  return [good,bad,unresolved,tr?'Küçük ölçekli ve operasyonel tehlikeler bilinmiyor.':'Small-scale and operational hazards remain unknown.'].filter(Boolean).join(' ');
 }

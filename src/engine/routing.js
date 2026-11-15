@@ -5,6 +5,8 @@ const NEIGHBORS = [
   [-1,1,Math.SQRT2],[0,1,1],[1,1,Math.SQRT2],
 ];
 export const cellIndex=(x,y,width)=>y*width+x;
+export const DEFAULT_SLOPE_WEIGHT=4;
+export const SUPPORTED_SLOPE_WEIGHTS=[0,1,2,4,8];
 export function inHazard(x,y,hazards=[],enabled=true) {
   return enabled && hazards.some(h=>Math.hypot(x-h.x,y-h.y)<h.radius);
 }
@@ -16,13 +18,13 @@ export function isBlocked(data,x,y,hazardEnabled=true) {
 export function slopeDegrees(a,b,runMeters){
   return Math.atan2(Math.abs(b-a),runMeters)*180/Math.PI;
 }
-export function routeCost(data, from, to, stepLength, mode='terrain', hazardEnabled=true) {
+export function routeCost(data, from, to, stepLength, mode='terrain', hazardEnabled=true, slopeWeight=DEFAULT_SLOPE_WEIGHT) {
+  if(!SUPPORTED_SLOPE_WEIGHTS.includes(slopeWeight))throw new RangeError('Unsupported illustrative slope coefficient');
   const h1=data.heights[cellIndex(from.x,from.y,data.gridWidth)];
   const h2=data.heights[cellIndex(to.x,to.y,data.gridWidth)];
   const slope=slopeDegrees(h1,h2,(data.cellMeters??data.demoCellMeters)*stepLength);
   const meters=stepLength*(data.cellMeters??data.demoCellMeters);
   // These illustrative weights are engineering design choices, not EVA safety guidance.
-  const slopeWeight=mode==='terrain'?4:0;
   const penalty=mode==='terrain' ? (1+slopeWeight*Math.pow(slope/20,2)) : 1;
   return {cost:meters*penalty,meters,slope};
 }
@@ -44,7 +46,8 @@ class MinHeap {
     return first;
   }
 }
-export function planRoute(data,start,goal,mode='terrain',hazardEnabled=true){
+export function planRoute(data,start,goal,mode='terrain',hazardEnabled=true,slopeWeight=DEFAULT_SLOPE_WEIGHT){
+  if(!SUPPORTED_SLOPE_WEIGHTS.includes(slopeWeight))throw new RangeError('Unsupported illustrative slope coefficient');
   const {gridWidth:w,gridHeight:h}=data;
   const validate=p=>Number.isInteger(p.x)&&Number.isInteger(p.y)&&p.x>=0&&p.y>=0&&p.x<w&&p.y<h;
   if(!validate(start)||!validate(goal)) return null;
@@ -69,11 +72,11 @@ export function planRoute(data,start,goal,mode='terrain',hazardEnabled=true){
       let meters=0,maxSlope=0,ascending=0;
       for(let i=1;i<cells.length;i++){
         const a=cells[i-1],b=cells[i];
-        const segment=routeCost(data,a,b,Math.hypot(a.x-b.x,a.y-b.y),mode,hazardEnabled);
+        const segment=routeCost(data,a,b,Math.hypot(a.x-b.x,a.y-b.y),mode,hazardEnabled,slopeWeight);
         meters+=segment.meters;maxSlope=Math.max(maxSlope,segment.slope);
         ascending+=Math.max(0,data.heights[key(b.x,b.y)]-data.heights[key(a.x,a.y)]);
       }
-      return {cells,meters,maxSlope,ascending,totalCost:g[goalIdx],mode,iterations};
+      return {cells,meters,maxSlope,ascending,totalCost:g[goalIdx],mode,iterations,slopeWeight:mode==='terrain'?slopeWeight:0};
     }
     const cx=cur%w,cy=Math.floor(cur/w);
     for(const [dx,dy,len] of NEIGHBORS){
@@ -82,7 +85,7 @@ export function planRoute(data,start,goal,mode='terrain',hazardEnabled=true){
       // Prevent diagonal traversal through the corner of a blocked cell.
       if(dx&&dy&&(isBlocked(data,cx+dx,cy,hazardEnabled)||isBlocked(data,cx,cy+dy,hazardEnabled)))continue;
       const ni=key(nx,ny);
-      const {cost}=routeCost(data,{x:cx,y:cy},{x:nx,y:ny},len,mode,hazardEnabled);
+      const {cost}=routeCost(data,{x:cx,y:cy},{x:nx,y:ny},len,mode,hazardEnabled,slopeWeight);
       const tentative=g[cur]+cost;
       if(tentative<g[ni]){came[ni]=cur;g[ni]=tentative;f[ni]=tentative+heuristic({x:nx,y:ny},goal,cellMeters);open.push(ni,f[ni]);}
     }
