@@ -75,10 +75,11 @@ test('SC-01 elevation profile uses measured samples and supports point selection
   await expect(page.locator('#elevationProfile')).toBeVisible();
   await expect(page.locator('#elevationProfile .elevation-profile-line.terrain')).toHaveAttribute('stroke','#16c7c8');
   await expect(page.locator('#elevationProfile .elevation-profile-line.shortest')).toHaveAttribute('stroke','#f28c28');
-  await expect(page.locator('#elevationProfile .elevation-profile-point')).toHaveCountGreaterThan(2);
+  expect(await page.locator('#elevationProfile .elevation-profile-point').count()).toBeGreaterThan(2);
   await page.locator('#elevationProfile .elevation-profile-point.terrain').first().click();
   await expect(page.locator('#segmentInspection')).toBeVisible();
   await expect(page.locator('#segmentSelect')).toHaveValue(/terrain:0/);
+  await page.screenshot({path:'test-results/elevation-profile-desktop.png',fullPage:true});
 });
 
 test('elevation profile remains usable at mobile widths in EN/TR',async({page})=>{
@@ -91,6 +92,7 @@ test('elevation profile remains usable at mobile widths in EN/TR',async({page})=
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await page.locator('#elevationProfile .elevation-profile-point.terrain').first().tap();
     await expect(page.locator('#segmentInspection')).toBeVisible();
+    await page.screenshot({path:`test-results/elevation-profile-${language}-${width}.png`,fullPage:true});
   }
 });
 
