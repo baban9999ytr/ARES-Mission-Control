@@ -1,13 +1,15 @@
-# Challenge alignment
+# Official challenge alignment
 
-Official challenge: [Interplanetary Survival Guide: Martian Map](https://www.spaceappschallenge.org/2026/challenges/interplanetary-survival-guide-martian-map/). The full official page returned an inaccessible response during this audit. This matrix uses the challenge overview indexed by search and must be checked against the official portal before submission. No claim is made that all detailed deliverables have been verified.
+Reviewed the [official 2026 Interplanetary Survival Guide: Martian Map Details tab](https://www.spaceappschallenge.org/2026/challenges/interplanetary-survival-guide-martian-map/) on 15 November 2026. The objectives are paraphrased below; the page's examples and potential considerations are suggestions, not mandatory deliverables.
 
-| Challenge objective from overview | Current ARES capability and evidence | Limit | Status |
+| Official objective or consideration | ARES evidence | Limitation | Status |
 |---|---|---|---|
-| Layered, integrated view of a Martian location or route | Registered CTX optical and DEM layers in `src/main.js`; measured pack metadata in `public/data/mission-pack.json` | One Jezero study area and expanded sector; regional overview is context only | Partial |
-| Data from multiple NASA science missions | MRO CTX map products plus research catalog and DONKI context | Only CTX DEM measurements enter route optimization. DONKI is solar-event context, not local dose; science catalog does not supply routeable verified targets | Partial |
-| Route and destination details for a human explorer | A* alternatives, sampled slope, ascent, segment inspection, 30 exercises and custom stops | Stops are illustrative and no operational traverse certification exists | Partial |
-| Current conditions and practical Marswalk planning | DONKI displays external event records with availability status | No verified local thermal, radiation, weather, obstacles, soil, communications or suit data in the route model | Not implemented for operational planning |
-| Science along the route | Source-linked Jezero and global catalogs | Catalog coordinates are outside coverage or not eligible; no source-confirmed science target is routeable | Partial |
+| Create a map, tool, or interface for a Mars surface exploration mission using NASA data and tools | Interactive Jezero CTX map with MRO imagery and DEM, A* routes, missions and local comparison | Research prototype, not an astronaut-use system | Partial |
+| Layer data from NASA science missions to help navigate a location or route | Registered optical and elevation products are composited; catalog and DONKI appear as separate research context | Only DEM elevation enters routing. Multiple independently measured data kinds are not fused into the cost model | Partial |
+| Identify a science goal and a suitable location | Thirty illustrative mission questions and a source-linked science catalog | Catalog targets are not verified as routeable points in current measured coverage | Partial |
+| Consider three or more data kinds such as optical, thermal, spectral, topographic, atmospheric, radiation, or chemical | Measured optical and topographic products; DONKI solar events provide separate external context | This is a **suggestion**, not a stated minimum. Measured thermal, local radiation, soil and obstacle layers are unavailable. Synthetic thermal is demo-only | Partial |
+| Consider information for crew safety, mobility, equipment, and obstacle avoidance | Sampled DEM slope and ascent alternatives, transparent model caveats | No verified local rock, soil, radiation, thermal, lighting, communications, suit or energy constraints; routes cannot certify safety | Partial |
+| Consider a route map connecting science objectives while avoiding major obstacles | A* route map and fixed-order mission legs | No source-verified science destination in routeable coverage; small obstacles are unresolved by the 40 m grid | Partial |
+| Format may be static or interactive, including habitat, tablet, HUD or other displays | Interactive workstation and responsive web page | No tested field tablet or helmet HUD implementation | Implemented as a web interface |
 
-Phase 10 improves the first-screen explanation and route decision summary. The mapped objectives are an interpretation of the accessible overview, not a verbatim transcription of the full official specification. Submission requirements and deadline remain a human portal check.
+The challenge says teams **may consider** particular data kinds, formats, time frames and transportation scenarios. It does not state that all of them are required. This mapping distinguishes measured inputs, research context, and actual route optimization inputs. ARES does not claim NASA endorsement or operational Marswalk readiness. The separate team submission portal still needs a human check for project status and required artifacts.
