@@ -15,6 +15,6 @@ for(const [label,a,mode,route] of [['shortest',p,'distance',short],['terrain',p,
 assert.ok(JSON.stringify(original.cells)!==JSON.stringify(reroute.cells));
 assert.ok(!reroute.cells.some(c=>c.x===chosen.x&&c.y===chosen.y));
 assert.ok(detour&&!detour.cells.some(c=>c.x===35&&c.y>=8&&c.y<50));
-assert.equal(rejected,null);
+assert.equal(rejected,null); 
 console.log('controlled_change',JSON.stringify({raisedCell:chosen,originalPathUsesCell:original.cells.some(c=>c.x===chosen.x&&c.y===chosen.y),newPathUsesCell:reroute.cells.some(c=>c.x===chosen.x&&c.y===chosen.y),pathChanged:JSON.stringify(original.cells)!==JSON.stringify(reroute.cells)}));
 console.log('nodata',JSON.stringify({partialBarrierDetourMeters:detour?.meters,partialRouteCrossesBarrier:detour?.cells.some(c=>c.x===35&&c.y>=8&&c.y<50),completeBarrierRejected:rejected===null}));
