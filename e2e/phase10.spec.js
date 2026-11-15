@@ -102,7 +102,7 @@ test('elevation profile remains usable at mobile widths in EN/TR',async({page})=
     await page.locator('#juryExample').click();
     await expect(page.locator('#elevationProfile')).toBeVisible();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
-    await page.locator('#elevationProfile .elevation-profile-point.terrain').first().tap();
+    await page.locator('#elevationProfile .elevation-profile-point.terrain').first().click();
     await expect(page.locator('#segmentInspection')).toBeVisible();
     await page.screenshot({path:`test-results/elevation-profile-${language}-${width}.png`,fullPage:true});
   }
