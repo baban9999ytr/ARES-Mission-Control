@@ -90,13 +90,13 @@ export function renderElevationProfile(container,{routes,segments,locale='en',se
 
   const drawRoute=(mode)=>{
     const series=buildElevationProfileSeries(routes[mode],segments[mode]);
-    const polyline=el('polyline',{class:'elevation-profile-line '+mode,fill:'none',stroke:COLORS[mode],points:series.map(p=>x(p.distanceMeters).toFixed(2)+','+y(p.elevationMeters).toFixed(2)) .join(' ')});
+    const polyline=el('polyline',{class:'elevation-profile-line '+(mode==='distance'?'shortest':mode),fill:'none',stroke:COLORS[mode],points:series.map(p=>x(p.distanceMeters).toFixed(2)+','+y(p.elevationMeters).toFixed(2)) .join(' ')});
     if(mode==='distance')polyline.setAttribute('stroke-dasharray','9 7');
     polyline.setAttribute('stroke-width','3');
     svg.append(polyline);
 
     series.forEach((point,index)=>{
-      const group=el('g',{class:'elevation-profile-point '+mode,tabindex:'0','data-profile-mode':mode,'data-profile-index':point.segmentIndex});
+      const group=el('g',{class:'elevation-profile-point '+(mode==='distance'?'shortest':mode),tabindex:'0','data-profile-mode':mode,'data-profile-index':point.segmentIndex});
       const circle=el('circle',{cx:x(point.distanceMeters),cy:y(point.elevationMeters),r:selected?.mode===mode&&selected.index===point.segmentIndex?'6':'4',fill:COLORS[mode],stroke:'white','stroke-width':'2'});
       const title=el('title');
       title.textContent=locale==='tr'
