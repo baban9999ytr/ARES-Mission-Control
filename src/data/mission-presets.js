@@ -1,0 +1,8 @@
+/** Illustrative user-study coordinates on the verified measured CTX route grid. */
+export const measuredPresets=pack=>[
+  {...pack.start,id:'base',code:'EX-BASE',name:'Illustrative Base Camp',nameTr:'Örnek Ana Üs',type:'User-study scenario; no human installation',typeTr:'Kullanıcı senaryosu; insan yerleşimi yok',desc:'Planning origin example; no real base exists here.',descTr:'Örnek planlama başlangıcı; burada gerçek bir üs yok.'},
+  {...pack.waypoints[0],id:'sample',code:'EX-SAMPLE',name:'Geological Sampling Site',nameTr:'Jeolojik Örnekleme Noktası',type:'Illustrative study point',typeTr:'Örnek çalışma noktası',desc:'Example sample stop; no source-verified outcrop identity.',descTr:'Örnek numune durağı; doğrulanmış kayaç konumu değildir.'},
+  {id:'mineral',code:'EX-MIN',name:'Mineral Survey Site',nameTr:'Mineral Araştırma Noktası',type:'Illustrative study point',typeTr:'Örnek çalışma noktası',desc:'Scenario only; not evidence of a discovered mineral deposit.',descTr:'Yalnızca senaryodur; keşfedilmiş mineral yatağına kanıt değildir.',x:31,y:18},
+  {id:'observe',code:'EX-OBS',name:'Observation Point',nameTr:'Gözlem Noktası',type:'Illustrative study point',typeTr:'Örnek çalışma noktası',desc:'Example terrain observation stop; no verified named target.',descTr:'Örnek arazi gözlem durağı; doğrulanmış hedef değildir.',x:63,y:39},
+  {id:'return',code:'EX-RETURN',name:'Return Point',nameTr:'Dönüş Noktası',type:'Illustrative study point',typeTr:'Örnek çalışma noktası',desc:'Example return stop on measured terrain; not an operational waypoint.',descTr:'Ölçümlü arazide örnek dönüş durağı; operasyonel konum değildir.',x:17,y:42},
+];

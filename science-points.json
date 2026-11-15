@@ -31,7 +31,9 @@
         "status": "verified"
       },
       "geological_category": "impact crater / ancient lacustrine-deltaic environment",
-      "jury_description_en": "Jezero Crater preserves an ancient lake-and-delta system that is especially valuable for studying past habitability. Perseverance is collecting carefully selected rock and regolith samples from this environment."
+      "jury_description_en": "Jezero Crater preserves an ancient lake-and-delta system that is especially valuable for studying past habitability. Perseverance is collecting carefully selected rock and regolith samples from this environment.",
+      "geological_category_tr": "çarpma krateri / antik göl-delta ortamı",
+      "scientific_target_tr": "Antik yaşanabilirlik, biyolojik izlerin korunması, tortulbilim ve numune saklama"
     },
     {
       "id": "ares-002",
@@ -55,7 +57,9 @@
         "status": "verified landing-site coordinates"
       },
       "geological_category": "impact crater / layered sedimentary mound",
-      "jury_description_en": "Gale Crater offers a natural archive of Martian environmental change, with Mount Sharp exposing a long sequence of layered rocks. Curiosity uses these strata to investigate whether ancient Mars provided habitable conditions."
+      "jury_description_en": "Gale Crater offers a natural archive of Martian environmental change, with Mount Sharp exposing a long sequence of layered rocks. Curiosity uses these strata to investigate whether ancient Mars provided habitable conditions.",
+      "geological_category_tr": "çarpma krateri / tabakalı tortul tepe",
+      "scientific_target_tr": "Geçmiş yaşanabilirlik, tortul tabakalanma, mineraloji ve iklim tarihi"
     },
     {
       "id": "ares-003",
@@ -79,7 +83,9 @@
         "status": "verified NASA global-topography reference"
       },
       "geological_category": "shield volcano",
-      "jury_description_en": "Olympus Mons is the Solar System's largest known volcano and a defining example of Martian shield volcanism. Its enormous scale and summit caldera provide a clear target for studying volcanic evolution on Mars."
+      "jury_description_en": "Olympus Mons is the Solar System's largest known volcano and a defining example of Martian shield volcanism. Its enormous scale and summit caldera provide a clear target for studying volcanic evolution on Mars.",
+      "geological_category_tr": "kalkan yanardağ",
+      "scientific_target_tr": "Büyük ölçekli volkanizma, volkanik evrim ve yüzey süreçleri"
     },
     {
       "id": "ares-004",
@@ -99,7 +105,9 @@
       },
       "coordinates": null,
       "geological_category": "canyon system / tectonic rift and erosional terrain",
-      "jury_description_en": "Valles Marineris is one of Mars' most dramatic geological systems, combining enormous tectonic fractures with erosion and ancient channel activity. It offers a regional-scale record of how the Martian crust and surface evolved."
+      "jury_description_en": "Valles Marineris is one of Mars' most dramatic geological systems, combining enormous tectonic fractures with erosion and ancient channel activity. It offers a regional-scale record of how the Martian crust and surface evolved.",
+      "geological_category_tr": "kanyon sistemi / tektonik yarık ve aşınma arazisi",
+      "scientific_target_tr": "Tektonik, kabuk deformasyonu, aşınma ve antik hidroloji"
     },
     {
       "id": "ares-005",
@@ -123,7 +131,9 @@
         "status": "verified NASA image reference for Elysium Mons"
       },
       "geological_category": "shield volcano / volcanic province",
-      "jury_description_en": "Elysium Mons is a major Martian shield volcano whose lava flows and caldera preserve evidence of volcanic activity. It is a strong target for comparing the style and evolution of volcanism across Mars."
+      "jury_description_en": "Elysium Mons is a major Martian shield volcano whose lava flows and caldera preserve evidence of volcanic activity. It is a strong target for comparing the style and evolution of volcanism across Mars.",
+      "geological_category_tr": "kalkan yanardağ / volkanik bölge",
+      "scientific_target_tr": "Volkanik etkinlik, lav akışı biçimi ve volkan-tektonik süreçler"
     },
     {
       "id": "ares-006",
@@ -147,7 +157,9 @@
         "status": "verified NASA global-topography reference"
       },
       "geological_category": "impact basin / sedimentary and erosional basin floor",
-      "jury_description_en": "Hellas Planitia is a giant impact basin that exposes a deep record of Martian crustal and surface processes. Its unusual depth and diverse basin-floor features make it a valuable target for reconstructing Mars' geological and climatic history."
+      "jury_description_en": "Hellas Planitia is a giant impact basin that exposes a deep record of Martian crustal and surface processes. Its unusual depth and diverse basin-floor features make it a valuable target for reconstructing Mars' geological and climatic history.",
+      "geological_category_tr": "çarpma havzası / tortul ve aşınmış havza tabanı",
+      "scientific_target_tr": "Büyük çarpma olayları, havza evrimi, tortullaşma ve iklimle ilişkili yüzey süreçleri"
     },
     {
       "id": "ares-007",
@@ -171,7 +183,9 @@
         "status": "verified NASA global-topography reference"
       },
       "geological_category": "impact basin / northern plains",
-      "jury_description_en": "Utopia Planitia is a vast northern lowland basin that preserves a different chapter of Martian surface evolution from the southern highlands. Its plains and impact features provide a useful target for studying large-scale crustal and surface processes."
+      "jury_description_en": "Utopia Planitia is a vast northern lowland basin that preserves a different chapter of Martian surface evolution from the southern highlands. Its plains and impact features provide a useful target for studying large-scale crustal and surface processes.",
+      "geological_category_tr": "çarpma havzası / kuzey düzlükleri",
+      "scientific_target_tr": "Çarpma süreçleri, kuzey düzlüklerinin evrimi ve yüzey jeolojisi"
     },
     {
       "id": "ares-008",
@@ -195,7 +209,9 @@
         "status": "verified Viking 1 target-site coordinates; region-level reference"
       },
       "geological_category": "outflow channel system / plains",
-      "jury_description_en": "Chryse Planitia and Ares Vallis preserve some of the clearest evidence for large ancient outflow events on Mars. The region connects major channel systems with a historically important NASA landing site, making it useful for studying Martian hydrology."
+      "jury_description_en": "Chryse Planitia and Ares Vallis preserve some of the clearest evidence for large ancient outflow events on Mars. The region connects major channel systems with a historically important NASA landing site, making it useful for studying Martian hydrology.",
+      "geological_category_tr": "taşkın kanalı sistemi / düzlükler",
+      "scientific_target_tr": "Antik taşkın kanalları, akarsu aşındırması ve suyla ilişkili yüzey tarihi"
     }
   ]
 }
