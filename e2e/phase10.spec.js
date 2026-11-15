@@ -68,6 +68,18 @@ test('SC-05 catalog selection describes equal distance without saying farther',a
 });
 
 
+
+test('SC-02 renders the measured elevation profile for identical routes',async({page})=>{
+  await ready(page);
+  await page.locator('#missionLibraryOpen').click();
+  await page.locator('#missionSearch').fill('SC-02');
+  await page.locator('#missionList [data-mission="SC-02"]').click();
+  await expect(page.locator('#routeContext')).toContainText('SC-02');
+  await expect(page.locator('#elevationProfile')).toBeVisible();
+  await expect(page.locator('#elevationProfile .elevation-profile-line.terrain')).toBeVisible();
+  await expect(page.locator('#elevationProfile .elevation-profile-line.shortest')).toBeVisible();
+});
+
 test('SC-01 elevation profile uses measured samples and supports point selection',async({page})=>{
   await ready(page);
   await page.locator('#juryExample').click();
