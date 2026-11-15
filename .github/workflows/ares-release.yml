@@ -26,3 +26,14 @@ jobs:
         run: node tools/generate_mission_results.mjs --check
       - name: Validate Cloudflare Workers assets deployment without publishing
         run: npx --yes wrangler@4 deploy --dry-run
+      - name: Install browser dependencies
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: Run browser regression suite
+        run: npm run test:browser
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ares-elevation-profile-screenshots
+          path: test-results/
+          if-no-files-found: ignore
