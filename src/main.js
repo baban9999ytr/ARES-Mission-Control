@@ -2,12 +2,13 @@ import demo from './data/demo-terrain.json' with {type:'json'};
 import {planRoute,isBlocked} from './engine/routing.js';
 import {clientPointToCell,clampPan,cellToSvg,stepKeyboardCell} from './engine/map-grid.js';
 import {validateMissionPack,mapDisplayCoordinates} from './data/mission-pack.js';
-import {selectMissionData,layerForMode} from './data/mission-mode.js';
+import {selectMissionData} from './data/mission-mode.js';
 import {validateScienceCatalog,scienceCoverage,coordinateEvidence} from './data/science-catalog.js';
 import {fetchDonki,formatDonkiStatus} from './data/donki.js';
 import {buildBriefing} from './data/briefing.js';
 import {validateMissionLibrary,planMission,buildMissionReport} from './data/mission-library.js';
 import {createCustomMission,validateCustomMission,editCustomMission,serializeCustomMission,parseCustomMission,MAX_CUSTOM_STOPS} from './data/mission-builder.js';
+import {DEFAULT_MEASURED_LAYERS,updateMeasuredLayers,layerPresentation,elevationScale,elevationGradient} from './data/layer-compositing.js';
 
 const $=s=>document.querySelector(s);
 const DEMO_WAYPOINTS=[
@@ -15,7 +16,7 @@ const DEMO_WAYPOINTS=[
   {id:'rim',name:'Crater rim overlook',type:'Illustrative study target',x:66,y:40,code:'EX-02',desc:'Example point on the synthetic map.'},
   {id:'basin',name:'Ancient lakebed',type:'Illustrative study target',x:43,y:47,code:'EX-03',desc:'Example point on the synthetic map.'},
 ];
-const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
+const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',layers:{...DEFAULT_MEASURED_LAYERS},mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
 const library={missions:[],loaded:false,error:null,phase:'All',search:''};
 const editor={mode:'edit',undo:[],redo:[],drag:null,listDrag:null,selectedStop:null};
 const customActive=()=>state.kind==='measured'&&state.activeMission?.phase==='Custom';
@@ -46,11 +47,27 @@ function calculateRoutes(){
 function renderMap(){
   const d=state.data;const stage=$('#mapStage');const world=$('#mapWorld');
   world.style.setProperty('--zoom',state.zoom);world.style.setProperty('--pan-x',`${state.panX}px`);world.style.setProperty('--pan-y',`${state.panY}px`);
-  const layer=layerForMode(state.kind,d,state.layer);const demoFiles={optical:'mars-demo-terrain.webp',elevation:'mars-demo-elevation.webp',thermal:'mars-demo-thermal.webp'};
-  const src=state.kind==='measured'?(layer?`./public/${layer.path}`:null):`./public/${demoFiles[state.layer]}`;
-  if(src)$('#terrainImage').src=src;else $('#terrainImage').removeAttribute('src');
-  $('#terrainImage').alt=state.kind==='measured'?`${layer?.label??'Unavailable'} · CTX crop`:`Synthetic ${state.layer} illustration`;
-  $('#mapLayerLabel').textContent=state.kind==='measured'?(layer?.label??'Unavailable'):(state.layer==='thermal'?'Synthetic thermal illustration':`Synthetic ${state.layer} illustration`);
+  const demoFiles={optical:'mars-demo-terrain.webp',elevation:'mars-demo-elevation.webp',thermal:'mars-demo-thermal.webp'};
+  const optical=$('#terrainImage'),elevation=$('#elevationImage');
+  if(state.kind==='measured'){
+    const presentation=layerPresentation(state.layers);
+    const opticalSrc=`./public/${d.layers.optical.path}`,elevationSrc=`./public/${d.layers.elevation.path}`;
+    if(optical.getAttribute('src')!==opticalSrc)optical.setAttribute('src',opticalSrc);
+    if(elevation.getAttribute('src')!==elevationSrc)elevation.setAttribute('src',elevationSrc);
+    optical.hidden=!presentation.opticalVisible;elevation.hidden=!presentation.elevationVisible;
+    elevation.style.opacity=String(presentation.elevationOpacity);
+    elevation.style.mixBlendMode=presentation.blendMode;
+    optical.alt='MRO CTX optical imagery · registered Jezero crop';
+    $('#mapLayerLabel').textContent=state.layers.optical&&state.layers.elevation?`CTX optical + measured elevation · ${state.layers.opacity}%`:state.layers.optical?'MRO CTX optical imagery':'Measured CTX elevation colors';
+    $('#elevationLegend').hidden=!state.layers.elevation;
+  }else{
+    const src=`./public/${demoFiles[state.layer]}`;
+    if(optical.getAttribute('src')!==src)optical.setAttribute('src',src);
+    optical.hidden=false;elevation.hidden=true;
+    optical.alt=`Synthetic ${state.layer} illustration`;
+    $('#mapLayerLabel').textContent=state.layer==='thermal'?'Synthetic thermal illustration':`Synthetic ${state.layer} illustration`;
+    $('#elevationLegend').hidden=true;
+  }
   const paths=['distance','terrain'].filter(mode=>state.routes[mode]);
   paths.sort((a,b)=>a===state.mode?1:b===state.mode?-1:0);
   let svg='<defs><pattern id="unknown" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#15242d"/><path d="M0 0V6" stroke="#bdbdbd" stroke-width="2"/></pattern></defs>';
@@ -96,13 +113,40 @@ function renderDataset(){const d=state.data,measured=state.kind==='measured';
   $('#datasetName').textContent=measured?d.site:'Synthetic Jezero demonstration';$('#datasetSummary').textContent=measured?'USGS CTX optical mosaic and DEM · Jezero study crop. Routes use a sampled 40 m grid.':'Illustrative map and height grid; not geographically registered.';
   $('#dataTag').textContent=measured?'Measured CTX':'Synthetic demo';$('#dataStatus').textContent=measured?'Measured CTX':'Synthetic demo';$('#mapHeading').textContent=measured?'Jezero CTX study crop':'Synthetic Jezero terrain';$('#mapSubheading').textContent=measured?'Projected Mars equirectangular metres · Research route prototype':'Illustrative map · Select a point tool to explore';
   $('#datasetSwitch').hidden=false;$('#datasetSwitch').textContent=measured?'Switch to synthetic demo':'Switch to measured CTX';
-  $('#layerIcons').innerHTML=['optical','elevation','thermal'].map(name=>{const layer=layerForMode(state.kind,d,name),available=!measured||!!layer;const description=measured?available?'Registered CTX raster':'Unavailable':name==='thermal'?'Synthetic illustration':'Synthetic illustration';return `<button type="button" data-layer="${name}" class="layer-option ${state.layer===name?'active':''}" aria-pressed="${state.layer===name}" ${available?'':'disabled'}><span><strong>${name[0].toUpperCase()+name.slice(1)}</strong><small>${description}</small></span></button>`}).join('');
+  if(measured){
+    $('#layerIcons').innerHTML='<label class="layer-check"><input type="checkbox" data-layer-visibility="optical" aria-label="Optical imagery"><span>Optical imagery<small>Registered MRO CTX crop</small></span></label><label class="layer-check"><input type="checkbox" data-layer-visibility="elevation" aria-label="Elevation colors"><span>Elevation colors<small>Sampled CTX DEM</small></span></label><label class="layer-opacity-label" for="layerOpacity">Elevation opacity <output id="layerOpacityValue" for="layerOpacity">45%</output></label><input id="layerOpacity" type="range" min="0" max="100" step="1" value="45" aria-label="Elevation opacity"><label class="layer-opacity-label" for="layerBlend">Presentation</label><select id="layerBlend" aria-label="Elevation blend presentation"><option value="color">Preserve optical detail</option><option value="alpha">Standard overlay</option></select><p class="layer-unavailable">Thermal <small>Unavailable: no registered CTX thermal raster</small></p>';
+    syncMeasuredLayerControls();
+    const scale=elevationScale(d.heights);
+    $('#elevationRamp').style.background=elevationGradient();
+    $('#legendMin').textContent=`${scale.min.toFixed(1)} m`;
+    $('#legendMax').textContent=`${scale.max.toFixed(1)} m`;
+    $('#legendReference').textContent=d.verticalReference.replace(/radius (\d+) m/,(_,radius)=>`R ${Number(radius).toLocaleString('en-US')} m`).replace(' (source DEM XML)',' (DEM XML)').replace(', R ',' · R ');
+    $('#legendMethod').textContent=`40 m sampled DEM grid. Colors clip at ${scale.low.toFixed(1)}–${scale.high.toFixed(1)} m (2nd–98th percentile). Display pixels interpolate grid samples; they are not independent measurements.`;
+  }else $('#layerIcons').innerHTML=['optical','elevation','thermal'].map(name=>`<button type="button" data-layer="${name}" class="layer-option ${state.layer===name?'active':''}" aria-pressed="${state.layer===name}"><span><strong>${name[0].toUpperCase()+name.slice(1)}</strong><small>Synthetic illustration</small></span></button>`).join('');
   $('#hazardToggle').checked=state.hazards;$('#hazardToggle').disabled=measured;$('#hazardToggleLabel').textContent=measured?'No verified hazard layer':'Synthetic hazard zones';$('#hazardRow').hidden=measured;
   $('#sourceOrg').textContent=measured?'USGS Astrogeology · MRO CTX':'Synthetic illustration';$('#opticalResolution').textContent=measured?'6 m source pixels':'Illustrative';$('#demResolution').textContent=measured?'20 m source pixels':'Synthetic';$('#gridResolution').textContent=measured?`${d.cellMeters} m route cells`:'Illustrative';$('#coverage').textContent=measured?`${(d.boundsMeters.east-d.boundsMeters.west)/1000} × ${(d.boundsMeters.north-d.boundsMeters.south)/1000} km · ${d.quality.validCells}/${d.quality.totalCells} DEM cells`:'Not geographically registered';
   $('#scientificNote').textContent=measured?'40 m grid slopes are endpoint differences from sampled DEM heights; no terrain safety validation.':'Synthetic demonstration; no measured thermal or hazard assessment.';
   $('#dataDialogText').textContent=measured?JSON.stringify({dataset:d.site,sourceOrganization:'USGS Astrogeology / MRO CTX',crs:d.crsWkt,boundsMeters:d.boundsMeters,verticalUnits:d.verticalUnits,verticalReference:d.verticalReference,sourceResolution:d.quality.sourceResolution,routingGridMeters:d.cellMeters,validCells:d.quality.validCells,totalCells:d.quality.totalCells,sources:Object.fromEntries(Object.entries(d.layers).map(([k,v])=>[k,v.source])),limitations:d.notice},null,2):'Synthetic procedural demo. Terrain, heights, thermal color, hazards and waypoints are illustrative. No measured elevations or registered Mars coordinates.';
 }
-function setLayer(name){if(state.kind==='measured'&&!layerForMode(state.kind,state.data,name))return;state.layer=name;document.querySelectorAll('[data-layer]').forEach(b=>{b.classList.toggle('active',b.dataset.layer===name);b.setAttribute('aria-pressed',String(b.dataset.layer===name));});renderMap();}
+function syncMeasuredLayerControls(){
+  if(state.kind!=='measured')return;
+  for(const name of ['optical','elevation']){
+    const input=$(`[data-layer-visibility="${name}"]`);
+    input.checked=state.layers[name];
+    input.disabled=state.layers[name]&&!state.layers[name==='optical'?'elevation':'optical'];
+  }
+  $('#layerOpacity').value=String(state.layers.opacity);
+  $('#layerOpacity').disabled=!state.layers.optical||!state.layers.elevation;
+  $('#layerOpacityValue').textContent=state.layers.optical?`${state.layers.opacity}%`:'100% (elevation only)';
+  $('#layerBlend').value=state.layers.blend;
+  $('#layerBlend').disabled=!state.layers.optical||!state.layers.elevation;
+}
+function setMeasuredLayers(change){
+  try{state.layers=updateMeasuredLayers(state.layers,change);$('#layerFeedback').textContent='';}
+  catch(error){$('#layerFeedback').textContent=error.message;}
+  syncMeasuredLayerControls();renderMap();
+}
+function setLayer(name){if(state.kind!=='demo')return;state.layer=name;document.querySelectorAll('[data-layer]').forEach(b=>{b.classList.toggle('active',b.dataset.layer===name);b.setAttribute('aria-pressed',String(b.dataset.layer===name));});renderMap();}
 function setPick(which){state.pick=state.pick===which?null:which;state.keyboardCell=state.pick?{...(state.pick==='start'?state.start:state.destination)}:null;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}if(state.pick){const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);announce(`Choose ${state.pick} at ${coordinates(state.keyboardCell)}. Use arrow keys and Enter on the map, or click a valid cell.${blocked?' This cell is unavailable.':''}`,blocked);$('#mapStage').focus();}else announce(state.activeMission?'Mission ready. Drag markers to edit stops; compare both routes at right.':'Create a mission or choose an exercise to begin.');renderMap();}
 function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(state.activeMission){state.activeMission=null;state.missionLegs=[];editor.mode='navigate';editor.undo=[];editor.redo=[];renderMissionLibrary();}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
@@ -279,6 +323,8 @@ async function loadWeather(){
 }
 function attach(){
   $('#layerIcons').addEventListener('click',e=>{const b=e.target.closest('[data-layer]');if(b&&!b.disabled)setLayer(b.dataset.layer);});
+  $('#layerIcons').addEventListener('change',e=>{if(state.kind!=='measured')return;const name=e.target.dataset.layerVisibility;if(name)setMeasuredLayers({[name]:e.target.checked});else if(e.target.id==='layerBlend')setMeasuredLayers({blend:e.target.value});});
+  $('#layerIcons').addEventListener('input',e=>{if(state.kind==='measured'&&e.target.id==='layerOpacity')setMeasuredLayers({opacity:Number(e.target.value)});});
   $('#waypoints').addEventListener('click',e=>{const b=e.target.closest('[data-waypoint]');if(!b)return;const p=state.waypoints.find(x=>x.id===b.dataset.waypoint);if(p){editor.mode='navigate';editor.undo=[];editor.redo=[];state.activeMission=null;state.missionLegs=[];state.destination=p;state.presetId=p.id;calculateRoutes();renderMissionLibrary();announce(`Example destination selected: ${p.name}.`);}});
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;renderMap();renderComparison();}));
   $('#pickStart').addEventListener('click',()=>setPick('start'));$('#pickDestination').addEventListener('click',()=>setPick('destination'));
