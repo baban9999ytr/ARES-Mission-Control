@@ -17,7 +17,7 @@ const DEMO_WAYPOINTS=[
 ];
 const state={data:demo,kind:'demo',waypoints:DEMO_WAYPOINTS,start:{x:13,y:29},destination:DEMO_WAYPOINTS[0],presetId:'delta',layer:'optical',mode:'terrain',pick:null,keyboardCell:null,hazards:true,showRoutes:true,routes:{distance:null,terrain:null},zoom:1,panX:0,panY:0,eva:false,activeMission:null,missionLegs:[]};
 const library={missions:[],loaded:false,error:null,phase:'All',search:''};
-const editor={mode:'navigate',undo:[],redo:[],drag:null,listDrag:null};
+const editor={mode:'edit',undo:[],redo:[],drag:null,listDrag:null,selectedStop:null};
 const customActive=()=>state.kind==='measured'&&state.activeMission?.phase==='Custom';
 const research={catalogs:{jezero:null,global:null},scope:'jezero',selected:null,weatherLoaded:false};
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -75,7 +75,7 @@ function renderMap(){
     for(const p of state.waypoints){if(p.x===state.destination.x&&p.y===state.destination.y)continue;const q=svgPoint(p);svg+=`<g class="map-waypoint"><circle cx="${q.x}" cy="${q.y}" r="5"/><text x="${q.x+9}" y="${q.y-8}">${escapeHtml(p.code)}</text></g>`;}
     svg+=marker(state.start,'S','start')+marker(state.destination,'D','destination');
   }
-  if(state.pick&&state.keyboardCell)svg+=marker(state.keyboardCell,'+','keyboard-cursor');
+  if((state.pick||customActive()&&editor.mode==='add')&&state.keyboardCell)svg+=marker(state.keyboardCell,'+','keyboard-cursor');
   $('#mapSvg').innerHTML=svg;
   $('#zoomPct').textContent=`${Math.round(state.zoom*100)}%`;
   if(state.kind==='measured'){$('#scaleBar').hidden=false;$('#scaleBar').style.width=`${400/(d.gridWidth*d.cellMeters)*stage.clientWidth*state.zoom}px`;$('#scaleText').textContent='400 m';}else{$('#scaleBar').hidden=true;$('#scaleText').textContent='Illustrative grid';}
@@ -103,7 +103,7 @@ function renderDataset(){const d=state.data,measured=state.kind==='measured';
   $('#dataDialogText').textContent=measured?JSON.stringify({dataset:d.site,sourceOrganization:'USGS Astrogeology / MRO CTX',crs:d.crsWkt,boundsMeters:d.boundsMeters,verticalUnits:d.verticalUnits,verticalReference:d.verticalReference,sourceResolution:d.quality.sourceResolution,routingGridMeters:d.cellMeters,validCells:d.quality.validCells,totalCells:d.quality.totalCells,sources:Object.fromEntries(Object.entries(d.layers).map(([k,v])=>[k,v.source])),limitations:d.notice},null,2):'Synthetic procedural demo. Terrain, heights, thermal color, hazards and waypoints are illustrative. No measured elevations or registered Mars coordinates.';
 }
 function setLayer(name){if(state.kind==='measured'&&!layerForMode(state.kind,state.data,name))return;state.layer=name;document.querySelectorAll('[data-layer]').forEach(b=>{b.classList.toggle('active',b.dataset.layer===name);b.setAttribute('aria-pressed',String(b.dataset.layer===name));});renderMap();}
-function setPick(which){state.pick=state.pick===which?null:which;state.keyboardCell=state.pick?{...(state.pick==='start'?state.start:state.destination)}:null;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}if(state.pick){const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);announce(`Choose ${state.pick} at ${coordinates(state.keyboardCell)}. Use arrow keys and Enter on the map, or click a valid cell.${blocked?' This cell is unavailable.':''}`,blocked);$('#mapStage').focus();}else announce('Select a point tool to plan your own route.');renderMap();}
+function setPick(which){state.pick=state.pick===which?null:which;state.keyboardCell=state.pick?{...(state.pick==='start'?state.start:state.destination)}:null;for(const [id,mode] of [['pickStart','start'],['pickDestination','destination']]){const b=$(`#${id}`);b.classList.toggle('active',state.pick===mode);b.setAttribute('aria-pressed',String(state.pick===mode));}if(state.pick){const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);announce(`Choose ${state.pick} at ${coordinates(state.keyboardCell)}. Use arrow keys and Enter on the map, or click a valid cell.${blocked?' This cell is unavailable.':''}`,blocked);$('#mapStage').focus();}else announce(state.activeMission?'Mission ready. Drag markers to edit stops; compare both routes at right.':'Create a mission or choose an exercise to begin.');renderMap();}
 function setPoint(which,cell){if(!cell){announce('Click inside the mapped footprint.',true);return;}if(isBlocked(state.data,cell.x,cell.y,state.kind==='demo'&&state.hazards)){announce('That grid cell has no usable DEM elevation or is inside an enabled demo hazard. Choose another cell.',true);return;}if(state.activeMission){state.activeMission=null;state.missionLegs=[];editor.mode='navigate';editor.undo=[];editor.redo=[];renderMissionLibrary();}if(which==='start')state.start=cell;else{state.destination={...cell,id:'custom',name:'Custom destination',type:'Map-selected point',code:'CUSTOM',desc:'Selected on the current map grid.'};state.presetId=null;}setPick(null);calculateRoutes();announce(`${which==='start'?'Start':'Destination'} set to ${coordinates(cell)}. Routes recalculated.`);}
 function setZoom(next){const stage=$('#mapStage');state.zoom=Math.max(1,Math.min(3,Math.round(next*10)/10));state.panX=clampPan(state.panX,state.zoom,stage.clientWidth);state.panY=clampPan(state.panY,state.zoom,stage.clientHeight);renderMap();}
 function downloadJson(payload,filename){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=filename;link.click();setTimeout(()=>URL.revokeObjectURL(url),0);}
@@ -113,9 +113,11 @@ function renderMissionBuilder(){
   const measured=state.kind==='measured',active=customActive(),mission=state.activeMission;
   $('#missionBuilder').hidden=!measured;
   $('#missionDuplicate').disabled=!measured||!mission||active;
+  $('#missionDuplicate').hidden=active;
   $('#missionEditor').hidden=!active;
   $('#mapStage').classList.toggle('mission-adding',active&&editor.mode==='add');
-  $('#mapStage').classList.toggle('mission-editing',active&&editor.mode==='edit');
+  $('#mapStage').classList.toggle('mission-editing',active&&editor.mode!=='add');
+  $('#mapHint').textContent=active&&editor.mode==='add'?'Click a valid map cell, or use arrow keys and Enter to append a stop · Escape cancels':active?'Drag a marker to move a stop · Drag background to pan · Scroll to zoom':'Drag map to pan · Scroll or use + / − to zoom';
   if(!active)return;
   if($('#missionTitle').value!==mission.title)$('#missionTitle').value=mission.title;
   document.querySelectorAll('[data-edit-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.editMode===editor.mode)));
@@ -126,7 +128,7 @@ function renderMissionBuilder(){
     const n=mission.stops.length,number=index+1;
     const label=index===0?'Start':index===n-1?'Destination':'Stop '+number;
     const location=escapeHtml(coordinates(p));
-    return '<div class="mission-editor-row" data-stop-row="'+index+'">'+
+    return '<div class="mission-editor-row'+(editor.selectedStop===index?' selected':'')+'" data-stop-row="'+index+'">'+
       '<button type="button" class="mission-stop-grip" data-stop-grip="'+index+'" aria-label="Drag to reorder stop '+number+'">⠿</button>'+
       '<div class="mission-stop-info"><strong>'+escapeHtml(label)+'</strong><small>'+location+'</small></div>'+
       '<div class="mission-stop-controls">'+
@@ -144,11 +146,11 @@ function installCustomMission(mission,resetHistory=true){
   state.destination={...safe.stops.at(-1),id:'CUSTOM',name:safe.title,type:'User-designed measured-grid mission',code:'CUSTOM'};
   state.presetId=null;
   if(resetHistory){editor.undo=[];editor.redo=[];}
-  editor.mode='edit';
+  editor.mode='edit';editor.selectedStop=null;
   setPick(null);
   calculateRoutes();
   renderMissionLibrary();
-  $('#missionDrawer').open=true;
+  $('#missionDrawer').open=false;
 }
 function applyCustomEdit(operation){
   if(!customActive())return;
@@ -162,7 +164,7 @@ function applyCustomEdit(operation){
     state.activeMission=next;
     state.start={...next.stops[0]};
     state.destination={...next.stops.at(-1),id:'CUSTOM',name:next.title,type:'User-designed measured-grid mission',code:'CUSTOM'};
-    calculateRoutes();renderMissionLibrary();
+    editor.mode='edit';calculateRoutes();renderMissionLibrary();
     $('#missionEditorStatus').textContent='Mission updated · '+next.stops.length+' ordered stops · both route modes recalculated.';
   }catch(error){
     $('#missionEditorStatus').textContent=error.message;
@@ -201,7 +203,7 @@ function renderMissionLibrary(){
   renderMissionBuilder();
   const active=state.kind==='measured'&&library.loaded;
   $('#missionControls').hidden=!active;
-  $('#missionStatus').textContent=state.kind!=='measured'?'Available only in measured CTX mode.':library.error?'Catalog unavailable: '+library.error:library.loaded?'30 verified measured-grid exercises · 10 per phase. Not named science sites.':'Loading measured mission catalog…';
+  $('#missionStatus').textContent=state.kind!=='measured'?'Mission editing requires measured CTX. Switch datasets in Advanced.':library.error?'Catalog unavailable: '+library.error:library.loaded?'Measured CTX ready · 30 illustrative exercises available.':'Loading measured mission catalog…';
   if(!active){$('#missionList').replaceChildren();$('#missionDetail').textContent='These exercises cannot be loaded in synthetic mode.';return;}
   const query=library.search.trim().toLowerCase();
   const filtered=library.missions.filter(m=>(library.phase==='All'||m.phase===library.phase)&&
@@ -230,6 +232,7 @@ function selectLibraryMission(id){
   state.destination={...mission.stops[mission.stops.length-1],id:mission.id,name:mission.title,type:'Illustrative measured-grid mission',code:mission.id};
   state.presetId=null;
   setPick(null);calculateRoutes();renderMissionLibrary();
+  $('#missionDrawer').open=false;$('#missionLibraryOpen').setAttribute('aria-expanded','false');
   announce('Loaded '+mission.id+': '+plan.legs.length+' independently routed legs.');
 }
 function clearLibraryMission(){
@@ -285,6 +288,8 @@ function attach(){
   $('#datasetSwitch').addEventListener('click',()=>{const url=new URL(location.href);if(state.kind==='measured')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.href=url.href;});
   $('#missionPhase').addEventListener('change',e=>{library.phase=e.target.value;renderMissionLibrary();});
   $('#missionSearch').addEventListener('input',e=>{library.search=e.target.value;renderMissionLibrary();});
+  $('#missionLibraryOpen').addEventListener('click',()=>{$('#missionDrawer').open=!$('#missionDrawer').open;$('#missionLibraryOpen').setAttribute('aria-expanded',String($('#missionDrawer').open));if($('#missionDrawer').open)$('#missionSearch').focus();});
+  $('#missionDrawer').addEventListener('toggle',()=>$('#missionLibraryOpen').setAttribute('aria-expanded',String($('#missionDrawer').open)));
   $('#missionList').addEventListener('click',e=>{const b=e.target.closest('[data-mission]');if(b)selectLibraryMission(b.dataset.mission);});
   $('#missionClear').addEventListener('click',clearLibraryMission);
   $('#missionNew').addEventListener('click',()=>{
@@ -304,7 +309,9 @@ function attach(){
   document.querySelectorAll('[data-edit-mode]').forEach(button=>button.addEventListener('click',()=>{
     if(!customActive())return;
     if(button.dataset.editMode==='add'&&state.activeMission.stops.length>=MAX_CUSTOM_STOPS)return;
-    editor.mode=button.dataset.editMode;renderMissionBuilder();
+    editor.mode=button.dataset.editMode;
+    if(editor.mode==='add'){state.keyboardCell={...state.activeMission.stops.at(-1)};$('#mapStage').focus();}
+    renderMissionBuilder();renderMap();
     $('#missionEditorStatus').textContent=editor.mode==='add'?'Click a valid measured CTX cell to append a stop.':editor.mode==='edit'?'Drag a numbered map stop to move it. Background drag still pans.':'Drag the map background to pan without moving stops.';
   }));
   $('#missionUndo').addEventListener('click',()=>restoreCustomHistory(editor.undo,editor.redo));
@@ -325,10 +332,12 @@ function attach(){
     }catch(error){$('#missionEditorStatus').textContent=error.message;announce(error.message,true);}
     finally{e.target.value='';}
   });
+  document.querySelector('.mission-file-label').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#missionImport').click();}});
   const stopList=$('#missionEditorStops');
   stopList.addEventListener('click',e=>{
     if(!customActive())return;
     const up=e.target.closest('[data-stop-up]'),down=e.target.closest('[data-stop-down]'),remove=e.target.closest('[data-stop-remove]');
+    const row=e.target.closest('[data-stop-row]');if(row&&!up&&!down&&!remove){editor.selectedStop=Number(row.dataset.stopRow);renderMissionBuilder();}
     if(up)applyCustomEdit({type:'reorder',index:Number(up.dataset.stopUp),to:Number(up.dataset.stopUp)-1});
     if(down)applyCustomEdit({type:'reorder',index:Number(down.dataset.stopDown),to:Number(down.dataset.stopDown)+1});
     if(remove)applyCustomEdit({type:'remove',index:Number(remove.dataset.stopRemove)});
@@ -358,7 +367,6 @@ function attach(){
     }
   });
   stopList.addEventListener('pointercancel',()=>{editor.listDrag=null;stopList.querySelectorAll('[data-stop-row]').forEach(el=>el.classList.remove('drop-target','dragging'));});
-  $('#missionExport').addEventListener('click',exportBriefing);
   $('#scienceScope').addEventListener('change',e=>{research.scope=e.target.value;research.selected=null;renderScience();});
   $('#scienceList').addEventListener('click',e=>{const b=e.target.closest('[data-science]');if(b){research.selected=b.dataset.science;renderScience();}});
   $('#weatherDrawer').addEventListener('toggle',e=>{if(e.target.open&&!research.weatherLoaded){research.weatherLoaded=true;loadWeather();}});
@@ -367,10 +375,21 @@ function attach(){
   $('#fullscreenButton').addEventListener('click',()=>{const el=$('#mapStage');if(!document.fullscreenElement)el.requestFullscreen?.().catch(()=>toast('Fullscreen unavailable'));else document.exitFullscreen?.();});
   $('#evaButton').addEventListener('click',()=>{state.eva=!state.eva;document.body.classList.toggle('eva-active',state.eva);$('#evaButton').setAttribute('aria-pressed',String(state.eva));});$('#evaExit').addEventListener('click',()=>{state.eva=false;document.body.classList.remove('eva-active');$('#evaButton').setAttribute('aria-pressed','false');});
   const stage=$('#mapStage');let drag=null;
-  stage.addEventListener('keydown',e=>{if(e.target!==stage||!state.pick)return;if(e.key.startsWith('Arrow')){e.preventDefault();state.keyboardCell=stepKeyboardCell(state.keyboardCell,e.key,state.data.gridWidth,state.data.gridHeight);const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);$('#cursorCoordinates').textContent=coordinates(state.keyboardCell);announce(`${coordinates(state.keyboardCell)}. ${blocked?'Unavailable cell; choose another.':'Press Enter or Space to set '+state.pick+'.'}`,blocked);renderMap();}else if(e.key==='Enter'||e.key===' '){e.preventDefault();setPoint(state.pick,state.keyboardCell);}else if(e.key==='Escape'){e.preventDefault();setPick(null);}});
+  stage.addEventListener('wheel',e=>{e.preventDefault();setZoom(state.zoom+(e.deltaY<0?.2:-.2));},{passive:false});
+  stage.addEventListener('keydown',e=>{
+    const adding=customActive()&&editor.mode==='add';
+    if(e.target!==stage||!state.pick&&!adding)return;
+    if(e.key.startsWith('Arrow')){
+      e.preventDefault();state.keyboardCell=stepKeyboardCell(state.keyboardCell,e.key,state.data.gridWidth,state.data.gridHeight);
+      const blocked=isBlocked(state.data,state.keyboardCell.x,state.keyboardCell.y,state.kind==='demo'&&state.hazards);
+      $('#cursorCoordinates').textContent=coordinates(state.keyboardCell);
+      announce(`${coordinates(state.keyboardCell)}. ${blocked?'Unavailable cell; choose another.':adding?'Press Enter or Space to add this stop.':'Press Enter or Space to set '+state.pick+'.'}`,blocked);renderMap();
+    }else if(e.key==='Enter'||e.key===' '){e.preventDefault();if(adding)applyCustomEdit({type:'add',point:state.keyboardCell});else setPoint(state.pick,state.keyboardCell);}
+    else if(e.key==='Escape'){e.preventDefault();if(adding){editor.mode='edit';renderMissionBuilder();renderMap();$('#missionEditorStatus').textContent='Add stop canceled.';}else setPick(null);}
+  });
   stage.addEventListener('pointerdown',e=>{
     if(e.target.closest('button,.map-scale,.map-layer-label'))return;
-    const index=customActive()&&editor.mode==='edit'?nearestCustomStop(e,stage.getBoundingClientRect()):-1;
+    const index=customActive()&&editor.mode!=='add'?nearestCustomStop(e,stage.getBoundingClientRect()):-1;
     const kind=index>=0?'stop':customActive()&&editor.mode==='add'?'add':'pan';
     drag={kind,index,pointerId:e.pointerId,x:e.clientX,y:e.clientY,panX:state.panX,panY:state.panY,moved:false,preview:null};
     editor.drag=kind==='stop'?drag:null;
@@ -403,6 +422,7 @@ function attach(){
         if(point)applyCustomEdit({type:'move',index:last.index,point});
         else $('#missionEditorStatus').textContent='Drag ended outside mapped terrain; stop not moved.';
       }
+      else {editor.selectedStop=last.index;renderMissionBuilder();$('#missionEditorStatus').textContent='Stop '+(last.index+1)+' selected. Drag its marker to move it, or use the stop list to reorder or remove it.';}
       renderMap();
     }else if(last.kind==='add'&&!last.moved){
       const point=cellUnderPointer(e,stage);
