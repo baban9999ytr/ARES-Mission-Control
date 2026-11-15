@@ -1,4 +1,11 @@
 const strings={
+  'jury.headline':["The shortest route isn't always the most suitable route.",'En kısa rota, her zaman en uygun rota değildir.'],
+  'jury.lead':['ARES compares alternative routes across measured Mars terrain to examine distance and elevation trade-offs.','ARES, ölçülmüş Mars arazisindeki alternatif rotaları karşılaştırarak mesafe ve yükseklik ödünleşimlerini inceler.'],
+  'jury.example':['Explore Example Mission','Örnek Görevi İncele'],
+  'jury.create':['Create a Mission','Görev Oluştur'],
+  'jury.science':['Explore Science Targets','Bilimsel Hedefleri İncele'],
+  'jury.replaceConfirm':['Replace the active custom mission with SC-01? Save its JSON first if you need to keep your edits.','Etkin özel görev SC-01 ile değiştirilsin mi? Düzenlemeleri korumak istiyorsanız önce JSON dosyasını kaydedin.'],
+  'jury.measuredOnly':['Mission creation requires the measured CTX dataset.','Görev oluşturmak için ölçümlü CTX veri kümesi gerekir.'],
   'app.title':['ARES Mission Planner — Jezero CTX','ARES Görev Planlayıcı — Jezero CTX'],
   'sources.title':['ARES / Scientific Sources','ARES / Bilimsel Kaynaklar'],
   'header.control':['Mission Control','Görev Kontrol'],
