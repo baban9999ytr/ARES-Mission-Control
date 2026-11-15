@@ -36,3 +36,12 @@ test('multi-stop missions keep leg boundaries in the profile samples',()=>{
     assert.ok(boundaries.every(s=>Number.isInteger(s.leg)));
   }
 });
+
+test('SC-02 identical routes still expose the same measured profile data',()=>{
+  const mission=missions.find(m=>m.id==='SC-02');
+  const plan=planMission(pack,mission);
+  assert.ok(plan);
+  const shortest=buildElevationProfileSeries(plan.routes.distance,routeSegments(plan.routes.distance,pack,plan.legs));
+  const terrain=buildElevationProfileSeries(plan.routes.terrain,routeSegments(plan.routes.terrain,pack,plan.legs));
+  assert.deepEqual(shortest,terrain);
+});
