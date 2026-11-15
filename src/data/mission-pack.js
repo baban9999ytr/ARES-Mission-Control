@@ -31,3 +31,13 @@ export function mapDisplayCoordinates(pack,p){
   return {east: west+(p.x+.5)*(east-west)/pack.gridWidth,
           north: north-(p.y+.5)*(north-south)/pack.gridHeight};
 }
+export function validateCompatibleRegion(base,candidate,overviewBounds){
+  if(base.crsWkt!==candidate.crsWkt||base.cellMeters!==candidate.cellMeters||
+    base.verticalReference!==candidate.verticalReference||
+    ['optical','elevation'].some(name=>base.layers[name].source!==candidate.layers[name].source)){
+    throw new Error('Expanded region does not share the validated CTX source, projection, grid spacing and vertical reference');
+  }
+  const b=candidate.boundsMeters,o=overviewBounds;
+  if(b.west<o.west||b.east>o.east||b.south<o.south||b.north>o.north)throw new Error('Expanded region exceeds the measured overview');
+  return candidate;
+}
