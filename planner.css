@@ -141,3 +141,34 @@ button:focus-visible,summary:focus-visible,select:focus-visible,label[role=butto
 .preset-drawer{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}.preset-drawer summary{font-size:12px!important}.preset-drawer summary span{font-size:10px!important}.preset-drawer .waypoint-list{margin-top:8px}.preset-row{display:flex;gap:4px;align-items:stretch}.preset-row .waypoint{flex:1;min-width:0}.preset-add{border:1px solid #bbd5ce;background:#edf7f3;color:#1c5d55;border-radius:5px;font-size:10px;font-weight:700;white-space:nowrap;padding:4px 7px}.preset-add:hover{background:#dcefe8}.preset-drawer #presetDetail{font-size:10px;line-height:1.4;margin:8px 0 0}
 .jury-brief{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 20px;background:#e7eee9;border-bottom:1px solid #c8d9d3;color:#183b3c}.jury-brief h1{font-size:19px;line-height:1.25;margin:0 0 4px}.jury-brief p{font-size:12px;line-height:1.4;margin:0;max-width:650px}.jury-actions{display:flex;flex-wrap:wrap;gap:7px;flex:none}.jury-actions button{font:700 12px/1.2 var(--font);border:1px solid #5d7777;background:white;color:#234b4e;border-radius:5px;padding:9px 11px;cursor:pointer}.jury-actions #juryExample{background:#235b63;border-color:#235b63;color:white}.jury-actions button:focus-visible{outline:3px solid #cb714b;outline-offset:2px}.route-decision{font-size:13px;line-height:1.45;font-weight:700;background:#e7f2ee;border-left:4px solid #168a83;padding:10px 12px;margin:12px 0 8px;color:#183b3c}@media(max-width:1100px){.jury-brief{align-items:flex-start;flex-direction:column}.jury-actions{width:100%}}@media(max-width:520px){.jury-brief{padding:11px 14px}.jury-brief h1{font-size:16px}.jury-actions button{flex:1 1 100%;text-align:center}}
 @media(min-width:721px) and (max-width:1150px){.planner-layout,.planner-layout:not(x){grid-template-rows:max-content max-content;align-items:start}.tool-panel{grid-row:1 / span 2;max-height:calc(100vh - 185px);overflow:auto}.map-panel{align-self:start}.map-header{display:block}.map-header .panel-heading{width:100%}.map-header-actions{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:6px;margin-top:9px}.analysis-panel{grid-column:2;grid-row:2;border-left:1px solid var(--line);border-top:1px solid var(--line)}.comparison-section{padding:15px 12px}}
+
+/* Measured elevation profile */
+.elevation-profile{margin-top:1rem;border-top:1px solid rgba(255,255,255,.12);padding-top:1rem}
+.elevation-profile-title{display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;margin-bottom:.6rem}
+.elevation-profile-title strong{font-size:.92rem}
+.elevation-profile-title span{font-size:.72rem;color:var(--muted)}
+.elevation-profile-chart{width:100%;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(4,14,18,.45)}
+.elevation-profile-chart svg{display:block;width:100%;height:auto;min-height:240px}
+.elevation-profile-grid line{stroke:rgba(255,255,255,.1);stroke-width:1}
+.elevation-profile-grid text{fill:var(--muted);font-size:11px}
+.elevation-profile-grid .axis-title,.elevation-profile-chart .axis-title{fill:var(--text);font-size:11px}
+.elevation-profile-line{vector-effect:non-scaling-stroke}
+.elevation-profile-line.shortest{stroke:#f28c28}
+.elevation-profile-line.terrain{stroke:#16c7c8}
+.elevation-profile-point{cursor:pointer;outline:none}
+.elevation-profile-point circle{transition:r .12s ease,filter .12s ease}
+.elevation-profile-point:hover circle,.elevation-profile-point:focus circle{r:6;filter:drop-shadow(0 0 4px currentColor)}
+.elevation-profile-point.shortest{color:#f28c28}
+.elevation-profile-point.terrain{color:#16c7c8}
+.elevation-profile-legend{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.55rem;font-size:.72rem;color:var(--muted)}
+.elevation-profile-legend span{display:inline-flex;align-items:center;gap:.3rem}
+.elevation-profile-legend span:last-child{flex:1 1 100%}
+.elevation-profile-empty{margin:.8rem 0;color:var(--muted);font-size:.82rem}
+@media (max-width:720px){
+  .elevation-profile{margin-top:.8rem;padding-top:.8rem}
+  .elevation-profile-title{display:block}
+  .elevation-profile-title span{display:block;margin-top:.2rem}
+  .elevation-profile-chart svg{min-height:210px}
+  .elevation-profile-grid text{font-size:9px}
+  .elevation-profile-legend{font-size:.68rem}
+}
