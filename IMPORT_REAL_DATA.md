@@ -23,6 +23,7 @@ The `.venv` is local and untracked. If absent, install `rasterio`, `numpy`, and 
 ## Data sources
 
 Use data products from official NASA/USGS collections. For example:
+
 - [NASA Mars Trek](https://trek.nasa.gov/mars/) — Jezero MRO HiRISE imagery and Mars Odyssey THEMIS context.
 - [NASA Mars Trek WMTS documentation](https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=mars) — official Mars layers and coordinate systems.
 - [NASA's Perseverance location map](https://science.nasa.gov/mission/mars-2020-perseverance/location-map/) — contextual geology and rover traverse.

@@ -1,44 +1,206 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Measured Jezero CTX optical and elevation data, route-model provenance and research limitations for ARES Mission Control.">
-  <base href="/">
-  <title>ARES / Scientific Sources</title>
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-<div class="sources-page">
-  <header class="sources-top">
-    <a href="./" class="brand" aria-label="ARES mission planner"><span class="brand-mark"><span class="planet"></span><span class="orbit-ring"></span></span><span class="brand-word">ARES<span class="brand-slash">/</span></span></a>
-    <div class="sources-nav"><a class="sources-back" href="./" data-i18n="sources.back">← BACK TO MISSION CONTROL</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-language="en" aria-pressed="true">EN</button><button type="button" data-language="tr" aria-pressed="false">TR</button></div></div>
-  </header>
-  <div class="sources-container">
-    <div class="eyebrow">DATA INTEGRITY / MISSION REFERENCE</div>
-    <h1>Data &amp; methodology<span class="highlight-dot">.</span></h1>
-    <p class="sources-lead">ARES loads a measured Jezero CTX optical mosaic and digital elevation model (DEM). Route planning supports the original 3.2 × 2.4 km crop and a validated 6.4 × 4.8 km sector; the 30 × 22.5 km overview remains context-only beyond the selected route region.</p>
-    <div class="sources-warning"><strong>INDEPENDENT RESEARCH PROTOTYPE · NOT CERTIFIED EVA NAVIGATION</strong><span>ARES is an independent research prototype developed for NASA Space Apps Challenge. NASA does not endorse this project.</span></div>
-    <h2>NASA & USGS resources</h2>
-    <div class="sources-grid">
-      <a href="https://astrogeology.usgs.gov/search/map/mars_2020_terrain_relative_navigation_ctx_dtm_mosaic" target="_blank" rel="noopener noreferrer"><span>01 / USGS ASTROGEOLOGY · MRO CTX</span><strong>Mars 2020 CTX products</strong><p>Data type: registered optical orthomosaic (6 m/pixel) and DEM (20 m/pixel), Mars equirectangular metres (ESRI:103885), approximately 31.9 × 30.2 km source footprint. ARES derives optical/elevation displays, a 30 × 22.5 km overview, and 3.2 × 2.4 km and 6.4 × 4.8 km route grids. Verified 2026-11-15.</p><em>USGS PRODUCT & CITATION ↗</em></a>
-      <a href="https://trek.nasa.gov/mars/" target="_blank" rel="noopener noreferrer"><span>02 / NASA</span><strong>Mars Trek</strong><p>Data type: interactive planetary map. Global Mars coverage; resolution and projection vary by layer. ARES uses it only as research context, not as a route input. Verified 2026-11-15.</p><em>OPEN RESOURCE ↗</em></a>
-      <a href="https://science.nasa.gov/mission/mars-2020-perseverance/location-map/" target="_blank" rel="noopener noreferrer"><span>03 / NASA SCIENCE</span><strong>Perseverance location map</strong><p>Data type: mission traverse map for Jezero. Display resolution is map-dependent; it is not sampled into ARES. ARES uses it as rover context only. Rover positions and named outcrops are not identified by the route grid. Verified 2026-11-15.</p><em>OPEN RESOURCE ↗</em></a>
-      <a href="https://ccmc.gsfc.nasa.gov/tools/DONKI/" target="_blank" rel="noopener noreferrer"><span>04 / NASA CCMC</span><strong>DONKI solar events</strong><p>Data type: time-stamped FLR, CME and SEP event feed; no map projection or spatial resolution. ARES shows an optional recent-event list. It is not local Mars surface radiation or EVA safety data. Verified 2026-11-15.</p><em>OPEN RESOURCE ↗</em></a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Measured Jezero CTX optical and elevation data, route-model provenance and research limitations for ARES Mission Control."
+    />
+    <base href="/" />
+    <title>ARES / Scientific Sources</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="sources-page">
+      <header class="sources-top">
+        <a href="./" class="brand" aria-label="ARES mission planner"
+          ><span class="brand-mark"
+            ><span class="planet"></span><span class="orbit-ring"></span></span
+          ><span class="brand-word"
+            >ARES<span class="brand-slash">/</span></span
+          ></a
+        >
+        <div class="sources-nav">
+          <a class="sources-back" href="./" data-i18n="sources.back"
+            >← BACK TO MISSION CONTROL</a
+          >
+          <div class="language-switch" role="group" aria-label="Language">
+            <button type="button" data-language="en" aria-pressed="true">
+              EN</button
+            ><button type="button" data-language="tr" aria-pressed="false">
+              TR
+            </button>
+          </div>
+        </div>
+      </header>
+      <div class="sources-container">
+        <div class="eyebrow">DATA INTEGRITY / MISSION REFERENCE</div>
+        <h1>Data &amp; methodology<span class="highlight-dot">.</span></h1>
+        <p class="sources-lead">
+          ARES loads a measured Jezero CTX optical mosaic and digital elevation
+          model (DEM). Route planning supports the original 3.2 × 2.4 km crop
+          and a validated 6.4 × 4.8 km sector; the 30 × 22.5 km overview remains
+          context-only beyond the selected route region.
+        </p>
+        <div class="sources-warning">
+          <strong
+            >INDEPENDENT RESEARCH PROTOTYPE · NOT CERTIFIED EVA
+            NAVIGATION</strong
+          ><span
+            >ARES is an independent research prototype developed for NASA Space
+            Apps Challenge. NASA does not endorse this project.</span
+          >
+        </div>
+        <h2>NASA & USGS resources</h2>
+        <div class="sources-grid">
+          <a
+            href="https://astrogeology.usgs.gov/search/map/mars_2020_terrain_relative_navigation_ctx_dtm_mosaic"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span>01 / USGS ASTROGEOLOGY · MRO CTX</span
+            ><strong>Mars 2020 CTX products</strong>
+            <p>
+              Data type: registered optical orthomosaic (6 m/pixel) and DEM (20
+              m/pixel), Mars equirectangular metres (ESRI:103885), approximately
+              31.9 × 30.2 km source footprint. ARES derives optical/elevation
+              displays, a 30 × 22.5 km overview, and 3.2 × 2.4 km and 6.4 × 4.8
+              km route grids. Verified 2026-11-15.
+            </p>
+            <em>USGS PRODUCT & CITATION ↗</em></a
+          >
+          <a
+            href="https://trek.nasa.gov/mars/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span>02 / NASA</span><strong>Mars Trek</strong>
+            <p>
+              Data type: interactive planetary map. Global Mars coverage;
+              resolution and projection vary by layer. ARES uses it only as
+              research context, not as a route input. Verified 2026-11-15.
+            </p>
+            <em>OPEN RESOURCE ↗</em></a
+          >
+          <a
+            href="https://science.nasa.gov/mission/mars-2020-perseverance/location-map/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span>03 / NASA SCIENCE</span
+            ><strong>Perseverance location map</strong>
+            <p>
+              Data type: mission traverse map for Jezero. Display resolution is
+              map-dependent; it is not sampled into ARES. ARES uses it as rover
+              context only. Rover positions and named outcrops are not
+              identified by the route grid. Verified 2026-11-15.
+            </p>
+            <em>OPEN RESOURCE ↗</em></a
+          >
+          <a
+            href="https://ccmc.gsfc.nasa.gov/tools/DONKI/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span>04 / NASA CCMC</span><strong>DONKI solar events</strong>
+            <p>
+              Data type: time-stamped FLR, CME and SEP event feed; no map
+              projection or spatial resolution. ARES shows an optional
+              recent-event list. It is not local Mars surface radiation or EVA
+              safety data. Verified 2026-11-15.
+            </p>
+            <em>OPEN RESOURCE ↗</em></a
+          >
+        </div>
+        <h2>From planetary data to route comparison</h2>
+        <div class="source-pipeline">
+          <span>Raw CTX GeoTIFFs</span><b>→</b><span>Geospatial processing</span
+          ><b>→</b><span>Registered terrain layers</span><b>→</b
+          ><span>40 m routing grid</span><b>→</b><span>Independent A* legs</span
+          ><b>→</b><span>Mission interface</span>
+        </div>
+        <h2>What is real in ARES?</h2>
+        <div class="sources-facts">
+          <div>
+            <strong>Measured CTX study crop</strong>
+            <p>
+              Jezero optical mosaic and DEM data are processed into aligned WebP
+              layers and a 80 × 60 height grid at 40 m cell spacing. Map
+              coverage: projected E 4,586,000–4,589,200 m and N
+              1,091,000–1,093,400 m. Original optical sampling is 6 m/pixel; DEM
+              sampling is 20 m/pixel.
+            </p>
+          </div>
+          <div>
+            <strong>Expanded measured overview</strong>
+            <p>
+              The same registered CTX optical and DEM GeoTIFFs provide a 30 ×
+              22.5 km context view and a validated 160 × 120 route grid over 6.4
+              × 4.8 km. Pan, zoom and projected-coordinate inspection work
+              throughout the overview. The outline shows the selected routeable
+              region; outside it is context-only.
+            </p>
+          </div>
+          <div>
+            <strong>Route computation</strong>
+            <p>
+              Eight-neighbour A* computes shortest grid distance or a
+              terrain-preferred path with an illustrative slope-cost weighting.
+              The displayed maximum slope is between adjacent 40 m sampled grid
+              cells, not a maximum physical surface slope.
+            </p>
+          </div>
+          <div>
+            <strong>Separate synthetic demonstration</strong>
+            <p>
+              The optional synthetic demo mode uses procedurally generated
+              height values, imagery, hazard zones and thermal colouring. No
+              measured CTX thermal or verified hazard layer is provided.
+            </p>
+          </div>
+          <div>
+            <strong>Known scientific limits</strong>
+            <p>
+              ARES does not resolve rocks or sand at EVA scale, certify
+              traversability, model life-support constraints, or calculate local
+              Mars radiation exposure. User-selected points and permanent
+              illustrative landmarks are not authenticated named geological
+              targets. Points outside the selected routeable region are not
+              routed.
+            </p>
+          </div>
+        </div>
+        <h2>Attribution and product identity</h2>
+        <p class="sources-end">
+          CTX is an instrument aboard NASA's Mars Reconnaissance Orbiter. USGS
+          Astrogeology publishes the processed Mars 2020 map products used here.
+          NASA-derived research data does not make ARES a NASA-developed or
+          NASA-endorsed product. ARES implements its own route model, editor and
+          interface. No NASA insignia or mission badge is used. USGS asks users
+          to credit its publications and product authors.
+          <a
+            href="https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs"
+            target="_blank"
+            rel="noopener noreferrer"
+            >USGS credit guidance ↗</a
+          >
+          <a
+            href="https://www.nasa.gov/nasa-brand-center/images-and-media/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >NASA media guidance ↗</a
+          >
+        </p>
+        <p class="sources-end">
+          <a href="./DATA_SOURCES.md" target="_blank" rel="noopener noreferrer"
+            >Source and processing details ↗</a
+          >
+          <a
+            href="./IMPORT_REAL_DATA.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Importer documentation ↗</a
+          >
+        </p>
+      </div>
     </div>
-    <h2>From planetary data to route comparison</h2>
-    <div class="source-pipeline"><span>Raw CTX GeoTIFFs</span><b>→</b><span>Geospatial processing</span><b>→</b><span>Registered terrain layers</span><b>→</b><span>40 m routing grid</span><b>→</b><span>Independent A* legs</span><b>→</b><span>Mission interface</span></div>
-    <h2>What is real in ARES?</h2>
-    <div class="sources-facts">
-      <div><strong>Measured CTX study crop</strong><p>Jezero optical mosaic and DEM data are processed into aligned WebP layers and a 80 × 60 height grid at 40 m cell spacing. Map coverage: projected E 4,586,000–4,589,200 m and N 1,091,000–1,093,400 m. Original optical sampling is 6 m/pixel; DEM sampling is 20 m/pixel.</p></div>
-      <div><strong>Expanded measured overview</strong><p>The same registered CTX optical and DEM GeoTIFFs provide a 30 × 22.5 km context view and a validated 160 × 120 route grid over 6.4 × 4.8 km. Pan, zoom and projected-coordinate inspection work throughout the overview. The outline shows the selected routeable region; outside it is context-only.</p></div>
-      <div><strong>Route computation</strong><p>Eight-neighbour A* computes shortest grid distance or a terrain-preferred path with an illustrative slope-cost weighting. The displayed maximum slope is between adjacent 40 m sampled grid cells, not a maximum physical surface slope.</p></div>
-      <div><strong>Separate synthetic demonstration</strong><p>The optional synthetic demo mode uses procedurally generated height values, imagery, hazard zones and thermal colouring. No measured CTX thermal or verified hazard layer is provided.</p></div>
-      <div><strong>Known scientific limits</strong><p>ARES does not resolve rocks or sand at EVA scale, certify traversability, model life-support constraints, or calculate local Mars radiation exposure. User-selected points and permanent illustrative landmarks are not authenticated named geological targets. Points outside the selected routeable region are not routed.</p></div>
-    </div>
-    <h2>Attribution and product identity</h2><p class="sources-end">CTX is an instrument aboard NASA's Mars Reconnaissance Orbiter. USGS Astrogeology publishes the processed Mars 2020 map products used here. NASA-derived research data does not make ARES a NASA-developed or NASA-endorsed product. ARES implements its own route model, editor and interface. No NASA insignia or mission badge is used. USGS asks users to credit its publications and product authors. <a href="https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs" target="_blank" rel="noopener noreferrer">USGS credit guidance ↗</a> <a href="https://www.nasa.gov/nasa-brand-center/images-and-media/" target="_blank" rel="noopener noreferrer">NASA media guidance ↗</a></p>
-    <p class="sources-end"><a href="./DATA_SOURCES.md" target="_blank" rel="noopener noreferrer">Source and processing details ↗</a> <a href="./IMPORT_REAL_DATA.md" target="_blank" rel="noopener noreferrer">Importer documentation ↗</a></p>
-  </div>
-</div>
-<script type="module" src="./src/sources.js"></script></body>
+    <script type="module" src="./src/sources.js"></script>
+  </body>
 </html>

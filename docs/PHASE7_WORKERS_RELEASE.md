@@ -31,22 +31,23 @@ The build already generates `dist/build-info.json` from `CF_PAGES_COMMIT_SHA` (i
 
 Go to **Workers & Pages → ares-mission-control → Settings → Builds** (labels may differ):
 
-| Setting | Required |
-| --- | --- |
-| Source repository | `baban9999ytr/ARES-Mission-Control` |
-| Production branch | `main` |
-| Root directory | repository root |
-| Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
-| Node version | 22 (see `.node-version`) |
-| Wrangler config | `wrangler.json` committed at repository root |
-| Static asset root | `./dist` (from Wrangler config) |
+| Setting           | Required                                     |
+| ----------------- | -------------------------------------------- |
+| Source repository | `baban9999ytr/ARES-Mission-Control`          |
+| Production branch | `main`                                       |
+| Root directory    | repository root                              |
+| Build command     | `npm run build`                              |
+| Deploy command    | `npx wrangler deploy`                        |
+| Node version      | 22 (see `.node-version`)                     |
+| Wrangler config   | `wrangler.json` committed at repository root |
+| Static asset root | `./dist` (from Wrangler config)              |
 
 **Critical:** Do not use `npx wrangler deploy --assets .`, `--assets ./public`, a dashboard upload of the repository root, or a custom deploy step that ignores `wrangler.json`. Those may publish the input files while dropping generated `build-info.json` and SPA fallback.
 
 Avoid removing or recreating the existing Worker or custom domain. `name` in `wrangler.json` matches the existing Worker, and the custom domain is managed in the dashboard.
 
 Official docs:
+
 - https://developers.cloudflare.com/workers/wrangler/configuration/
 - https://developers.cloudflare.com/workers/static-assets/
 - https://developers.cloudflare.com/workers/static-assets/headers/

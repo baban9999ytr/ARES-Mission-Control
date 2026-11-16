@@ -2,12 +2,12 @@
 
 Audit date: 2026-11-14. Machine-readable metadata and SHA-256 hashes: [`../data/manifests/raster-audit.json`](../data/manifests/raster-audit.json). Raster source files remain outside Git. File labels in that manifest map as follows: `file_1`, `file_7`–`file_10` are in `$HOME/Downloads`; `file_2` is in `$HOME/ARES-DATA/06_HIGH_RESOLUTION/CENTRAL_JEZERO`; `file_3`–`file_4` are in `$HOME/ARES-DATA/06_HIGH_RESOLUTION/SOUTHWEST_JEZERO`; `file_5`–`file_6` are in repository `ARES-DATA/02_ELEVATION` and `ARES-DATA/01_OPTICAL`; `file_11`–`file_15` are in repository `ARES-DATA/04_ROVER_IMAGES`. The numbered labels correspond to the command order used for this audit, not scientific product IDs.
 
-| Region | DEM/DTM | DRG/optical | Current assessment |
-| --- | --- | --- | --- |
-| Central Jezero | `cenjez_DEM_1m(1).tif`, 251,714,420 B, 1 m | `cenjez_DRG_0_3m.tif`, 1,640,221,885 B, about 0.300 m | Both open; same projected Mars CRS and 99.9755% DEM bbox overlap. |
-| Southwest Jezero | `swjez-DEM_1m.tif`, 198,198,530 B, 1 m | `swjez-DRG_0_3m.tif`, 1,125,585,518 B, 0.3 m | Both open; same projected Mars CRS and 98.9565% DEM bbox overlap. |
-| Northern Fan | `nf_DEM_1m.tif` absent | `nf_DRG_0_3m.tif` absent | No files found under the ARES project, `$HOME/ARES-DATA`, or `$HOME/Downloads`. |
-| Jezero CTX context | 20 m DTM, 9,662,387 B | 6 m orthomosaic, 36,269,402 B | Both open; same ESRI:103885 CRS and full DEM bbox overlap. Separate from the high-resolution Jezero CRS. |
+| Region             | DEM/DTM                                    | DRG/optical                                           | Current assessment                                                                                       |
+| ------------------ | ------------------------------------------ | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Central Jezero     | `cenjez_DEM_1m(1).tif`, 251,714,420 B, 1 m | `cenjez_DRG_0_3m.tif`, 1,640,221,885 B, about 0.300 m | Both open; same projected Mars CRS and 99.9755% DEM bbox overlap.                                        |
+| Southwest Jezero   | `swjez-DEM_1m.tif`, 198,198,530 B, 1 m     | `swjez-DRG_0_3m.tif`, 1,125,585,518 B, 0.3 m          | Both open; same projected Mars CRS and 98.9565% DEM bbox overlap.                                        |
+| Northern Fan       | `nf_DEM_1m.tif` absent                     | `nf_DRG_0_3m.tif` absent                              | No files found under the ARES project, `$HOME/ARES-DATA`, or `$HOME/Downloads`.                          |
+| Jezero CTX context | 20 m DTM, 9,662,387 B                      | 6 m orthomosaic, 36,269,402 B                         | Both open; same ESRI:103885 CRS and full DEM bbox overlap. Separate from the high-resolution Jezero CRS. |
 
 The exact-name files `$HOME/Downloads/cenjez_DEM_1m.tif` (0 B) and `cenjez_DRG_0_3m.tif` (238 B XML) are unusable. Two `.part` downloads are incomplete (89,068,868 B DEM; 48,133,037 B DRG). They are listed in the manifest but excluded from pair validation. The complete central products above are separate files; do not overwrite any of these downloads during cleanup.
 

@@ -14,19 +14,19 @@ The legend computes actual sampled-grid extrema from the measured pack: **−257
 
 ## Verification
 
-| Chromium check | Result |
-| --- | --- |
-| Optical Only | PASS — CTX optical visible, elevation and legend hidden. |
-| Elevation Only | PASS — DEM raster and legend visible, 100% effective opacity. |
-| Optical + Elevation | PASS — both registered rasters visible by default at 45%. |
-| Opacity 0%, 45%, 100% | PASS — style opacity and visual screenshots checked. |
-| Standard alpha and color blend | PASS — at 100%, color mode retained optical texture; alpha mode displayed DEM colors. |
-| Pan and zoom alignment | PASS — both rasters and route SVG had identical transformed rectangles. |
-| Waypoint drag with both layers | PASS — moved measured stop and recalculated terrain route (2.13 km → 1.78 km). |
-| Route visibility | PASS — selected route and markers were visible across low and high elevation colors. |
-| Measured/synthetic isolation | PASS — measured Thermal unavailable; synthetic thermal remained selectable and labeled illustrative. |
-| Desktop 1440 × 900 | PASS. |
-| Mobile 390 × 844 and 320 × 720 | PASS — popover stayed within viewport; no horizontal overflow. |
+| Chromium check                 | Result                                                                                               |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Optical Only                   | PASS — CTX optical visible, elevation and legend hidden.                                             |
+| Elevation Only                 | PASS — DEM raster and legend visible, 100% effective opacity.                                        |
+| Optical + Elevation            | PASS — both registered rasters visible by default at 45%.                                            |
+| Opacity 0%, 45%, 100%          | PASS — style opacity and visual screenshots checked.                                                 |
+| Standard alpha and color blend | PASS — at 100%, color mode retained optical texture; alpha mode displayed DEM colors.                |
+| Pan and zoom alignment         | PASS — both rasters and route SVG had identical transformed rectangles.                              |
+| Waypoint drag with both layers | PASS — moved measured stop and recalculated terrain route (2.13 km → 1.78 km).                       |
+| Route visibility               | PASS — selected route and markers were visible across low and high elevation colors.                 |
+| Measured/synthetic isolation   | PASS — measured Thermal unavailable; synthetic thermal remained selectable and labeled illustrative. |
+| Desktop 1440 × 900             | PASS.                                                                                                |
+| Mobile 390 × 844 and 320 × 720 | PASS — popover stayed within viewport; no horizontal overflow.                                       |
 
 `npm run check` passed **52 tests** and the static build. `.venv/bin/python tools/test_raster_import.py` passed. An initial run with the system `python3` could not start because that interpreter lacks `rasterio`; the project's virtual environment has the required dependency. Chromium reported no console errors or warnings.
 

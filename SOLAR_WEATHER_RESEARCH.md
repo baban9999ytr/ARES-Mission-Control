@@ -20,14 +20,14 @@
 
 ## 1. Güneş patlaması (FLR), CME ve SEP arasındaki farklar
 
-| | **Solar Flare (FLR)** | **CME (koronal kütle atımı)** | **SEP (güneş enerjik parçacıkları)** |
-|---|---|---|---|
-| **Nedir?** | Güneş atmosferinde ani parlama. X-ışını ve morötesi (EUV) ışıma patlaması. | Güneşten uzaya fırlatılan büyük plazma ve manyetik alan bulutu. | Güneş olaylarıyla yaklaşık ışık hızının önemli bir kısmına hızlandırılan yüklü parçacıklar (çoğunlukla protonlar). |
-| **Ne taşır?** | Işıma (elektromanyetik) | Madde ve manyetik alan | Parçacık radyasyonu |
-| **Nasıl ölçülür/sınıflanır?** | GOES uydularının 1-8 Å X-ışını akısıyla: A, B, C, M, X (her sınıf 10 kat) **[İ]** | Hız, yarım açı, yön (DONKI'de CME analizi). DONKI'de CME'nin "Type" alanı SCORE ölçeğidir **[A]** | NOAA'da ≥10 MeV proton akısı (pfu) ve S1-S5 ölçeği. Eşikler: 10, 100, 1000, 10 000, 100 000 pfu **[A]** ([SWPC](https://www.swpc.noaa.gov/node/39)) |
-| **Ulaşma süresi** | Işık hızında, anında **[İ]** | Gün mertebesi. DONKI'deki 4 örnek kayıtta Mars için model tahmini CME'den yaklaşık 3-5 gün sonra (genelleme değil) **[S]** | SWPC: 500 MeV bir proton için ~10 dakikadan, saatlerce sürebilen gecikmelere kadar. Süre, olayın güneş diskindeki konumuna bağlı **[A]** |
-| **Dünya'daki karşılığı** | R ölçeği (radyo karartması) **[İ]** | G ölçeği (jeomanyetik fırtına) **[İ]** | S ölçeği (radyasyon fırtınası) |
-| **Aralarındaki ilişki** | Güçlü flare'ler bazen CME ile birlikte olur, her zaman değil **[İ]** | SWPC, güneş proton olaylarının hızlı CME'lerden kaynaklandığını belirtir **[A]** | DONKI, FLR kayıtlarını ilgili CME ve SEP kayıtlarına bağlar ("linkedEvents") **[A]** |
+|                               | **Solar Flare (FLR)**                                                             | **CME (koronal kütle atımı)**                                                                                              | **SEP (güneş enerjik parçacıkları)**                                                                                                                |
+| ----------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Nedir?**                    | Güneş atmosferinde ani parlama. X-ışını ve morötesi (EUV) ışıma patlaması.        | Güneşten uzaya fırlatılan büyük plazma ve manyetik alan bulutu.                                                            | Güneş olaylarıyla yaklaşık ışık hızının önemli bir kısmına hızlandırılan yüklü parçacıklar (çoğunlukla protonlar).                                  |
+| **Ne taşır?**                 | Işıma (elektromanyetik)                                                           | Madde ve manyetik alan                                                                                                     | Parçacık radyasyonu                                                                                                                                 |
+| **Nasıl ölçülür/sınıflanır?** | GOES uydularının 1-8 Å X-ışını akısıyla: A, B, C, M, X (her sınıf 10 kat) **[İ]** | Hız, yarım açı, yön (DONKI'de CME analizi). DONKI'de CME'nin "Type" alanı SCORE ölçeğidir **[A]**                          | NOAA'da ≥10 MeV proton akısı (pfu) ve S1-S5 ölçeği. Eşikler: 10, 100, 1000, 10 000, 100 000 pfu **[A]** ([SWPC](https://www.swpc.noaa.gov/node/39)) |
+| **Ulaşma süresi**             | Işık hızında, anında **[İ]**                                                      | Gün mertebesi. DONKI'deki 4 örnek kayıtta Mars için model tahmini CME'den yaklaşık 3-5 gün sonra (genelleme değil) **[S]** | SWPC: 500 MeV bir proton için ~10 dakikadan, saatlerce sürebilen gecikmelere kadar. Süre, olayın güneş diskindeki konumuna bağlı **[A]**            |
+| **Dünya'daki karşılığı**      | R ölçeği (radyo karartması) **[İ]**                                               | G ölçeği (jeomanyetik fırtına) **[İ]**                                                                                     | S ölçeği (radyasyon fırtınası)                                                                                                                      |
+| **Aralarındaki ilişki**       | Güçlü flare'ler bazen CME ile birlikte olur, her zaman değil **[İ]**              | SWPC, güneş proton olaylarının hızlı CME'lerden kaynaklandığını belirtir **[A]**                                           | DONKI, FLR kayıtlarını ilgili CME ve SEP kayıtlarına bağlar ("linkedEvents") **[A]**                                                                |
 
 **Pratik kural:** FLR = "ışık patladı", CME = "bulut fırlatıldı", SEP = "parçacıklar geliyor". Mars radyasyon güvenliği açısından en çok önem taşıyan türdür SEP (bkz. bölüm 3).
 
@@ -41,19 +41,19 @@
 
 ### 2.1 Uç noktalar
 
-| Endpoint | İçerik | Ana parametreler |
-|---|---|---|
-| `CME` | Koronal kütle atımı kayıtları | `startDate`, `endDate` |
-| `CMEAnalysis` | CME analizi: zaman, enlem, boylam, yarım açı, hız, tip | `startDate`, `endDate`, `mostAccurateOnly`, `completeEntryOnly`, `speed`, `halfAngle`, `catalog`, `keyword` |
-| `FLR` | Güneş patlaması kayıtları | `startDate`, `endDate` |
-| `SEP` | Güneş enerjik parçacık olayları | `startDate`, `endDate` |
-| `GST` | Jeomanyetik fırtına (Kp) | `startDate`, `endDate` |
-| `IPS` | Gezegenlerarası şok | `startDate`, `endDate`, `location`, `catalog` |
-| `MPC` | Manyetopoz geçişi | `startDate`, `endDate` |
-| `RBE` | Radyasyon kuşağı artışı | `startDate`, `endDate` |
-| `HSS` | Yüksek hızlı akış | `startDate`, `endDate` |
-| `WSAEnlilSimulations` | WSA-ENLIL+Cone model sonuçları (Mars dahil gezegen etki tahminleri) | `startDate`, `endDate` |
-| `notifications` | Bildirimler (`type`: all, FLR, SEP, CME, IPS, MPC, GST, RBE, report) | `startDate`, `endDate`, `type` |
+| Endpoint              | İçerik                                                               | Ana parametreler                                                                                            |
+| --------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `CME`                 | Koronal kütle atımı kayıtları                                        | `startDate`, `endDate`                                                                                      |
+| `CMEAnalysis`         | CME analizi: zaman, enlem, boylam, yarım açı, hız, tip               | `startDate`, `endDate`, `mostAccurateOnly`, `completeEntryOnly`, `speed`, `halfAngle`, `catalog`, `keyword` |
+| `FLR`                 | Güneş patlaması kayıtları                                            | `startDate`, `endDate`                                                                                      |
+| `SEP`                 | Güneş enerjik parçacık olayları                                      | `startDate`, `endDate`                                                                                      |
+| `GST`                 | Jeomanyetik fırtına (Kp)                                             | `startDate`, `endDate`                                                                                      |
+| `IPS`                 | Gezegenlerarası şok                                                  | `startDate`, `endDate`, `location`, `catalog`                                                               |
+| `MPC`                 | Manyetopoz geçişi                                                    | `startDate`, `endDate`                                                                                      |
+| `RBE`                 | Radyasyon kuşağı artışı                                              | `startDate`, `endDate`                                                                                      |
+| `HSS`                 | Yüksek hızlı akış                                                    | `startDate`, `endDate`                                                                                      |
+| `WSAEnlilSimulations` | WSA-ENLIL+Cone model sonuçları (Mars dahil gezegen etki tahminleri)  | `startDate`, `endDate`                                                                                      |
+| `notifications`       | Bildirimler (`type`: all, FLR, SEP, CME, IPS, MPC, GST, RBE, report) | `startDate`, `endDate`, `type`                                                                              |
 
 Kaynak: CCMC DONKI sayfasının 07/03/2025 tarihli sürümü ve üçüncü taraf dokümanlar **[S][İ]**. CCMC, parametrelerin ve yanıt biçimlerinin göç sırasında **değişmediğini** söylüyor **[A]**. Bu nedenle liste geçerli kabul edilebilir ama ilk canlı istekte doğrulanmalı.
 
@@ -90,11 +90,11 @@ DONKI ana kataloğu `M2M_CATALOG`tur. Haziran 2020'den itibaren M2M-SWAO analizl
 
 ### 3.2 Her veri türü Mars için ne anlama gelir?
 
-| Tür | Mars için anlamı | Kanıt |
-|---|---|---|
-| **FLR** | X-ışını/EUV patlaması Mars'ın üst atmosferini ve iyonosferini etkileyebilir. MAVEN'in EUVM cihazı Mars'ta flare ölçer. DONKI'deki GOES kayıtları ise Dünya yakınından ölçülmüştür. Flare'in Mars yüzeyindeki dozu üzerindeki etkisini araştırdığım kaynaklarda **doğrulayamadım**. | DONKI'nin MAVEN_EUVM kataloğu açıklaması **[A]** |
-| **CME** | Mars'a ulaşırsa güneş rüzgârı ortamını bozar. DONKI WSA-ENLIL kayıtlarında Mars için tahmini şok varış zamanı verilir ("Glancing Blow" = sıyırma etkisi). 10-12 Eylül 2017'de RAD, şok geldiğinde anlık doz hızında yaklaşık %15 düşüş gördü, çünkü şok galaktik kozmik ışınları azalttı. | WSA-ENLIL kayıtları **[S]**; Zeitlin/Hassler çalışmaları **[S]** |
-| **SEP** | Mars için asıl radyasyon tehlikesi. Eylül 2017 olayında RAD, doz hızlarının GCR seviyesinin 2-3 katına çıktığını ölçtü (birkaç saat içinde yükseldi, yaklaşık 12 saat tepede kaldı, sonraki 36 saatte düştü). Mayıs 2024'te NASA, RAD'ın o güne kadarki en büyük artışını bildirdi: olay boyunca 8 100 mikrogray. MAVEN bunu gözlediği en büyük SEP olayı olarak tanımladı. Mars Odyssey'in yıldız kamerası bir süre devre dışı kaldı. | JPL 2017 **[S]**; NASA 2024 **[S]** |
+| Tür     | Mars için anlamı                                                                                                                                                                                                                                                                                                                                                                                                                       | Kanıt                                                            |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **FLR** | X-ışını/EUV patlaması Mars'ın üst atmosferini ve iyonosferini etkileyebilir. MAVEN'in EUVM cihazı Mars'ta flare ölçer. DONKI'deki GOES kayıtları ise Dünya yakınından ölçülmüştür. Flare'in Mars yüzeyindeki dozu üzerindeki etkisini araştırdığım kaynaklarda **doğrulayamadım**.                                                                                                                                                     | DONKI'nin MAVEN_EUVM kataloğu açıklaması **[A]**                 |
+| **CME** | Mars'a ulaşırsa güneş rüzgârı ortamını bozar. DONKI WSA-ENLIL kayıtlarında Mars için tahmini şok varış zamanı verilir ("Glancing Blow" = sıyırma etkisi). 10-12 Eylül 2017'de RAD, şok geldiğinde anlık doz hızında yaklaşık %15 düşüş gördü, çünkü şok galaktik kozmik ışınları azalttı.                                                                                                                                              | WSA-ENLIL kayıtları **[S]**; Zeitlin/Hassler çalışmaları **[S]** |
+| **SEP** | Mars için asıl radyasyon tehlikesi. Eylül 2017 olayında RAD, doz hızlarının GCR seviyesinin 2-3 katına çıktığını ölçtü (birkaç saat içinde yükseldi, yaklaşık 12 saat tepede kaldı, sonraki 36 saatte düştü). Mayıs 2024'te NASA, RAD'ın o güne kadarki en büyük artışını bildirdi: olay boyunca 8 100 mikrogray. MAVEN bunu gözlediği en büyük SEP olayı olarak tanımladı. Mars Odyssey'in yıldız kamerası bir süre devre dışı kaldı. | JPL 2017 **[S]**; NASA 2024 **[S]**                              |
 
 ### 3.3 Dünya'da görülen ile Mars'ta olan aynı şey değil
 
@@ -123,15 +123,15 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 
 ### 4.2 Zorunlu etiketler (arayüz metni önerileri)
 
-| Durum | Önerilen etiket (TR / EN) |
-|---|---|
-| Her DONKI kartı | "Araştırma verisi: NASA CCMC DONKI. Resmî tahmin değildir. / Research data: NASA CCMC DONKI. Not an official forecast." |
-| Dünya yakını ölçüm (GOES, SOHO, STEREO-A vb.) | "Dünya yakınında ölçüldü. Mars'taki değeri göstermez. / Measured near Earth. Does not represent conditions at Mars." |
-| Model sonucu (WSA-ENLIL) | "Model tahmini. Gözlem değil. / Model estimate, not an observation." |
-| Mars'tan alınmış veri (MAVEN EUVM) | "Mars yörüngesinden hızlı bakış verisi; analiz için resmî PDS ürünlerine bakın. / Quick-look data from Mars orbit." |
-| Mars tarihsel referans (RAD) | "Tarihsel referans: Curiosity (Gale Krateri). Canlı veri veya Jezero değeri değildir. / Historical reference: Curiosity (Gale Crater). Not live; not a Jezero value." |
-| Veri yok | "Bu kaynakta Mars için kayıt yok. Bu, etkinin olmadığı anlamına gelmez. / No Mars record in this source. This does not mean no effect." |
-| Her kartta | Son güncelleme zamanı (UTC) ve veri çekme zamanı |
+| Durum                                         | Önerilen etiket (TR / EN)                                                                                                                                             |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Her DONKI kartı                               | "Araştırma verisi: NASA CCMC DONKI. Resmî tahmin değildir. / Research data: NASA CCMC DONKI. Not an official forecast."                                               |
+| Dünya yakını ölçüm (GOES, SOHO, STEREO-A vb.) | "Dünya yakınında ölçüldü. Mars'taki değeri göstermez. / Measured near Earth. Does not represent conditions at Mars."                                                  |
+| Model sonucu (WSA-ENLIL)                      | "Model tahmini. Gözlem değil. / Model estimate, not an observation."                                                                                                  |
+| Mars'tan alınmış veri (MAVEN EUVM)            | "Mars yörüngesinden hızlı bakış verisi; analiz için resmî PDS ürünlerine bakın. / Quick-look data from Mars orbit."                                                   |
+| Mars tarihsel referans (RAD)                  | "Tarihsel referans: Curiosity (Gale Krateri). Canlı veri veya Jezero değeri değildir. / Historical reference: Curiosity (Gale Crater). Not live; not a Jezero value." |
+| Veri yok                                      | "Bu kaynakta Mars için kayıt yok. Bu, etkinin olmadığı anlamına gelmez. / No Mars record in this source. This does not mean no effect."                               |
+| Her kartta                                    | Son güncelleme zamanı (UTC) ve veri çekme zamanı                                                                                                                      |
 
 ### 4.3 Teknik uyarılar
 
@@ -143,13 +143,13 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 
 ## 5. ARES arayüzünde gösterilebilecek en fazla 5 bilgi alanı
 
-| # | Alan | Kaynak (endpoint/alan) | Gösterim | Zorunlu uyarı |
-|---|---|---|---|---|
-| 1 | **Mars için modellenen CME şok varış tahmini** (zaman, "sıyırma" etiketi) | `WSAEnlilSimulations`, "Mars" etki satırı | "Tahmini şok: 17 Mayıs 2025 20:00 UTC (sıyırma)" | "Model tahmini. Gözlem değil." Alan adları doğrulanmadı **[S]** |
-| 2 | **Tetikleyici güneş olayı** (flare sınıfı, tepe zamanı, kaynak bölge) | `FLR`: `classType`, `peakTime`, `sourceLocation`, `activeRegionNum` | "M4.3 flare, 23 Nis 08:48 UTC (Dünya'dan ölçüm)" | "Dünya yakınında ölçüldü. Mars'taki değeri göstermez." |
-| 3 | **Bağlı olay zinciri** (flare → CME → SEP bağlantı sayısı/durumu) | `FLR`/`CME`: `linkedEvents` | "Bağlı kayıtlar: 1 CME, 5 SEP" | SEP kayıtları Dünya yakını/model enstrümanlarına dayanır (GOES SEISS, SOHO, STEREO-A, REleASE modeli). "Mars'a ulaştığı anlamına gelmez." |
-| 4 | **Mars'ta ölçülmüş flare (varsa)** (MAVEN EUVM) | DONKI `MAVEN_EUVM_FLARE_CATALOG` | "MAVEN EUVM: C5+ flare, zaman" | "Hızlı bakış verisi, gecikmeli olabilir." Bu kataloğun FLR endpoint'inde `catalog` parametresiyle çekilip çekilemediği **doğrulanmadı** |
-| 5 | **Veri durumu rozeti** (kaynak: DONKI/CCMC, katalog, son güncelleme, "araştırma verisi") | Her kayıtta `catalog`, `submissionTime`, `versionId`; istemci zamanı | Her kartın altında sabit rozet | "Resmî tahmin: NOAA SWPC." |
+| #   | Alan                                                                                     | Kaynak (endpoint/alan)                                               | Gösterim                                         | Zorunlu uyarı                                                                                                                             |
+| --- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Mars için modellenen CME şok varış tahmini** (zaman, "sıyırma" etiketi)                | `WSAEnlilSimulations`, "Mars" etki satırı                            | "Tahmini şok: 17 Mayıs 2025 20:00 UTC (sıyırma)" | "Model tahmini. Gözlem değil." Alan adları doğrulanmadı **[S]**                                                                           |
+| 2   | **Tetikleyici güneş olayı** (flare sınıfı, tepe zamanı, kaynak bölge)                    | `FLR`: `classType`, `peakTime`, `sourceLocation`, `activeRegionNum`  | "M4.3 flare, 23 Nis 08:48 UTC (Dünya'dan ölçüm)" | "Dünya yakınında ölçüldü. Mars'taki değeri göstermez."                                                                                    |
+| 3   | **Bağlı olay zinciri** (flare → CME → SEP bağlantı sayısı/durumu)                        | `FLR`/`CME`: `linkedEvents`                                          | "Bağlı kayıtlar: 1 CME, 5 SEP"                   | SEP kayıtları Dünya yakını/model enstrümanlarına dayanır (GOES SEISS, SOHO, STEREO-A, REleASE modeli). "Mars'a ulaştığı anlamına gelmez." |
+| 4   | **Mars'ta ölçülmüş flare (varsa)** (MAVEN EUVM)                                          | DONKI `MAVEN_EUVM_FLARE_CATALOG`                                     | "MAVEN EUVM: C5+ flare, zaman"                   | "Hızlı bakış verisi, gecikmeli olabilir." Bu kataloğun FLR endpoint'inde `catalog` parametresiyle çekilip çekilemediği **doğrulanmadı**   |
+| 5   | **Veri durumu rozeti** (kaynak: DONKI/CCMC, katalog, son güncelleme, "araştırma verisi") | Her kayıtta `catalog`, `submissionTime`, `versionId`; istemci zamanı | Her kartın altında sabit rozet                   | "Resmî tahmin: NOAA SWPC."                                                                                                                |
 
 **Bilerek dışarıda bırakılanlar:** Kp/G ölçeği, GOES proton akısı, "Mars doz hızı" ve "güvenlik seviyesi" alanları. Gerekçe bölüm 4'te.
 
@@ -159,30 +159,31 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 
 ## 6. Doğrulanamayan iddialar ve açık sorular
 
-| # | İddia / eksik | Durum |
-|---|---|---|
-| 1 | Yeni DONKI API'sinin API anahtarı gerektirmediği | Yalnızca üçüncü taraf kaynaklar. Resmî sayfa değinmiyor. |
-| 2 | Yeni API'nin 30 günden uzun aralıkları reddettiği | Tek üçüncü taraf kaynak (MCP sürüm notu). Resmî doğrulama yok. |
-| 3 | Eski adreslerin yönlendirme ya da HTML 200 davranışı | Üçüncü taraf bildirimleri. Resmî sayfa yalnızca "yerine geçti" diyor. |
-| 4 | `WSAEnlilSimulations` JSON alan adları ve Mars etki listesi yapısı | Web görünümünde Mars satırı görüldü. JSON şeması resmî kaynaktan okunmadı. |
-| 5 | `SEP` endpoint'inin JSON alanları | Bu oturumda doğrulanmadı. |
-| 6 | MAVEN EUVM flare kataloğunun `FLR` endpoint'i üzerinden sorgulanabilirliği | Katalog var **[A]**. `catalog` parametresi desteği doğrulanmadı. |
-| 7 | Mars SEP Scoreboard içeriği | Sayfa JavaScript ile yükleniyor, içeriği okunamadı. |
-| 8 | Flare sınıf eşikleri (A, B, C, M, X) ve R/S/G ölçeklerinin ayrıntıları | İkincil kaynaklar. NOAA SWPC "scales" sayfasından teyit edilmeli. |
-| 9 | CME'nin Mars'a "3-5 günde" ulaştığı | Yalnızca 4 DONKI örnek kaydından hesaplandı. Genel kural değil. |
-| 10 | Mars'ın Güneş'ten uzaklığına bağlı ışıma azalması (ters kare yasası) | Genel fizik bilgisi, kaynaklanmadı. |
-| 11 | Mars atmosfer basıncının Dünya'nın ~%1'i olduğu | İkincil kaynak (The Conversation). |
-| 12 | MAVEN'in 2015'te bir CME'nin atmosfer kaybını 10 kat artırdığını gözlediği | İkincil kaynak (Popular Science). Burada ana sonuç olarak kullanılmadı. |
-| 13 | Mayıs 2024 X12 flare'in Solar Orbiter verisine dayandığı ve o sırada Dünya'dan görünmediği | İkincil kaynak (Space.com). Dünya'dan görülüp görülmediği doğrulanmadı. |
-| 14 | Perseverance'ta (Jezero) iyonlaştırıcı radyasyon dozimetresi olup olmadığı | Araştırılmadı. |
-| 15 | Güncel DONKI Mars kayıtları ve gerçek zamanlı veri | Canlı API çağrısı yapılmadı. Örnek kayıtlar arama sonuçlarındaki DONKI web görünümlerinden alındı. |
-| 16 | `DONKI-API doc` sayfasının tam adresi | CCMC sayfasında bağlantı var, adresini açıp okumadım. Parametreler 07/03/2025 tarihli DONKI sayfası sürümünden alındı. |
+| #   | İddia / eksik                                                                              | Durum                                                                                                                  |
+| --- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| 1   | Yeni DONKI API'sinin API anahtarı gerektirmediği                                           | Yalnızca üçüncü taraf kaynaklar. Resmî sayfa değinmiyor.                                                               |
+| 2   | Yeni API'nin 30 günden uzun aralıkları reddettiği                                          | Tek üçüncü taraf kaynak (MCP sürüm notu). Resmî doğrulama yok.                                                         |
+| 3   | Eski adreslerin yönlendirme ya da HTML 200 davranışı                                       | Üçüncü taraf bildirimleri. Resmî sayfa yalnızca "yerine geçti" diyor.                                                  |
+| 4   | `WSAEnlilSimulations` JSON alan adları ve Mars etki listesi yapısı                         | Web görünümünde Mars satırı görüldü. JSON şeması resmî kaynaktan okunmadı.                                             |
+| 5   | `SEP` endpoint'inin JSON alanları                                                          | Bu oturumda doğrulanmadı.                                                                                              |
+| 6   | MAVEN EUVM flare kataloğunun `FLR` endpoint'i üzerinden sorgulanabilirliği                 | Katalog var **[A]**. `catalog` parametresi desteği doğrulanmadı.                                                       |
+| 7   | Mars SEP Scoreboard içeriği                                                                | Sayfa JavaScript ile yükleniyor, içeriği okunamadı.                                                                    |
+| 8   | Flare sınıf eşikleri (A, B, C, M, X) ve R/S/G ölçeklerinin ayrıntıları                     | İkincil kaynaklar. NOAA SWPC "scales" sayfasından teyit edilmeli.                                                      |
+| 9   | CME'nin Mars'a "3-5 günde" ulaştığı                                                        | Yalnızca 4 DONKI örnek kaydından hesaplandı. Genel kural değil.                                                        |
+| 10  | Mars'ın Güneş'ten uzaklığına bağlı ışıma azalması (ters kare yasası)                       | Genel fizik bilgisi, kaynaklanmadı.                                                                                    |
+| 11  | Mars atmosfer basıncının Dünya'nın ~%1'i olduğu                                            | İkincil kaynak (The Conversation).                                                                                     |
+| 12  | MAVEN'in 2015'te bir CME'nin atmosfer kaybını 10 kat artırdığını gözlediği                 | İkincil kaynak (Popular Science). Burada ana sonuç olarak kullanılmadı.                                                |
+| 13  | Mayıs 2024 X12 flare'in Solar Orbiter verisine dayandığı ve o sırada Dünya'dan görünmediği | İkincil kaynak (Space.com). Dünya'dan görülüp görülmediği doğrulanmadı.                                                |
+| 14  | Perseverance'ta (Jezero) iyonlaştırıcı radyasyon dozimetresi olup olmadığı                 | Araştırılmadı.                                                                                                         |
+| 15  | Güncel DONKI Mars kayıtları ve gerçek zamanlı veri                                         | Canlı API çağrısı yapılmadı. Örnek kayıtlar arama sonuçlarındaki DONKI web görünümlerinden alındı.                     |
+| 16  | `DONKI-API doc` sayfasının tam adresi                                                      | CCMC sayfasında bağlantı var, adresini açıp okumadım. Parametreler 07/03/2025 tarihli DONKI sayfası sürümünden alındı. |
 
 ---
 
 ## 7. Kaynaklar
 
 ### Resmî NASA / NOAA (açılıp okundu **[A]**)
+
 - CCMC Announcements, DONKI/API taşınması ve Mars Scoreboard betaları: https://ccmc.gsfc.nasa.gov/news/major-updates/
 - CCMC DONKI System (hakkında, kataloglar, sorumluluk reddi): https://ccmc.gsfc.nasa.gov/tools/DONKI/
 - Mars CME Scoreboard (uygulama): https://ccmc.gsfc.nasa.gov/CMESB-Mars/
@@ -191,6 +192,7 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 - NOAA SWPC GOES proton akısı ve S-ölçeği eşikleri: https://www.swpc.noaa.gov/node/39
 
 ### Resmî NASA / DONKI sayfaları (arama özeti görüldü **[S]**)
+
 - DONKI WSA-ENLIL+Cone kayıtları (Mars etki satırları): https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/42110/1 ve https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/43084/1
 - DONKI FLR kaydı örneği (bağlı CME/SEP, enstrümanlar): https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/FLR/42702/2
 - DONKI FLR JSON çıktısı örneği: https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR
@@ -201,10 +203,12 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 - NASA, solar maximum'da Mars çalışması (phys.org kopyası): https://phys.org/news/2024-04-nasa-scientists-gear-solar-storms.pdf
 
 ### Hakemli yayınlar (özet görüldü **[S]**)
+
 - Zeitlin, C. vd. (2018), "Analysis of the Radiation Hazard Observed by RAD on the Surface of Mars During the September 2017 Solar Particle Event", Space Weather 16(12).
 - Guo, J. vd. (2021), "Radiation environment for future human exploration on the surface of Mars: the current understanding based on MSL/RAD dose measurements", Astron. Astrophys. Rev., doi:10.1007/s00159-021-00136-5.
 
 ### İkincil kaynaklar **[İ]**
+
 - DONKI taşınmasına dair üçüncü taraf bildirimleri: https://github.com/ProgramComputer/NASA-MCP-server/releases/tag/v1.2.0 ve https://packagist.org/packages/omnilab/donki
 - Flare sınıfları ve R/S/G ölçekleri özeti: https://newspaceeconomy.ca/2025/12/14/the-ultimate-guide-to-solar-flares-and-space-weather-scales/ ve https://www.spaceweatherlive.com/en/help/what-are-solar-flares
 - Mayıs 2024 Mars fırtınası (Space.com): https://www.space.com/powerful-solar-storm-mars-radiation-astronaut-missions
@@ -212,4 +216,5 @@ DONKI kayıtlarında, Dünya'ya etkisi "No or little impact to Earth" olarak yaz
 - NASA API anahtarı/limit bilgisi (eski api.nasa.gov sistemi): https://api.nasa.gov/
 
 ### Atıf notu
+
 CCMC, DONKI verisi kullanan çalışmalarda kaynak olarak DONKI ve CCMC'nin belirtilmesini ister. Önerilen kısa atıf: "Data: NASA CCMC DONKI (Community Coordinated Modeling Center, NASA GSFC)." Resmî örnek atıf metni için: https://ccmc.gsfc.nasa.gov/publication-policy/

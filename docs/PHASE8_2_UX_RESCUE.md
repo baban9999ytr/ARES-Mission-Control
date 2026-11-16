@@ -12,22 +12,22 @@ The map retains the measured CTX optical mosaic and sampled DEM as the default. 
 
 Tested in Chromium at 1440 × 900, 390 × 844, and 320 × 720. The first two sizes are captured below. At 390 and 320 pixels, the document had no horizontal overflow. The mobile sequence places mission actions before the map, then the comparison, followed by Research and Advanced. The 320-pixel primary actions and add control were reachable.
 
-| Journey | Verdict | Evidence |
-| --- | --- | --- |
-| A — First-time user | PASS | New Mission created 2 stops; Add Stop appended a third; two independent route legs and both comparison values updated. Keyboard add also appended a third stop. |
-| B — Mission editing | PASS | Marker drag changed its measured-grid coordinates; grip drag reordered stops; Undo and Redo restored and reapplied the order. |
-| C — Existing mission | PASS | Search returned CM-04 alone; selection displayed 4 independent legs; Duplicate & Edit made a 5-stop editable copy. |
-| D — Data integrity | PASS | Default measured CTX retained the same opening route values (2.07 km shortest, 2.13 km terrain preferred). `?mode=demo` displayed the synthetic label and raster; Research, Data Sources, provenance, and dataset switching remained accessible. The routing engine and terrain files were untouched. |
-| E — Mobile | PASS | 390- and 320-pixel browser checks found no horizontal overflow; primary actions, map, comparison, and disclosures were reachable. |
+| Journey              | Verdict | Evidence                                                                                                                                                                                                                                                                                              |
+| -------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A — First-time user  | PASS    | New Mission created 2 stops; Add Stop appended a third; two independent route legs and both comparison values updated. Keyboard add also appended a third stop.                                                                                                                                       |
+| B — Mission editing  | PASS    | Marker drag changed its measured-grid coordinates; grip drag reordered stops; Undo and Redo restored and reapplied the order.                                                                                                                                                                         |
+| C — Existing mission | PASS    | Search returned CM-04 alone; selection displayed 4 independent legs; Duplicate & Edit made a 5-stop editable copy.                                                                                                                                                                                    |
+| D — Data integrity   | PASS    | Default measured CTX retained the same opening route values (2.07 km shortest, 2.13 km terrain preferred). `?mode=demo` displayed the synthetic label and raster; Research, Data Sources, provenance, and dataset switching remained accessible. The routing engine and terrain files were untouched. |
+| E — Mobile           | PASS    | 390- and 320-pixel browser checks found no horizontal overflow; primary actions, map, comparison, and disclosures were reachable.                                                                                                                                                                     |
 
 `npm run check`: 47 tests passed; static build passed.
 
 ## Screenshots
 
-| View | Before | After |
-| --- | --- | --- |
+| View               | Before                                                        | After                                                       |
+| ------------------ | ------------------------------------------------------------- | ----------------------------------------------------------- |
 | Desktop 1440 × 900 | [before-desktop.png](screenshots/phase8-2/before-desktop.png) | [after-desktop.png](screenshots/phase8-2/after-desktop.png) |
-| Mobile 390 × 844 | [before-mobile.png](screenshots/phase8-2/before-mobile.png) | [after-mobile.png](screenshots/phase8-2/after-mobile.png) |
+| Mobile 390 × 844   | [before-mobile.png](screenshots/phase8-2/before-mobile.png)   | [after-mobile.png](screenshots/phase8-2/after-mobile.png)   |
 
 Additional: [full mobile flow](screenshots/phase8-2/after-mobile-full.png) and [CM-04 selected](screenshots/phase8-2/after-cm04.png).
 

@@ -31,6 +31,7 @@ npx wrangler deploy --dry-run
 ```
 
 Then test on `https://spcapps.openstacktool.com/` against the correct deployed commit:
+
 - New → Add stop → Move via map drag → reorder via grip → Undo → Redo.
 - Move start and destination, and move one stop onto a blocked cell (reject).
 - Duplicate CM-04, move a middle stop and compare independent leg distance totals; return to default and verify original CM-04 is unchanged.

@@ -8,10 +8,10 @@ The bundled `JEZ_ctx_B_soc_008` optical and DEM products share the same projecte
 
 Measured on this machine with `.venv/bin/python` (Rasterio 1.5.2), the same CTX inputs, crop, and CLI options. Each version ran three times in a fresh Python process, writing to a temporary output directory. Wall time used `time.monotonic`; peak resident memory used the child process `wait4` `ru_maxrss` (KiB). This is process peak RSS, not an allocation trace or browser memory measurement.
 
-| Importer | Wall time, seconds (three runs) | Peak RSS, KiB (three runs) | Median wall | Median peak RSS |
-| --- | --- | --- | --- | --- |
-| `f0aa942` full-band read | 1.285, 1.238, 1.404 | 412092, 411724, 411696 | 1.285 s | 411724 KiB (402.1 MiB) |
-| Windowed GDAL band source | 0.727, 0.760, 0.727 | 108116, 108376, 107928 | 0.727 s | 108116 KiB (105.6 MiB) |
+| Importer                  | Wall time, seconds (three runs) | Peak RSS, KiB (three runs) | Median wall | Median peak RSS        |
+| ------------------------- | ------------------------------- | -------------------------- | ----------- | ---------------------- |
+| `f0aa942` full-band read  | 1.285, 1.238, 1.404             | 412092, 411724, 411696     | 1.285 s     | 411724 KiB (402.1 MiB) |
+| Windowed GDAL band source | 0.727, 0.760, 0.727             | 108116, 108376, 107928     | 0.727 s     | 108116 KiB (105.6 MiB) |
 
 The median peak RSS fell by 303608 KiB (296.5 MiB, 73.7%); median wall time fell by 0.558 s (43.4%). SHA-256 hashes of `mission-pack.json`, `mars-optical.webp`, and `mars-elevation.webp` were identical between the old and new importer for this fully valid CTX crop. These timings are local measurements and may differ with source layout, storage cache, and machine load.
 
@@ -41,10 +41,10 @@ Central, southwest, and CTX pairs pass CRS equality and bounding-box intersectio
 
 ## Checks run
 
-| Command | Result |
-| --- | --- |
-| `npm run check` | Passed: 9 Node tests and static build. |
-| `.venv/bin/python tools/test_raster_import.py` | Passed importer fixture smoke test. |
+| Command                                                                 | Result                                                                                         |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `npm run check`                                                         | Passed: 9 Node tests and static build.                                                         |
+| `.venv/bin/python tools/test_raster_import.py`                          | Passed importer fixture smoke test.                                                            |
 | `python tools/validate_data.py --output data/manifests/validation.json` | Passed science schema checks; central/southwest/CTX geometry-compatible; Northern Fan missing. |
 
 Rasterio, NumPy, and Pillow were installed into an ignored local `.venv` because Rasterio was absent from the default Python environment. The JavaScript app requires no installed packages. No real-data mission pack was built or loaded into ARES.

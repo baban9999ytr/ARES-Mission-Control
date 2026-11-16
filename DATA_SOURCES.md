@@ -4,10 +4,10 @@ Verified 2026-11-15. ARES is an independent NASA Space Apps Challenge research p
 
 ## Measured CTX inputs
 
-| Input | Organization and instrument | Native sample | Role |
-|---|---|---:|---|
-| [Jezero CTX orthomosaic](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff) | USGS Astrogeology Mars 2020 product, MRO Context Camera | 6 m/pixel | Optical map texture |
-| [Jezero CTX DTM](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff) | USGS Astrogeology Mars 2020 product, MRO Context Camera | 20 m/pixel | Elevation color and sampled route grid |
+| Input                                                                                                                                                                  | Organization and instrument                             | Native sample | Role                                   |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------: | -------------------------------------- |
+| [Jezero CTX orthomosaic](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_orthoMosaic_6m_Eqc_latTs0_lon0.tiff)            | USGS Astrogeology Mars 2020 product, MRO Context Camera |     6 m/pixel | Optical map texture                    |
+| [Jezero CTX DTM](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/JEZ_ctx_B_soc_008_DTM_MOLAtopography_DeltaGeoid_20m_Eqc_latTs0_lon0.tiff) | USGS Astrogeology Mars 2020 product, MRO Context Camera |    20 m/pixel | Elevation color and sampled route grid |
 
 The [USGS CTX product page](https://astrogeology.usgs.gov/search/map/mars_2020_terrain_relative_navigation_ctx_dtm_mosaic) provides product and citation information. Both local source rasters use the same projected Mars equirectangular CRS, ESRI:103885, in metres. The optical raster is 5,322 × 5,040 pixels, with projected bounds E 4,573,663.25–4,605,595.25 m and N 1,079,453.14–1,109,693.14 m. The DEM is 1,596 × 1,512 pixels and extends to E 4,605,583.25 m. The DEM's nodata sentinel is about −3.4028e38; the selected overview and study crop contain valid sampled DEM pixels. The production pack records its vertical reference as the Mars 2020 IAU sphere (radius 3,396,190 m) from the source DEM XML. These heights are not Earth elevations.
 

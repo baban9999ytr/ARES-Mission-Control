@@ -4,13 +4,13 @@
 
 `incoming/phase4-5/QA_TEST_REPORT.md` reports “12 passed” from `scripts/qa_test_runner.py`. Those are not twelve passed ARES application features. The script never imports `src/engine/routing.js`, the mission pack, browser UI or DONKI module. Classification of its checks:
 
-| IDs | Actual category | Evidential limit |
-| --- | --- | --- |
-| QA-01, 08, 09, 10, 11 | Data validation | Count, range, text and URL-shape checks; URL shape does not authenticate coordinates or content. |
-| QA-02, 05, 06 | Numerical sanity checks | Standalone great-circle distances, not ARES grid routes. |
-| QA-03, 04, 07, 15 | Simulated examples | Null handling, hard-coded slope threshold, Python JSON exception and hypothetical oxygen calculation do not exercise app behavior. |
-| QA-12, 13, 14 | Pending browser verification | No frontend test was executed in the submission. |
-| None | Actual application integration tests | The submitted runner imports no production application module. |
+| IDs                   | Actual category                      | Evidential limit                                                                                                                   |
+| --------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| QA-01, 08, 09, 10, 11 | Data validation                      | Count, range, text and URL-shape checks; URL shape does not authenticate coordinates or content.                                   |
+| QA-02, 05, 06         | Numerical sanity checks              | Standalone great-circle distances, not ARES grid routes.                                                                           |
+| QA-03, 04, 07, 15     | Simulated examples                   | Null handling, hard-coded slope threshold, Python JSON exception and hypothetical oxygen calculation do not exercise app behavior. |
+| QA-12, 13, 14         | Pending browser verification         | No frontend test was executed in the submission.                                                                                   |
+| None                  | Actual application integration tests | The submitted runner imports no production application module.                                                                     |
 
 The old report's 15° exclusion, 15 km EVA range and six-hour life-support result are unsupported. The current A* engine has no certified slope cutoff or oxygen budget. It uses a configurable illustrative slope cost. The old text is retained only in ignored research intake and is superseded by this report.
 

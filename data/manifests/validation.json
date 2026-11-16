@@ -19,14 +19,8 @@
       "overlap_square_meters": 462968726.8,
       "dem_bbox_coverage_fraction": 0.999755,
       "pixel_resolution_meters": {
-        "dem": [
-          1.0,
-          1.0
-        ],
-        "drg": [
-          0.29995473187602484,
-          0.29995473187602484
-        ]
+        "dem": [1.0, 1.0],
+        "drg": [0.29995473187602484, 0.29995473187602484]
       },
       "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
     },
@@ -36,14 +30,8 @@
       "overlap_square_meters": 318506960.32,
       "dem_bbox_coverage_fraction": 0.989565,
       "pixel_resolution_meters": {
-        "dem": [
-          1.0,
-          1.0
-        ],
-        "drg": [
-          0.3,
-          0.3
-        ]
+        "dem": [1.0, 1.0],
+        "drg": [0.3, 0.3]
       },
       "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
     },
@@ -57,14 +45,8 @@
       "overlap_square_meters": 965260800.0,
       "dem_bbox_coverage_fraction": 1.0,
       "pixel_resolution_meters": {
-        "dem": [
-          20.0,
-          20.0
-        ],
-        "drg": [
-          6.0,
-          6.0
-        ]
+        "dem": [20.0, 20.0],
+        "drg": [6.0, 6.0]
       },
       "caution": "BBox and CRS checks do not prove pixel-level registration or vertical accuracy."
     }

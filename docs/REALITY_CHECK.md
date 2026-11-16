@@ -8,10 +8,10 @@
 
 The source files opened as GeoTIFFs in Rasterio 1.5.2. Their local metadata records identify USGS Astrogeology products and the [USGS CTX archive](https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/index.html). Source SHA-256 values were `842b457afee7c2672022b66e3f60be836c6d52e99474015bfd9ced60099b8615` (optical) and `16a1aa66c3f48c1bca252795827db7b417876217aff0f5e1aff18027fab2327b` (DEM). These hashes establish local file identity; they do not independently authenticate the download chain.
 
-| Source | CRS | Size | Native pixel | Projected bounds (E, N metres) | Nodata |
-| --- | --- | --- | --- | --- | --- |
-| CTX optical | Mars Equirectangular IAU sphere (`ESRI:103885`) | 5322 × 5040 | 6 m | E 4573663.250853–4605595.250853; N 1079453.140188–1109693.140188 | 0 |
-| CTX DEM | Same CRS | 1596 × 1512 | 20 m | E 4573663.250853–4605583.250853; N 1079453.140188–1109693.140188 | −3.402822655×10³⁸ |
+| Source      | CRS                                             | Size        | Native pixel | Projected bounds (E, N metres)                                   | Nodata            |
+| ----------- | ----------------------------------------------- | ----------- | ------------ | ---------------------------------------------------------------- | ----------------- |
+| CTX optical | Mars Equirectangular IAU sphere (`ESRI:103885`) | 5322 × 5040 | 6 m          | E 4573663.250853–4605595.250853; N 1079453.140188–1109693.140188 | 0                 |
+| CTX DEM     | Same CRS                                        | 1596 × 1512 | 20 m         | E 4573663.250853–4605583.250853; N 1079453.140188–1109693.140188 | −3.402822655×10³⁸ |
 
 The shared footprint contains the pack crop E **4586000–4589200 m**, N **1091000–1093400 m**. The 80 × 60 routing grid covers that exact 3.2 × 2.4 km rectangle at 40 m per cell. Both rendered layers are 1000 × 750 pixels over the same bounds. The pack contains 4800/4800 finite DEM cells; this crop cannot demonstrate a naturally missing cell. A separate importer fixture verified an internal nodata barrier exports as `null`, and the router rejects those cells.
 
@@ -25,10 +25,10 @@ The local DEM metadata says elevation units are metres. The pack labels its vert
 
 I independently implemented Dijkstra with the same eight-neighbour geometry, blocked-cell and diagonal-corner rules, and edge-cost formula. For the first CTX target, Dijkstra and A* costs agreed exactly in the calculations below. I separately summed each returned path's horizontal lengths, positive height changes, maximum segment slope, and edge costs; each value matched the engine result at displayed precision.
 
-| Mode | Distance | Max adjacent-cell slope | Ascent | Route cost | Independent Dijkstra cost |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Shortest | 2065.096680 m | 17.717381° | 52.316 m | 2065.096680 | 2065.096680 |
-| Terrain preferred | 2131.370850 m | 10.438277° | 38.492 m | 2314.397563 | 2314.397563 |
+| Mode              |      Distance | Max adjacent-cell slope |   Ascent |  Route cost | Independent Dijkstra cost |
+| ----------------- | ------------: | ----------------------: | -------: | ----------: | ------------------------: |
+| Shortest          | 2065.096680 m |              17.717381° | 52.316 m | 2065.096680 |               2065.096680 |
+| Terrain preferred | 2131.370850 m |              10.438277° | 38.492 m | 2314.397563 |               2314.397563 |
 
 The browser displayed these as **2.07 km / 17.7° / 52 m** and **2.13 km / 10.4° / 38 m** respectively, consistent with its rounding. Changing one cell on the terrain route (`x=35, y=14`) by +1000 m in an **in-memory copy** changed the optimal path so it avoided that cell. A partial nodata barrier at `x=35, y=8…49` produced a 2230.782105 m detour without entering the barrier; extending the barrier through all 60 rows returned no route. The source TIFFs and bundled pack were not altered.
 

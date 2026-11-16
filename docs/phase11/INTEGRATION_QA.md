@@ -10,15 +10,15 @@ The existing custom mission schema now accepts optional `scienceMission` and sto
 
 ## Executed release checks
 
-| Command/check | Result |
-| --- | --- |
-| `npm run check` | 79 Node tests passed; static build completed (44 files, 1,482,159 bytes before integration commit) |
-| `npm run test:browser` | 18 Chromium Playwright tests passed across desktop, tablet and mobile cases, including EN/TR, science return, profile, sensitivity, print report, and JSON round trip |
-| `node tools/generate_mission_results.mjs --check` | All 30 measured missions verified |
-| `node tools/audit_ctx_routes.mjs` | A* cost and route metrics agreed with independent checks; controlled DEM change and no-data barrier behaved as expected |
-| `.venv/bin/python tools/test_raster_import.py` (using original worktree virtual environment) | Registered output, provenance and internal no-data barrier passed |
-| `npx --yes wrangler@4 deploy --dry-run` | Passed; assets readable, no bindings |
-| `git diff --check` | Passed |
+| Command/check                                                                                | Result                                                                                                                                                                |
+| -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run check`                                                                              | 79 Node tests passed; static build completed (44 files, 1,482,159 bytes before integration commit)                                                                    |
+| `npm run test:browser`                                                                       | 18 Chromium Playwright tests passed across desktop, tablet and mobile cases, including EN/TR, science return, profile, sensitivity, print report, and JSON round trip |
+| `node tools/generate_mission_results.mjs --check`                                            | All 30 measured missions verified                                                                                                                                     |
+| `node tools/audit_ctx_routes.mjs`                                                            | A* cost and route metrics agreed with independent checks; controlled DEM change and no-data barrier behaved as expected                                               |
+| `.venv/bin/python tools/test_raster_import.py` (using original worktree virtual environment) | Registered output, provenance and internal no-data barrier passed                                                                                                     |
+| `npx --yes wrangler@4 deploy --dry-run`                                                      | Passed; assets readable, no bindings                                                                                                                                  |
+| `git diff --check`                                                                           | Passed                                                                                                                                                                |
 
 No measured raster, route pack or mission catalog data was modified. The static build gate rejects raw rasters, sensitive files and oversized assets.
 

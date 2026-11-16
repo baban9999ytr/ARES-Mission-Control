@@ -10,7 +10,7 @@
 
 1. Show the actual CTX optical crop, projected Mars coordinates and measured scale bar. Open the dataset details if asked for the original source URLs and CRS.
 2. Select **Set start**, click a valid map cell; select **Set destination**, click another. Read the recalculated projected E/N points and route metrics.
-3. Choose **Shortest** then **Terrain preferred** in the comparison panel. Explain that the second mode uses an *illustrative slope cost*, not a certified safety limit. Show the route legend and the measured elevation layer.
+3. Choose **Shortest** then **Terrain preferred** in the comparison panel. Explain that the second mode uses an _illustrative slope cost_, not a certified safety limit. Show the route legend and the measured elevation layer.
 4. Open **Science Targets**, select Three Forks and show **Outside current map coverage**. Select Jezero Delta to show **Location not available as a verified single point**. Explain that existing example waypoints are illustrative grid locations.
 5. Expand **Space Weather**. Show observed event types, UTC event time, retrieval time, source-record links and the research disclaimer. Say explicitly that these records do not yield a Jezero surface radiation dose. If unavailable, read the error state instead.
 6. If time permits, open `docs/REALITY_CHECK.md` and describe the independent Dijkstra, changed-height and nodata-barrier experiments. Do not suggest an out-of-footprint science target has a route.

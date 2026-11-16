@@ -8,14 +8,14 @@ The left sidebar of the planner offers **Mission Library** with 30 authored meas
 - Search by mission ID, title, objective or research question; filter by phase.
 - Select a mission to set its ordered stop list on the measured Jezero CTX crop and calculate both A* preferences.
 - The map draws each route through the provided fixed-order stops and labels intermediate stops. S and D show the endpoints (S/D for a return to start).
-- The right panel reports aggregate distance, maximum adjacent-cell sampled slope and summed ascent across *independent* route legs. It also shows each leg's distance and maximum sampled slope for the selected preference.
+- The right panel reports aggregate distance, maximum adjacent-cell sampled slope and summed ascent across _independent_ route legs. It also shows each leg's distance and maximum sampled slope for the selected preference.
 - Both generic route-export and Mission Library export buttons produce the mission-specific JSON with all fixed-order legs, model outputs, coordinates, source pack provenance and limits.
 - **Exit mission** restores the original CTX demonstration route. Choosing a map point or illustrative waypoint exits the library context.
 - Loading the separate synthetic demo does not show or execute these measured CTX missions.
 
 ### Important limits
 
-These are 30 reproducible **research exercises**, *not* 30 identified real-world sites. Their coordinates are user-selected cells in a 40 m grid derived from one measured Jezero CTX optical and DEM study crop. They are not NASA-certified landing sites, field science targets or operational EVA routes.
+These are 30 reproducible **research exercises**, _not_ 30 identified real-world sites. Their coordinates are user-selected cells in a 40 m grid derived from one measured Jezero CTX optical and DEM study crop. They are not NASA-certified landing sites, field science targets or operational EVA routes.
 
 Commander scenarios run consecutive independent A* legs **in their authored order**. ARES does not globally optimize stop order or traverse logistics. Aggregate maximum sampled slope is the maximum among leg maxima. Neither metric certifies field traversability or local slopes unresolved by the 40 m grid.
 

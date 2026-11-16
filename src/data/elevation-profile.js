@@ -1,165 +1,331 @@
-import {routeSegments} from './route-segments.js';
-const NS='http://www.w3.org/2000/svg';
-const COLORS={terrain:'#16c7c8',shortest:'#f28c28'};
+import { routeSegments } from "./route-segments.js";
+const NS = "http://www.w3.org/2000/svg";
+const COLORS = { terrain: "#16c7c8", shortest: "#f28c28" };
 
-export function buildElevationProfileSeries(route,segments=[]){
-  if(!route||!route.cells?.length||!segments.length)return [];
+export function buildElevationProfileSeries(route, segments = []) {
+  if (!route || !route.cells?.length || !segments.length) return [];
   return [
-    {distanceMeters:0,elevationMeters:segments[0].startElevation,cellIndex:0,segmentIndex:0},
-    ...segments.map((segment,index)=>({
-      distanceMeters:segment.cumulativeMeters,
-      elevationMeters:segment.endElevation,
-      cellIndex:index+1,
-      segmentIndex:index,
+    {
+      distanceMeters: 0,
+      elevationMeters: segments[0].startElevation,
+      cellIndex: 0,
+      segmentIndex: 0,
+    },
+    ...segments.map((segment, index) => ({
+      distanceMeters: segment.cumulativeMeters,
+      elevationMeters: segment.endElevation,
+      cellIndex: index + 1,
+      segmentIndex: index,
     })),
   ];
 }
 
-const el=(name,attrs={})=>{
-  const node=document.createElementNS(NS,name);
-  for(const [key,value] of Object.entries(attrs))node.setAttribute(key,String(value));
+const el = (name, attrs = {}) => {
+  const node = document.createElementNS(NS, name);
+  for (const [key, value] of Object.entries(attrs))
+    node.setAttribute(key, String(value));
   return node;
 };
 
-const fmt=(value,locale,digits=1)=>new Intl.NumberFormat(locale==='tr'?'tr-TR':'en-US',{
-  minimumFractionDigits:digits,maximumFractionDigits:digits
-}).format(value);
+const fmt = (value, locale, digits = 1) =>
+  new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "en-US", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value);
 
-export function renderElevationProfile(container,{routes,segments,locale='en',selected=null,onSelect=()=>{},measured=true,verticalReference=null}){
-  if(!container)return;
+export function renderElevationProfile(
+  container,
+  {
+    routes,
+    segments,
+    locale = "en",
+    selected = null,
+    onSelect = () => {},
+    measured = true,
+    verticalReference = null,
+  },
+) {
+  if (!container) return;
   container.replaceChildren();
-  if(!measured){
-    const empty=document.createElement('p');
-    empty.className='elevation-profile-empty';
-    empty.textContent=locale==='tr'?'Yükseklik profili yalnızca ölçümlü CTX DEM verisinde gösterilir.':'The elevation profile is available only for measured CTX DEM data.';
+  if (!measured) {
+    const empty = document.createElement("p");
+    empty.className = "elevation-profile-empty";
+    empty.textContent =
+      locale === "tr"
+        ? "Yükseklik profili yalnızca ölçümlü CTX DEM verisinde gösterilir."
+        : "The elevation profile is available only for measured CTX DEM data.";
     container.append(empty);
     return;
   }
-  const hasData=routes?.distance&&routes?.terrain&&segments?.distance?.length&&segments?.terrain?.length;
-  if(!hasData){
-    const empty=document.createElement('p');
-    empty.className='elevation-profile-empty';
-    empty.textContent=locale==='tr'?'Ölçümlü rota profili için iki geçerli rota gerekli.':'Two valid measured routes are required for the elevation profile.';
+  const hasData =
+    routes?.distance &&
+    routes?.terrain &&
+    segments?.distance?.length &&
+    segments?.terrain?.length;
+  if (!hasData) {
+    const empty = document.createElement("p");
+    empty.className = "elevation-profile-empty";
+    empty.textContent =
+      locale === "tr"
+        ? "Ölçümlü rota profili için iki geçerli rota gerekli."
+        : "Two valid measured routes are required for the elevation profile.";
     container.append(empty);
     return;
   }
 
-  const title=document.createElement('div');
-  title.className='elevation-profile-title';
-  title.innerHTML=locale==='tr'
-    ? '<strong>Yükseklik profili</strong><span>Gerçek DEM örnekleri · birikimli rota mesafesi</span>'
-    : '<strong>Elevation profile</strong><span>Actual DEM samples · cumulative route distance</span>';
+  const title = document.createElement("div");
+  title.className = "elevation-profile-title";
+  title.innerHTML =
+    locale === "tr"
+      ? "<strong>Yükseklik profili</strong><span>Gerçek DEM örnekleri · birikimli rota mesafesi</span>"
+      : "<strong>Elevation profile</strong><span>Actual DEM samples · cumulative route distance</span>";
   container.append(title);
 
-  const wrap=document.createElement('div');
-  wrap.className='elevation-profile-chart';
-  const svg=el('svg',{viewBox:'0 0 760 360',role:'group'});
-  svg.setAttribute('aria-label',locale==='tr'?'İki rotanın mesafe-yükseklik profili':'Distance-elevation profile for both routes');
+  const wrap = document.createElement("div");
+  wrap.className = "elevation-profile-chart";
+  const svg = el("svg", { viewBox: "0 0 760 360", role: "group" });
+  svg.setAttribute(
+    "aria-label",
+    locale === "tr"
+      ? "İki rotanın mesafe-yükseklik profili"
+      : "Distance-elevation profile for both routes",
+  );
 
-  const all=[...buildElevationProfileSeries(routes.distance,segments.distance),...buildElevationProfileSeries(routes.terrain,segments.terrain)];
-  const maxDistance=Math.max(...all.map(p=>p.distanceMeters),1);
-  const minElevation=Math.min(...all.map(p=>p.elevationMeters));
-  const maxElevation=Math.max(...all.map(p=>p.elevationMeters));
-  const range=Math.max(maxElevation-minElevation,1);
-  const pad={left:58,right:18,top:22,bottom:44};
-  const plotW=760-pad.left-pad.right,plotH=360-pad.top-pad.bottom;
-  const x=d=>pad.left+(d/maxDistance)*plotW;
-  const y=h=>pad.top+(1-(h-minElevation)/range)*plotH;
+  const all = [
+    ...buildElevationProfileSeries(routes.distance, segments.distance),
+    ...buildElevationProfileSeries(routes.terrain, segments.terrain),
+  ];
+  const maxDistance = Math.max(...all.map((p) => p.distanceMeters), 1);
+  const minElevation = Math.min(...all.map((p) => p.elevationMeters));
+  const maxElevation = Math.max(...all.map((p) => p.elevationMeters));
+  const range = Math.max(maxElevation - minElevation, 1);
+  const pad = { left: 58, right: 18, top: 22, bottom: 44 };
+  const plotW = 760 - pad.left - pad.right,
+    plotH = 360 - pad.top - pad.bottom;
+  const x = (d) => pad.left + (d / maxDistance) * plotW;
+  const y = (h) => pad.top + (1 - (h - minElevation) / range) * plotH;
 
-  const grid=el('g',{class:'elevation-profile-grid'});
-  for(let i=0;i<=4;i++){
-    const value=minElevation+range*i/4,yy=y(value);
-    grid.append(el('line',{x1:pad.left,x2:760-pad.right,y1:yy,y2:yy}));
-    const label=el('text',{x:pad.left-8,y:yy+4,'text-anchor':'end'});
-    label.textContent=fmt(value,locale,1)+' m';
+  const grid = el("g", { class: "elevation-profile-grid" });
+  for (let i = 0; i <= 4; i++) {
+    const value = minElevation + (range * i) / 4,
+      yy = y(value);
+    grid.append(
+      el("line", { x1: pad.left, x2: 760 - pad.right, y1: yy, y2: yy }),
+    );
+    const label = el("text", {
+      x: pad.left - 8,
+      y: yy + 4,
+      "text-anchor": "end",
+    });
+    label.textContent = fmt(value, locale, 1) + " m";
     grid.append(label);
   }
-  for(let i=0;i<=4;i++){
-    const value=maxDistance*i/4,xx=x(value);
-    grid.append(el('line',{x1:xx,x2:xx,y1:pad.top,y2:360-pad.bottom}));
-    const label=el('text',{x:xx,y:360-pad.bottom+22,'text-anchor':'middle'});
-    label.textContent=fmt(value,locale,0)+' m';
+  for (let i = 0; i <= 4; i++) {
+    const value = (maxDistance * i) / 4,
+      xx = x(value);
+    grid.append(
+      el("line", { x1: xx, x2: xx, y1: pad.top, y2: 360 - pad.bottom }),
+    );
+    const label = el("text", {
+      x: xx,
+      y: 360 - pad.bottom + 22,
+      "text-anchor": "middle",
+    });
+    label.textContent = fmt(value, locale, 0) + " m";
     grid.append(label);
   }
   svg.append(grid);
 
-  const yTitle=el('text',{x:15,y:pad.top+plotH/2,transform:'rotate(-90 15 '+(pad.top+plotH/2)+')','text-anchor':'middle',class:'axis-title'});
-  yTitle.textContent=locale==='tr'?'Yükseklik (m)':'Elevation (m)';
-  const xTitle=el('text',{x:pad.left+plotW/2,y:349,'text-anchor':'middle',class:'axis-title'});
-  xTitle.textContent=locale==='tr'?'Birikimli mesafe (m)':'Cumulative distance (m)';
-  svg.append(yTitle,xTitle);
+  const yTitle = el("text", {
+    x: 15,
+    y: pad.top + plotH / 2,
+    transform: "rotate(-90 15 " + (pad.top + plotH / 2) + ")",
+    "text-anchor": "middle",
+    class: "axis-title",
+  });
+  yTitle.textContent = locale === "tr" ? "Yükseklik (m)" : "Elevation (m)";
+  const xTitle = el("text", {
+    x: pad.left + plotW / 2,
+    y: 349,
+    "text-anchor": "middle",
+    class: "axis-title",
+  });
+  xTitle.textContent =
+    locale === "tr" ? "Birikimli mesafe (m)" : "Cumulative distance (m)";
+  svg.append(yTitle, xTitle);
 
-  const drawRoute=(mode)=>{
-    const color=COLORS[mode==='distance'?'shortest':mode];
-    const series=buildElevationProfileSeries(routes[mode],segments[mode]);
-    const polyline=el('polyline',{class:'elevation-profile-line '+(mode==='distance'?'shortest':mode),fill:'none',stroke:color,points:series.map(p=>x(p.distanceMeters).toFixed(2)+','+y(p.elevationMeters).toFixed(2)) .join(' ')});
-    if(mode==='distance')polyline.setAttribute('stroke-dasharray','9 7');
-    polyline.setAttribute('stroke-width','3');
+  const drawRoute = (mode) => {
+    const color = COLORS[mode === "distance" ? "shortest" : mode];
+    const series = buildElevationProfileSeries(routes[mode], segments[mode]);
+    const polyline = el("polyline", {
+      class:
+        "elevation-profile-line " + (mode === "distance" ? "shortest" : mode),
+      fill: "none",
+      stroke: color,
+      points: series
+        .map(
+          (p) =>
+            x(p.distanceMeters).toFixed(2) +
+            "," +
+            y(p.elevationMeters).toFixed(2),
+        )
+        .join(" "),
+    });
+    if (mode === "distance") polyline.setAttribute("stroke-dasharray", "9 7");
+    polyline.setAttribute("stroke-width", "3");
     svg.append(polyline);
 
-    series.forEach((point,index)=>{
-      const group=el('g',{class:'elevation-profile-point '+(mode==='distance'?'shortest':mode),tabindex:'0',role:'button','data-profile-mode':mode,'data-profile-index':point.segmentIndex});
-      const circle=el('circle',{cx:x(point.distanceMeters),cy:y(point.elevationMeters),r:selected?.mode===mode&&selected.index===point.segmentIndex?'6':'4',fill:color,stroke:'white','stroke-width':'2'});
-      const title=el('title');
-      title.textContent=locale==='tr'
-        ? `Mesafe: ${fmt(point.distanceMeters,locale,1)} m · Yükseklik: ${fmt(point.elevationMeters,locale,1)} m · Bölüm: ${point.segmentIndex+1}`
-        : `Distance: ${fmt(point.distanceMeters,locale,1)} m · Elevation: ${fmt(point.elevationMeters,locale,1)} m · Segment: ${point.segmentIndex+1}`;
-      group.setAttribute('aria-label',(mode==='distance'?(locale==='tr'?'En kısa rota. ':'Shortest route. '):(locale==='tr'?'Arazi öncelikli rota. ':'Terrain-preferred route. '))+title.textContent);
-      group.append(circle,title);
-      group.addEventListener('focus',()=>onSelect(mode,Math.min(point.segmentIndex,segments[mode].length-1)));
-      group.addEventListener('click',()=>onSelect(mode,Math.min(point.segmentIndex,segments[mode].length-1)));
-      group.addEventListener('keydown',event=>{
-        if(event.key==='Enter'||event.key===' '){event.preventDefault();onSelect(mode,Math.min(point.segmentIndex,segments[mode].length-1));}
+    series.forEach((point, index) => {
+      const group = el("g", {
+        class:
+          "elevation-profile-point " +
+          (mode === "distance" ? "shortest" : mode),
+        tabindex: "0",
+        role: "button",
+        "data-profile-mode": mode,
+        "data-profile-index": point.segmentIndex,
+      });
+      const circle = el("circle", {
+        cx: x(point.distanceMeters),
+        cy: y(point.elevationMeters),
+        r:
+          selected?.mode === mode && selected.index === point.segmentIndex
+            ? "6"
+            : "4",
+        fill: color,
+        stroke: "white",
+        "stroke-width": "2",
+      });
+      const title = el("title");
+      title.textContent =
+        locale === "tr"
+          ? `Mesafe: ${fmt(point.distanceMeters, locale, 1)} m · Yükseklik: ${fmt(point.elevationMeters, locale, 1)} m · Bölüm: ${point.segmentIndex + 1}`
+          : `Distance: ${fmt(point.distanceMeters, locale, 1)} m · Elevation: ${fmt(point.elevationMeters, locale, 1)} m · Segment: ${point.segmentIndex + 1}`;
+      group.setAttribute(
+        "aria-label",
+        (mode === "distance"
+          ? locale === "tr"
+            ? "En kısa rota. "
+            : "Shortest route. "
+          : locale === "tr"
+            ? "Arazi öncelikli rota. "
+            : "Terrain-preferred route. ") + title.textContent,
+      );
+      group.append(circle, title);
+      group.addEventListener("focus", () =>
+        onSelect(mode, Math.min(point.segmentIndex, segments[mode].length - 1)),
+      );
+      group.addEventListener("click", () =>
+        onSelect(mode, Math.min(point.segmentIndex, segments[mode].length - 1)),
+      );
+      group.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSelect(
+            mode,
+            Math.min(point.segmentIndex, segments[mode].length - 1),
+          );
+        }
       });
       svg.append(group);
     });
   };
 
-  drawRoute('distance');
-  drawRoute('terrain');
+  drawRoute("distance");
+  drawRoute("terrain");
   wrap.append(svg);
   container.append(wrap);
 
-  const legend=document.createElement('div');
-  legend.className='elevation-profile-legend';
-  legend.innerHTML=locale==='tr'
-    ? '<span><i class="legend terrain"></i>Arazi öncelikli</span><span><i class="legend shortest"></i>En kısa</span><span>Her nokta bir DEM hücresi merkezinden alınan gerçek örnektir.</span>'
-    : '<span><i class="legend terrain"></i>Terrain-preferred</span><span><i class="legend shortest"></i>Shortest</span><span>Each point is a real sample from a DEM cell centre.</span>';
+  const legend = document.createElement("div");
+  legend.className = "elevation-profile-legend";
+  legend.innerHTML =
+    locale === "tr"
+      ? '<span><i class="legend terrain"></i>Arazi öncelikli</span><span><i class="legend shortest"></i>En kısa</span><span>Her nokta bir DEM hücresi merkezinden alınan gerçek örnektir.</span>'
+      : '<span><i class="legend terrain"></i>Terrain-preferred</span><span><i class="legend shortest"></i>Shortest</span><span>Each point is a real sample from a DEM cell centre.</span>';
   container.append(legend);
-  const datum=document.createElement('p');datum.className='elevation-profile-datum';
-  datum.textContent=locale==='tr'?`Düşey referans: ${verticalReference??'Kullanılamıyor'}. Düz çizgiler DEM örneklerini birleştirir.`:`Vertical reference: ${verticalReference??'Unavailable'}. Straight lines connect DEM samples.`;
+  const datum = document.createElement("p");
+  datum.className = "elevation-profile-datum";
+  datum.textContent =
+    locale === "tr"
+      ? `Düşey referans: ${verticalReference ?? "Kullanılamıyor"}. Düz çizgiler DEM örneklerini birleştirir.`
+      : `Vertical reference: ${verticalReference ?? "Unavailable"}. Straight lines connect DEM samples.`;
   container.append(datum);
 }
 
-
 /** Straight lines join DEM samples at grid-cell centres; no interpolation claim. */
-export function profileData(routes,data,legs=[]){
-  const series=['distance','terrain'].filter(mode=>routes[mode]).map(mode=>{
-    const segments=routeSegments(routes[mode],data,legs);
-    const points=buildElevationProfileSeries(routes[mode],segments);
-    if(!points.length&&routes[mode].cells?.length===1){const c=routes[mode].cells[0];points.push({distanceMeters:0,elevationMeters:data.heights[c.y*data.gridWidth+c.x]});}
-    return {mode,segments,points};
-  });
-  if(!series.length)return null;
-  const heights=series.flatMap(s=>s.points.map(p=>p.elevationMeters));
-  if(!heights.length||heights.some(h=>!Number.isFinite(h)))return null;
-  const min=Math.min(...heights),max=Math.max(...heights),span=Math.max(max-min,1);
-  const maxDistance=Math.max(...series.map(s=>s.points.at(-1)?.distanceMeters??0),1);
-  return {series,min,max,span,maxDistance,verticalReference:data.verticalReference??null};
+export function profileData(routes, data, legs = []) {
+  const series = ["distance", "terrain"]
+    .filter((mode) => routes[mode])
+    .map((mode) => {
+      const segments = routeSegments(routes[mode], data, legs);
+      const points = buildElevationProfileSeries(routes[mode], segments);
+      if (!points.length && routes[mode].cells?.length === 1) {
+        const c = routes[mode].cells[0];
+        points.push({
+          distanceMeters: 0,
+          elevationMeters: data.heights[c.y * data.gridWidth + c.x],
+        });
+      }
+      return { mode, segments, points };
+    });
+  if (!series.length) return null;
+  const heights = series.flatMap((s) => s.points.map((p) => p.elevationMeters));
+  if (!heights.length || heights.some((h) => !Number.isFinite(h))) return null;
+  const min = Math.min(...heights),
+    max = Math.max(...heights),
+    span = Math.max(max - min, 1);
+  const maxDistance = Math.max(
+    ...series.map((s) => s.points.at(-1)?.distanceMeters ?? 0),
+    1,
+  );
+  return {
+    series,
+    min,
+    max,
+    span,
+    maxDistance,
+    verticalReference: data.verticalReference ?? null,
+  };
 }
 
-export function profileSvg(profile,{interactive=true,language='en'}={}){
-  if(!profile)return '';
-  const tr=language==='tr',left=50,right=700,top=14,bottom=174;
-  const x=d=>left+d/profile.maxDistance*(right-left);
-  const y=h=>bottom-(h-profile.min)/profile.span*(bottom-top);
-  const number=n=>new Intl.NumberFormat(tr?'tr-TR':'en-US',{maximumFractionDigits:1}).format(n);
-  const label=mode=>mode==='distance'?(tr?'En kısa':'Shortest'):(tr?'Arazi öncelikli':'Terrain preferred');
-  const axis=`<path d="M${left} ${top}V${bottom}H${right}" class="profile-axis"/><text x="4" y="${top+4}">${number(profile.max)} m</text><text x="4" y="${bottom}">${number(profile.min)} m</text><text x="${left}" y="194">0 m</text><text x="${right}" y="194" text-anchor="end">${number(profile.maxDistance)} m</text>`;
-  const lines=profile.series.map(s=>{
-    const polyline=`<polyline class="profile-line ${s.mode}" points="${s.points.map(p=>`${x(p.distanceMeters).toFixed(2)},${y(p.elevationMeters).toFixed(2)}`).join(' ')}"/>`;
-    const hits=interactive?s.segments.map((z,index)=>`<path class="profile-hit" data-profile-mode="${s.mode}" data-profile-index="${index}" tabindex="0" role="button" aria-label="${label(s.mode)} · ${tr?'Bölüm':'Segment'} ${z.number} · ${number(z.cumulativeMeters)} m" d="M${x(z.cumulativeMeters-z.lengthMeters).toFixed(2)},${y(z.startElevation).toFixed(2)}L${x(z.cumulativeMeters).toFixed(2)},${y(z.endElevation).toFixed(2)}"/>`).join(''):'';
-    return polyline+hits;
-  }).join('');
-  return `<svg class="elevation-profile" viewBox="0 0 720 204" role="${interactive?'group':'img'}" aria-label="${tr?'Örneklenmiş DEM yükseklik profili; yatay eksen rota mesafesi, düşey eksen yükseklik':'Sampled DEM elevation profile; horizontal axis route distance, vertical axis elevation'}">${axis}${lines}</svg>`;
+export function profileSvg(
+  profile,
+  { interactive = true, language = "en" } = {},
+) {
+  if (!profile) return "";
+  const tr = language === "tr",
+    left = 50,
+    right = 700,
+    top = 14,
+    bottom = 174;
+  const x = (d) => left + (d / profile.maxDistance) * (right - left);
+  const y = (h) => bottom - ((h - profile.min) / profile.span) * (bottom - top);
+  const number = (n) =>
+    new Intl.NumberFormat(tr ? "tr-TR" : "en-US", {
+      maximumFractionDigits: 1,
+    }).format(n);
+  const label = (mode) =>
+    mode === "distance"
+      ? tr
+        ? "En kısa"
+        : "Shortest"
+      : tr
+        ? "Arazi öncelikli"
+        : "Terrain preferred";
+  const axis = `<path d="M${left} ${top}V${bottom}H${right}" class="profile-axis"/><text x="4" y="${top + 4}">${number(profile.max)} m</text><text x="4" y="${bottom}">${number(profile.min)} m</text><text x="${left}" y="194">0 m</text><text x="${right}" y="194" text-anchor="end">${number(profile.maxDistance)} m</text>`;
+  const lines = profile.series
+    .map((s) => {
+      const polyline = `<polyline class="profile-line ${s.mode}" points="${s.points.map((p) => `${x(p.distanceMeters).toFixed(2)},${y(p.elevationMeters).toFixed(2)}`).join(" ")}"/>`;
+      const hits = interactive
+        ? s.segments
+            .map(
+              (z, index) =>
+                `<path class="profile-hit" data-profile-mode="${s.mode}" data-profile-index="${index}" tabindex="0" role="button" aria-label="${label(s.mode)} · ${tr ? "Bölüm" : "Segment"} ${z.number} · ${number(z.cumulativeMeters)} m" d="M${x(z.cumulativeMeters - z.lengthMeters).toFixed(2)},${y(z.startElevation).toFixed(2)}L${x(z.cumulativeMeters).toFixed(2)},${y(z.endElevation).toFixed(2)}"/>`,
+            )
+            .join("")
+        : "";
+      return polyline + hits;
+    })
+    .join("");
+  return `<svg class="elevation-profile" viewBox="0 0 720 204" role="${interactive ? "group" : "img"}" aria-label="${tr ? "Örneklenmiş DEM yükseklik profili; yatay eksen rota mesafesi, düşey eksen yükseklik" : "Sampled DEM elevation profile; horizontal axis route distance, vertical axis elevation"}">${axis}${lines}</svg>`;
 }

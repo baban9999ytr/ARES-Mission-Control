@@ -4,13 +4,13 @@
 
 ## Architecture: do not publish 3 GB of GeoTIFFs as web assets
 
-| Layer | Location | Why |
-| --- | --- | --- |
-| ARES application (HTML/CSS/JS) | **Cloudflare Pages** | Static, no server needed |
-| Current measured CTX crop (mission-pack JSON + small WebPs) | **Git repository -> Pages** | Already small and read by current browser UI |
-| Unprocessed 1 m DEM / 0.3 m DRG TIFF sources (approximately 3 GB+) | **Local `ARES-DATA/` and, if backup/sharing required, a *private* R2 bucket** | Too large to check into Git or serve to browsers |
-| Additional *processed* Jezero map tiles / region mission packs | **Optional public R2 bucket with a custom domain** | Add only after the app implements and validates new datasets |
-| Sources, processing scripts, metadata and provenance | **Git** | Reproducibility without binary bloat |
+| Layer                                                              | Location                                                                      | Why                                                          |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| ARES application (HTML/CSS/JS)                                     | **Cloudflare Pages**                                                          | Static, no server needed                                     |
+| Current measured CTX crop (mission-pack JSON + small WebPs)        | **Git repository -> Pages**                                                   | Already small and read by current browser UI                 |
+| Unprocessed 1 m DEM / 0.3 m DRG TIFF sources (approximately 3 GB+) | **Local `ARES-DATA/` and, if backup/sharing required, a _private_ R2 bucket** | Too large to check into Git or serve to browsers             |
+| Additional _processed_ Jezero map tiles / region mission packs     | **Optional public R2 bucket with a custom domain**                            | Add only after the app implements and validates new datasets |
+| Sources, processing scripts, metadata and provenance               | **Git**                                                                       | Reproducibility without binary bloat                         |
 
 **Important:** The current app does not fetch its original TIFFs from the network. Its measured CTX mode already uses `public/data/mission-pack.json` and registered WebP images. The raw files are build-time scientific inputs, not runtime dependencies. Simply uploading new TIFFs to R2 does **not** add high-resolution routing.
 
@@ -28,15 +28,15 @@
 2. In Cloudflare Dashboard, **Workers & Pages > Create > Pages**, connect the repository `baban9999ytr/ARES-Mission-Control`. The repo is private; authorize the correct repository.
 3. Use these settings:
 
-   | Setting | Value |
-   | --- | --- |
-   | Production branch | Reviewed release branch (do **not** silently deploy `main`) |
-   | Framework | None |
-   | Build command | `npm run build` |
-   | Build output directory | `dist` |
-   | Root directory | Repository root |
-   | Node | 22 (repository has `.node-version`) |
-   | Output files | Static assets + `_headers` + `build-info.json` |
+   | Setting                | Value                                                       |
+   | ---------------------- | ----------------------------------------------------------- |
+   | Production branch      | Reviewed release branch (do **not** silently deploy `main`) |
+   | Framework              | None                                                        |
+   | Build command          | `npm run build`                                             |
+   | Build output directory | `dist`                                                      |
+   | Root directory         | Repository root                                             |
+   | Node                   | 22 (repository has `.node-version`)                         |
+   | Output files           | Static assets + `_headers` + `build-info.json`              |
 
 4. First verify the temporary `*.pages.dev` preview before touching a production hostname.
 5. Check whether `spapps.openstacktool.com` is already attached to another Pages project, Worker route or DNS record. Do not replace an existing service by accident.
@@ -65,7 +65,7 @@ jezero/northern-fan/v1/elevation/0/0.webp
 jezero/northern-fan/v1/route-grid.json
 ```
 
-These are an example *future naming plan*, **not files produced by the existing importer**.
+These are an example _future naming plan_, **not files produced by the existing importer**.
 
 ### Data ingest workflow
 
@@ -109,4 +109,4 @@ If deploying cross-origin assets from `mars-data.openstacktool.com` to `spapps.o
 - R2 public buckets/custom domains: https://developers.cloudflare.com/r2/buckets/public-buckets/
 - R2 cache with custom domain: https://developers.cloudflare.com/cache/interaction-cloudflare-products/r2/
 
-**Status at writing:** No R2 bucket or Pages deployment has been created by this change. All paths and domains in section B are *proposed architecture*.
+**Status at writing:** No R2 bucket or Pages deployment has been created by this change. All paths and domains in section B are _proposed architecture_.

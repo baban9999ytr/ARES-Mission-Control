@@ -17,30 +17,30 @@ The visual layout was guided by a generated desktop concept at `/home/krr/.codex
 
 ## Verification performed
 
-| Check | Result |
-| --- | --- |
-| `npm run test` | Passed, 15 tests. Includes map click conversion with zoom/pan, arbitrary valid point routing, nodata rejection and mode regression. |
-| `npm run build` | Passed; `planner.css` and the measured pack are included in `dist/`. |
-| `.venv/bin/python tools/test_raster_import.py` | Passed internal nodata-barrier fixture. |
-| `git diff --check` | Passed. |
-| Browser default | CTX optical loaded; route comparison showed 2.07 km / 17.7° / 52 m versus 2.13 km / 10.4° / 38 m; no console errors. |
-| Browser map controls | Clicking start and destination tools and the map updated projected coordinates and recalculated routes. Selecting a preset after a custom start changed the route. |
-| Browser zoom and pan | Zoom advanced from 100% to 120%; drag changed the shared `mapWorld` pan to 65.1 px, 35 px. No console errors. |
-| Browser layers and modes | Elevation switched to `mars-elevation.webp`; CTX thermal stayed disabled. Demo loaded its synthetic map and thermal image; switching back loaded CTX optical. |
-| Browser export | Downloaded JSON contained measured dataset, start, destination, shortest route and terrain-preferred route. The test download was removed afterward. |
-| Screenshot inspection | Desktop 1440 × 900, mobile 390 × 844 and taller mobile 390 × 1800 captured with headless Chromium and visually inspected. |
+| Check                                          | Result                                                                                                                                                             |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm run test`                                 | Passed, 15 tests. Includes map click conversion with zoom/pan, arbitrary valid point routing, nodata rejection and mode regression.                                |
+| `npm run build`                                | Passed; `planner.css` and the measured pack are included in `dist/`.                                                                                               |
+| `.venv/bin/python tools/test_raster_import.py` | Passed internal nodata-barrier fixture.                                                                                                                            |
+| `git diff --check`                             | Passed.                                                                                                                                                            |
+| Browser default                                | CTX optical loaded; route comparison showed 2.07 km / 17.7° / 52 m versus 2.13 km / 10.4° / 38 m; no console errors.                                               |
+| Browser map controls                           | Clicking start and destination tools and the map updated projected coordinates and recalculated routes. Selecting a preset after a custom start changed the route. |
+| Browser zoom and pan                           | Zoom advanced from 100% to 120%; drag changed the shared `mapWorld` pan to 65.1 px, 35 px. No console errors.                                                      |
+| Browser layers and modes                       | Elevation switched to `mars-elevation.webp`; CTX thermal stayed disabled. Demo loaded its synthetic map and thermal image; switching back loaded CTX optical.      |
+| Browser export                                 | Downloaded JSON contained measured dataset, start, destination, shortest route and terrain-preferred route. The test download was removed afterward.               |
+| Screenshot inspection                          | Desktop 1440 × 900, mobile 390 × 844 and taller mobile 390 × 1800 captured with headless Chromium and visually inspected.                                          |
 
 ## Design comparison and corrections
 
-| Point | Concept direction | Rendered result |
-| --- | --- | --- |
-| Layout | Map-dominant three-column GIS tool | Central CTX map with left controls and right comparison; mobile map first. |
-| Typography | Large plain headings, compact data text | DM Sans with restrained size hierarchy; IBM Plex Mono for coordinates and scale. |
-| Palette | Light slate, muted rust, teal route | White/slate workspace, rust actions and shortest line, teal terrain line. |
-| Map | Unobstructed grayscale imagery | Actual CTX optical crop, no decorative color wash, gradients or telemetry overlay. |
-| Route copy | Side-by-side metrics and explanation | Measured values, signed deltas, explicit safety caveat. |
-| Provenance | Compact data table | Source organization and actual native/grid resolutions; invented concept details omitted. |
-| Mobile | Map before tools | 390 px layout shows map, layer and point tools, then route comparison without horizontal overflow in the inspected screenshots. |
+| Point      | Concept direction                       | Rendered result                                                                                                                 |
+| ---------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Layout     | Map-dominant three-column GIS tool      | Central CTX map with left controls and right comparison; mobile map first.                                                      |
+| Typography | Large plain headings, compact data text | DM Sans with restrained size hierarchy; IBM Plex Mono for coordinates and scale.                                                |
+| Palette    | Light slate, muted rust, teal route     | White/slate workspace, rust actions and shortest line, teal terrain line.                                                       |
+| Map        | Unobstructed grayscale imagery          | Actual CTX optical crop, no decorative color wash, gradients or telemetry overlay.                                              |
+| Route copy | Side-by-side metrics and explanation    | Measured values, signed deltas, explicit safety caveat.                                                                         |
+| Provenance | Compact data table                      | Source organization and actual native/grid resolutions; invented concept details omitted.                                       |
+| Mobile     | Map before tools                        | 390 px layout shows map, layer and point tools, then route comparison without horizontal overflow in the inspected screenshots. |
 
 The actual route geometries overlap on many cells, so the two lines are less separated than in the concept image. Offsetting them for appearance would misrepresent their locations. The app instead distinguishes them by color, line style and selected comparison column.
 

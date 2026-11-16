@@ -7,6 +7,7 @@
 ## AŞAMA 1 — EXPLORER
 
 ### EX-01 — Batı Giriş — Merkez Çalışma Hattı
+
 - **Amaç:** Gerçek CTX çalışma alanında iki nokta arasında rota karşılaştırması yapmak.
 - **Başlangıç:** 18.30000°N, 77.28000°E (planetocentric, +East)
 - **Bitiş:** 18.46000°N, 77.42000°E (planetocentric, +East)
@@ -97,9 +98,11 @@
 - **JSON briefing:** `MISSION_SCREENSHOTS/EX-10.json`
 - **Değerlendirme:** İki modun ayrışması, mesafe ile eğim maliyetinin farklı ağırlıklandırılmasından kaynaklanabilir.
 - **Sınırlamalar:** 20 m DEM küçük ölçekli ayrıntıları çözmez; ARES rotası operasyonel güvenlik değerlendirmesi değildir.
+
 ## AŞAMA 2 — SCIENTIST
 
 ### SC-01 — Yükseklik farkı karşılaştırması
+
 - **Amaç:** Aynı boylam boyunca iki yükseklik bölgesini karşılaştırmak.
 - **Başlangıç:** 18.34000°N, 77.38000°E (planetocentric, +East)
 - **Bitiş:** 18.62000°N, 77.38000°E (planetocentric, +East)
@@ -190,9 +193,11 @@
 - **JSON briefing:** `MISSION_SCREENSHOTS/SC-10.json`
 - **Değerlendirme:** Bilimsel yorum yalnızca harita/DEM gözlemine dayanmalı; isimlendirilmemiş yüzeyler yeni jeolojik oluşum olarak etiketlenmemelidir.
 - **Sınırlamalar:** 20 m DEM küçük ölçekli ayrıntıları çözmez; ARES rotası operasyonel güvenlik değerlendirmesi değildir.
+
 ## AŞAMA 3 — COMMANDER
 
 ### CM-01 — İki Duraklı Bilim Turu
+
 - **Amaç:** B -> C -> D şeklinde iki bacaklı rota.
 - **Başlangıç:** 18.30000°N, 77.30000°E (planetocentric, +East)
 - **Bitiş:** 18.48000°N, 77.44000°E (planetocentric, +East)
@@ -283,6 +288,7 @@
 - **JSON briefing:** `MISSION_SCREENSHOTS/CM-10.json`
 - **Değerlendirme:** Çok duraklı görevlerde her bacak ayrı hesaplanmalıdır; toplam mesafe bacakların toplamıdır.
 - **Sınırlamalar:** 20 m DEM küçük ölçekli ayrıntıları çözmez; ARES rotası operasyonel güvenlik değerlendirmesi değildir.
+
 ## Ortak kabul kriterleri
 
 1. Kaynak URL, CRS/WKT, bounding box, hücre boyutu ve no-data maskesi briefing'e yazılmalı.

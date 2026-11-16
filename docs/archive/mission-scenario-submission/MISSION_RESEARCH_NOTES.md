@@ -9,6 +9,7 @@ Bu nedenle **30 görev tasarlandı; gerçek CTX üzerinde ARES rota metriği ça
 ## 2. CTX veri seti
 
 USGS Mars 2020 Science Investigation CTX DEM Mosaic:
+
 - Jezero kapsama alanı yaklaşık 19.29°N–17.58°N ve 76.99°E–78.58°E.
 - 20 m/piksel.
 - Dikey birim metre.
@@ -26,6 +27,7 @@ NASA'nın Perseverance konum haritası, yüksek çözünürlüklü topoğrafik v
 ## 4. Rota metrikleri
 
 Her rota için Shortest ve Terrain Preferred ayrı kaydedilmeli:
+
 - distance
 - maximum sampled slope
 - total ascent
@@ -63,11 +65,11 @@ Toplam mesafe = bacak 1 + bacak 2 + ...
 
 ## 10. Doğrulama durumu
 
-| Grup | Tasarım | Gerçek CTX ARES çalıştırması | Durum |
-|---|---:|---:|---|
-| EX-01–EX-10 | 10/10 | 0/10 | CTX pack bekleniyor |
-| SC-01–SC-10 | 10/10 | 0/10 | Araştırma senaryosu hazır |
-| CM-01–CM-10 | 10/10 | 0/10 | İleri görev tasarımı hazır |
+| Grup        | Tasarım | Gerçek CTX ARES çalıştırması | Durum                      |
+| ----------- | ------: | ---------------------------: | -------------------------- |
+| EX-01–EX-10 |   10/10 |                         0/10 | CTX pack bekleniyor        |
+| SC-01–SC-10 |   10/10 |                         0/10 | Araştırma senaryosu hazır  |
+| CM-01–CM-10 |   10/10 |                         0/10 | İleri görev tasarımı hazır |
 
 **Bu 0/10 değerleri özellikle görünür tutuldu.** 10 gerçek CTX çalıştırması yapılmış gibi yanlış bilgi verilmedi.
 

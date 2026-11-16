@@ -15,30 +15,16 @@
       "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "projected_mars_meters": true,
-      "resolution": [
-        1.0,
-        1.0
-      ],
+      "resolution": [1.0, 1.0],
       "bounds": [
-        4359982.037914526,
-        1077616.6170900527,
-        4378960.037914526,
+        4359982.037914526, 1077616.6170900527, 4378960.037914526,
         1102017.6170900527
       ],
-      "nodata": [
-        -32767.0
-      ],
-      "dtype": [
-        "float32"
-      ],
+      "nodata": [-32767.0],
+      "dtype": ["float32"],
       "compression": "LERC_ZSTD",
       "tiled": true,
-      "block_shapes": [
-        [
-          256,
-          256
-        ]
-      ],
+      "block_shapes": [[256, 256]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -56,10 +42,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          -2701.405654296875,
-          -2544.6763232421877
-        ]
+        "sample_percentiles": [-2701.405654296875, -2544.6763232421877]
       }
     },
     {
@@ -75,30 +58,16 @@
       "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "projected_mars_meters": true,
-      "resolution": [
-        0.29995473187602484,
-        0.29995473187602484
-      ],
+      "resolution": [0.29995473187602484, 0.29995473187602484],
       "bounds": [
-        4359982.912805038,
-        1077618.1716011204,
-        4378958.349098247,
+        4359982.912805038, 1077618.1716011204, 4378958.349098247,
         1102016.4894919163
       ],
-      "nodata": [
-        0.0
-      ],
-      "dtype": [
-        "uint8"
-      ],
+      "nodata": [0.0],
+      "dtype": ["uint8"],
       "compression": "ZSTD",
       "tiled": true,
-      "block_shapes": [
-        [
-          256,
-          256
-        ]
-      ],
+      "block_shapes": [[256, 256]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -116,10 +85,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          76.0,
-          183.0
-        ]
+        "sample_percentiles": [76.0, 183.0]
       }
     },
     {
@@ -135,30 +101,16 @@
       "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "projected_mars_meters": true,
-      "resolution": [
-        1.0,
-        1.0
-      ],
+      "resolution": [1.0, 1.0],
       "bounds": [
-        4349996.816078357,
-        1072667.7375764067,
-        4362772.816078357,
+        4349996.816078357, 1072667.7375764067, 4362772.816078357,
         1097860.7375764067
       ],
-      "nodata": [
-        -3.4028226550889045e+38
-      ],
-      "dtype": [
-        "float32"
-      ],
+      "nodata": [-3.4028226550889045e38],
+      "dtype": ["float32"],
       "compression": "LERC_ZSTD",
       "tiled": true,
-      "block_shapes": [
-        [
-          256,
-          256
-        ]
-      ],
+      "block_shapes": [[256, 256]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -176,10 +128,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          -2679.45861328125,
-          -2177.5418457031255
-        ]
+        "sample_percentiles": [-2679.45861328125, -2177.5418457031255]
       }
     },
     {
@@ -195,30 +144,16 @@
       "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "projected_mars_meters": true,
-      "resolution": [
-        0.3,
-        0.3
-      ],
+      "resolution": [0.3, 0.3],
       "bounds": [
-        4350129.442128072,
-        1072667.1487371756,
-        4362775.042128071,
+        4350129.442128072, 1072667.1487371756, 4362775.042128071,
         1097859.3487371756
       ],
-      "nodata": [
-        0.0
-      ],
-      "dtype": [
-        "uint8"
-      ],
+      "nodata": [0.0],
+      "dtype": ["uint8"],
       "compression": "ZSTD",
       "tiled": true,
-      "block_shapes": [
-        [
-          256,
-          256
-        ]
-      ],
+      "block_shapes": [[256, 256]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -236,10 +171,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          44.0,
-          199.0
-        ]
+        "sample_percentiles": [44.0, 199.0]
       }
     },
     {
@@ -255,30 +187,15 @@
       "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "ESRI:103885",
       "projected_mars_meters": true,
-      "resolution": [
-        20.0,
-        20.0
-      ],
+      "resolution": [20.0, 20.0],
       "bounds": [
-        4573663.250853,
-        1079453.140188,
-        4605583.250853,
-        1109693.140188
+        4573663.250853, 1079453.140188, 4605583.250853, 1109693.140188
       ],
-      "nodata": [
-        -3.4028226550889045e+38
-      ],
-      "dtype": [
-        "float32"
-      ],
+      "nodata": [-3.4028226550889045e38],
+      "dtype": ["float32"],
       "compression": null,
       "tiled": false,
-      "block_shapes": [
-        [
-          1,
-          1596
-        ]
-      ],
+      "block_shapes": [[1, 1596]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -296,10 +213,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          -2675.6723486328124,
-          -1791.0827636718755
-        ]
+        "sample_percentiles": [-2675.6723486328124, -1791.0827636718755]
       }
     },
     {
@@ -315,30 +229,15 @@
       "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "ESRI:103885",
       "projected_mars_meters": true,
-      "resolution": [
-        6.0,
-        6.0
-      ],
+      "resolution": [6.0, 6.0],
       "bounds": [
-        4573663.250853,
-        1079453.140188,
-        4605595.250853,
-        1109693.140188
+        4573663.250853, 1079453.140188, 4605595.250853, 1109693.140188
       ],
-      "nodata": [
-        0.0
-      ],
-      "dtype": [
-        "uint8"
-      ],
+      "nodata": [0.0],
+      "dtype": ["uint8"],
       "compression": null,
       "tiled": false,
-      "block_shapes": [
-        [
-          1,
-          5322
-        ]
-      ],
+      "block_shapes": [[1, 5322]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -356,10 +255,7 @@
         "purpose": "non-operational visualization",
         "resampling": "nearest-neighbor overview",
         "scaling": "per-raster 2nd–98th percentile linear grayscale, clipped; nodata transparent",
-        "sample_percentiles": [
-          97.0,
-          201.0
-        ]
+        "sample_percentiles": [97.0, 201.0]
       }
     },
     {
@@ -399,30 +295,16 @@
       "crs": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "PROJCS[\"Jezero_Crater_Projection\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",18.4663],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "projected_mars_meters": true,
-      "resolution": [
-        0.29995473187602484,
-        0.29995473187602484
-      ],
+      "resolution": [0.29995473187602484, 0.29995473187602484],
       "bounds": [
-        4359982.912805038,
-        1077618.1716011204,
-        4378958.349098247,
+        4359982.912805038, 1077618.1716011204, 4378958.349098247,
         1102016.4894919163
       ],
-      "nodata": [
-        0.0
-      ],
-      "dtype": [
-        "uint8"
-      ],
+      "nodata": [0.0],
+      "dtype": ["uint8"],
       "compression": "ZSTD",
       "tiled": true,
-      "block_shapes": [
-        [
-          256,
-          256
-        ]
-      ],
+      "block_shapes": [[256, 256]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -443,31 +325,14 @@
       "projected_mars_meters": false,
       "resolution": null,
       "bounds": null,
-      "nodata": [
-        null,
-        null,
-        null
-      ],
-      "dtype": [
-        "uint8",
-        "uint8",
-        "uint8"
-      ],
+      "nodata": [null, null, null],
+      "dtype": ["uint8", "uint8", "uint8"],
       "compression": "LZW",
       "tiled": false,
       "block_shapes": [
-        [
-          1,
-          2700
-        ],
-        [
-          1,
-          2700
-        ],
-        [
-          1,
-          2700
-        ]
+        [1, 2700],
+        [1, 2700],
+        [1, 2700]
       ],
       "embedded_tags": {
         "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
@@ -501,31 +366,14 @@
       "projected_mars_meters": false,
       "resolution": null,
       "bounds": null,
-      "nodata": [
-        null,
-        null,
-        null
-      ],
-      "dtype": [
-        "uint8",
-        "uint8",
-        "uint8"
-      ],
+      "nodata": [null, null, null],
+      "dtype": ["uint8", "uint8", "uint8"],
       "compression": "LZW",
       "tiled": false,
       "block_shapes": [
-        [
-          1,
-          5120
-        ],
-        [
-          1,
-          5120
-        ],
-        [
-          1,
-          5120
-        ]
+        [1, 5120],
+        [1, 5120],
+        [1, 5120]
       ],
       "embedded_tags": {
         "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
@@ -559,31 +407,14 @@
       "projected_mars_meters": false,
       "resolution": null,
       "bounds": null,
-      "nodata": [
-        null,
-        null,
-        null
-      ],
-      "dtype": [
-        "uint8",
-        "uint8",
-        "uint8"
-      ],
+      "nodata": [null, null, null],
+      "dtype": ["uint8", "uint8", "uint8"],
       "compression": "LZW",
       "tiled": false,
       "block_shapes": [
-        [
-          1,
-          998
-        ],
-        [
-          1,
-          998
-        ],
-        [
-          1,
-          998
-        ]
+        [1, 998],
+        [1, 998],
+        [1, 998]
       ],
       "embedded_tags": {
         "TIFFTAG_SOFTWARE": "VICAR Program VTIFF",
@@ -615,30 +446,15 @@
       "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "ESRI:103885",
       "projected_mars_meters": true,
-      "resolution": [
-        20.0,
-        20.0
-      ],
+      "resolution": [20.0, 20.0],
       "bounds": [
-        4573663.250853,
-        1079453.140188,
-        4605583.250853,
-        1109693.140188
+        4573663.250853, 1079453.140188, 4605583.250853, 1109693.140188
       ],
-      "nodata": [
-        -3.4028226550889045e+38
-      ],
-      "dtype": [
-        "float32"
-      ],
+      "nodata": [-3.4028226550889045e38],
+      "dtype": ["float32"],
       "compression": null,
       "tiled": false,
-      "block_shapes": [
-        [
-          1,
-          1596
-        ]
-      ],
+      "block_shapes": [[1, 1596]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
@@ -665,30 +481,15 @@
       "crs": "PROJCS[\"Equirectangular Mars 2000 Sphere IAU\",GEOGCS[\"GCS_Mars_2000_Sphere\",DATUM[\"Mars_2000_(Sphere)\",SPHEROID[\"Mars_2000_Sphere_IAU\",3396190,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",0],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
       "crs_name": "ESRI:103885",
       "projected_mars_meters": true,
-      "resolution": [
-        6.0,
-        6.0
-      ],
+      "resolution": [6.0, 6.0],
       "bounds": [
-        4573663.250853,
-        1079453.140188,
-        4605595.250853,
-        1109693.140188
+        4573663.250853, 1079453.140188, 4605595.250853, 1109693.140188
       ],
-      "nodata": [
-        0.0
-      ],
-      "dtype": [
-        "uint8"
-      ],
+      "nodata": [0.0],
+      "dtype": ["uint8"],
       "compression": null,
       "tiled": false,
-      "block_shapes": [
-        [
-          1,
-          5322
-        ]
-      ],
+      "block_shapes": [[1, 5322]],
       "embedded_tags": {
         "AREA_OR_POINT": "Area"
       },
