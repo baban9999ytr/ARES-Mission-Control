@@ -82,13 +82,11 @@ test("science stop objective, return and JSON round trip work in Turkish at mobi
   const json = JSON.parse(saved.toString());
   expect(json.scienceMission).toBe(true);
   expect(json.stops[1].activityType).toBe("imaging");
-  await page
-    .locator("#missionImport")
-    .setInputFiles({
-      name: "science.json",
-      mimeType: "application/json",
-      buffer: saved,
-    });
+  await page.locator("#missionImport").setInputFiles({
+    name: "science.json",
+    mimeType: "application/json",
+    buffer: saved,
+  });
   await expect(page.locator("#missionEditorStatus")).toContainText(
     "içe aktarıldı",
   );

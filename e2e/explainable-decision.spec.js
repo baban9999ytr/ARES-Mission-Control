@@ -86,13 +86,11 @@ test("custom mission blueprint still imports after JSON export", async ({
   await page.locator("#missionSave").click();
   const download = await downloadPromise;
   const contents = await readFile(await download.path());
-  await page
-    .locator("#missionImport")
-    .setInputFiles({
-      name: "mission.json",
-      mimeType: "application/json",
-      buffer: contents,
-    });
+  await page.locator("#missionImport").setInputFiles({
+    name: "mission.json",
+    mimeType: "application/json",
+    buffer: contents,
+  });
   await expect(page.locator("#missionEditorStatus")).toContainText(
     "Imported editable mission",
   );
